@@ -61,7 +61,8 @@ public class GlobalExceptionHandler {
   }
 
   private String extractValidationErrors(Exception exception) {
-    if (exception instanceof MethodArgumentNotValidException invalidException) {
+    if (exception instanceof MethodArgumentNotValidException) {
+      MethodArgumentNotValidException invalidException = (MethodArgumentNotValidException) exception;
       return invalidException
         .getBindingResult()
         .getFieldErrors()
@@ -72,7 +73,8 @@ public class GlobalExceptionHandler {
         .collect(Collectors.joining(", "));
     }
 
-    if (exception instanceof BindException bindException) {
+    if (exception instanceof BindException) {
+      BindException bindException = (BindException) exception;
       return bindException
         .getBindingResult()
         .getFieldErrors()
