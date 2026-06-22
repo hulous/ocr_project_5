@@ -30,11 +30,11 @@ public class CurrentUserService {
     }
 
     Object principal = authentication.getPrincipal();
-    if (!(principal instanceof User user)) {
+    if (!(principal instanceof User)) {
       throw new ApiException(HttpStatus.UNAUTHORIZED, "Unauthorized request");
     }
 
-    return user;
+    return (User) principal;
   }
 
   /**

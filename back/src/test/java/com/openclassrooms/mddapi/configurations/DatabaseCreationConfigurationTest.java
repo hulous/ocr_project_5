@@ -17,6 +17,7 @@ class DatabaseCreationConfigurationTest {
   @Test
   void dataSourceBeanBuildsDataSourceForPostgresSystemDatabase() {
     DataSourceProperties properties = Mockito.mock(DataSourceProperties.class);
+    @SuppressWarnings({"unchecked", "rawtypes"})
     DataSourceBuilder<?> builder = Mockito.mock(DataSourceBuilder.class);
     DataSource expectedDataSource = Mockito.mock(DataSource.class);
 
@@ -24,7 +25,7 @@ class DatabaseCreationConfigurationTest {
     when(properties.determineUsername()).thenReturn("user");
     when(properties.determinePassword()).thenReturn("pass");
     when(properties.initializeDataSourceBuilder()).thenReturn((DataSourceBuilder) builder);
-    when(builder.build()).thenReturn(expectedDataSource);
+    when(((DataSourceBuilder<DataSource>) builder).build()).thenReturn(expectedDataSource);
 
     DatabaseCreationConfiguration configuration = new DatabaseCreationConfiguration();
 
