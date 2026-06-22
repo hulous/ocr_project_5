@@ -89,9 +89,3 @@ Liquibase dependency is included. Add changelogs under:
 
 - src/main/resources/db/changelog
 
-## Important Note About Maven Wrapper
-
-This repository currently has mvnw/mvnw.cmd scripts but is missing wrapper metadata in .mvn/wrapper.
-Because of that, ./mvnw does not work at the moment.
-
-Use system Maven commands (mvn ...) until wrapper files are restored.
