@@ -68,7 +68,20 @@ class AuthenticationServiceTest {
     LoginUserDto dto = new LoginUserDto().setEmail("john@example.com").setPassword("pwd");
     User user = new User().setEmail("john@example.com");
 
-    when(userRepository.findByEmail("john@example.com")).thenReturn(Optional.of(user));
+    when(userRepository.findFirstByEmailOrName("john@example.com", "john@example.com")).thenReturn(Optional.of(user));
+
+    User result = service.authenticate(dto);
+
+    verify(authenticationManager).authenticate(any(UsernamePasswordAuthenticationToken.class));
+    assertEquals("john@example.com", result.getEmail());
+  }
+
+  @Test
+  void authenticateReturnsUserWhenUsernameCredentialsAreValid() {
+    LoginUserDto dto = new LoginUserDto().setEmail("john").setPassword("pwd");
+    User user = new User().setEmail("john@example.com").setName("john");
+
+    when(userRepository.findFirstByEmailOrName("john", "john")).thenReturn(Optional.of(user));
 
     User result = service.authenticate(dto);
 
@@ -79,7 +92,7 @@ class AuthenticationServiceTest {
   @Test
   void authenticateThrowsWhenUserCannotBeFoundAfterAuth() {
     LoginUserDto dto = new LoginUserDto().setEmail("john@example.com").setPassword("pwd");
-    when(userRepository.findByEmail("john@example.com")).thenReturn(Optional.empty());
+    when(userRepository.findFirstByEmailOrName("john@example.com", "john@example.com")).thenReturn(Optional.empty());
 
     UsernameNotFoundException exception = assertThrows(UsernameNotFoundException.class, () -> service.authenticate(dto));
 

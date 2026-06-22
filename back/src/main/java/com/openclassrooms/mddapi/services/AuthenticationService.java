@@ -53,11 +53,12 @@ public class AuthenticationService {
   }
 
   public User authenticate(LoginUserDto input) {
-    UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(input.getEmail(), input.getPassword());
+    String login = input.getEmail();
+    UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(login, input.getPassword());
     authenticationManager.authenticate(authToken);
 
     return userRepository
-      .findByEmail(input.getEmail())
+      .findFirstByEmailOrName(login, login)
       .orElseThrow(() -> new UsernameNotFoundException("Invalid credentials"));
   }
 
