@@ -33,8 +33,8 @@ class AuthenticationsControllerTest {
 
   @Test
   void registrateReturnsCreatedUser() {
-    RegisterUserDto dto = new RegisterUserDto().setEmail("john@example.com").setPassword("pwd").setName("John");
-    UserResponse responseBody = new UserResponse().setId(1).setEmail("john@example.com").setName("John");
+    RegisterUserDto dto = new RegisterUserDto().setEmail("john@example.com").setPassword("pwd").setUsername("John");
+    UserResponse responseBody = new UserResponse().setId(1).setEmail("john@example.com").setUsername("John");
 
     when(authenticationService.registrateResponse(dto)).thenReturn(responseBody);
 
@@ -95,13 +95,13 @@ class AuthenticationsControllerTest {
   void authenticatedUserReturnsCurrentPrincipal() {
     User current = new User()
       .setId(99)
-      .setName("Alice")
+      .setUsername("Alice")
       .setEmail("alice@example.com")
       .setCreatedAt(new Date())
       .setUpdatedAt(new Date());
     UserResponse responseBody = new UserResponse()
       .setId(99)
-      .setName("Alice")
+      .setUsername("Alice")
       .setEmail("alice@example.com")
       .setCreatedAt(current.getCreatedAt())
       .setUpdatedAt(current.getUpdatedAt());

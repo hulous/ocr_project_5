@@ -49,8 +49,8 @@ class ApplicationConfigurationTest {
   @Test
   void userDetailsServiceLoadsUserByName() {
     ApplicationConfiguration configuration = new ApplicationConfiguration(userRepository);
-    User user = new User().setEmail("john@example.com").setName("john");
-    when(userRepository.findFirstByEmailOrName("john", "john")).thenReturn(Optional.of(user));
+    User user = new User().setEmail("john@example.com").setUsername("john");
+    when(userRepository.findFirstByEmailOrUsername("john", "john")).thenReturn(Optional.of(user));
 
     UserDetailsService service = configuration.userDetailsService();
 

@@ -14,7 +14,7 @@ import lombok.experimental.Accessors;
 @ToString
 public class UserResponse {
   private Integer id;
-  private String name;
+  private String username;
   private String email;
   private Date createdAt;
   private Date updatedAt;
