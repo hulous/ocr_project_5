@@ -1,6 +1,6 @@
 spring:
   application:
-    name: base
+    name: mddapi
   config:
     import: "./env.properties"
   datasource:
@@ -22,3 +22,8 @@ security:
   jwt:
     secret-key: "${JWT_SECRET_TOKEN}"
     expiration-time: 3600000 # 1h in millisecond
+
+logging:
+  level:
+    root: DEBUG
+    com.example: TRACE
