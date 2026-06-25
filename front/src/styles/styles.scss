@@ -1,4 +1,28 @@
-/* You can add global styles to this file, and also import other style files */
+// =============================================================================
+// MDD — Point d'entrée du design system
+// À référencer dans angular.json > styles, ou @use depuis styles.scss racine.
+// =============================================================================
+@use './theme';
+@use './tokens';
+@use './components';
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+html, body {
+  margin: 0;
+  font-family: tokens.$mdd-font-family;
+  background-color: tokens.$mdd-surface;
+  color: tokens.$mdd-text-primary;
+}
+
+// Titres génériques de page (ex: "Inscription", "Créer un nouvel article")
+.mdd-page-title {
+  font-size: tokens.$mdd-font-size-h1;
+  font-weight: tokens.$mdd-font-weight-bold;
+  text-align: center;
+  margin: tokens.$mdd-spacing-lg 0;
+}
+
+.mdd-section-title {
+  font-size: tokens.$mdd-font-size-h2;
+  font-weight: tokens.$mdd-font-weight-bold;
+}

@@ -1,0 +1,162 @@
+// =============================================================================
+// MDD — Overrides de composants
+// Comportements/styles vus dans les maquettes mais non couverts par les
+// tokens système M3 (bordures noires au repos, état "déjà fait" en gris,
+// app-bar avec lien actif, avatar avec ring actif...).
+// =============================================================================
+@use './tokens' as tokens;
+
+// -----------------------------------------------------------------------------
+// Boutons
+// 3 variantes observées :
+//  - outlined (contour noir)  → "Se connecter" / "S'inscrire" sur la home
+//  - contained violet         → action principale (CTA)
+//  - contained gris           → action déjà effectuée / désactivée ("Déjà abonné")
+// -----------------------------------------------------------------------------
+.mdd-btn {
+  border-radius: tokens.$mdd-radius-md !important;
+  text-transform: none !important; // pas d'UPPERCASE dans les maquettes
+  font-weight: tokens.$mdd-font-weight-bold;
+  box-shadow: none !important; // design plat, pas d'élévation sur les boutons
+  padding: 8px 24px;
+}
+
+// mat-button[outlined] générique de la home page : contour noir fin
+.mdd-btn--outline {
+  --mdc-outlined-button-outline-color: #{tokens.$mdd-border};
+  --mdc-outlined-button-label-text-color: #{tokens.$mdd-text-primary};
+  --mdc-outlined-button-outline-width: 1px;
+}
+
+// mat-flat-button / mat-raised-button violet : CTA principal
+.mdd-btn--primary {
+  --mdc-filled-button-container-color: #{tokens.$mdd-primary};
+  --mdc-filled-button-label-text-color: #{tokens.$mdd-white};
+
+  &:hover {
+    --mdc-filled-button-container-color: #{tokens.$mdd-primary-hover};
+  }
+}
+
+// État "déjà fait" : même forme que le CTA mais gris, non cliquable visuellement
+.mdd-btn--done {
+  --mdc-filled-button-container-color: #{tokens.$mdd-disabled-bg};
+  --mdc-filled-button-label-text-color: #{tokens.$mdd-disabled-fg};
+  cursor: default;
+}
+
+// -----------------------------------------------------------------------------
+// Champs de formulaire (mat-form-field appearance="outline")
+// Bordure NOIRE fine au repos, bordure VIOLETTE au focus — pas de gris MDC
+// par défaut. C'est la personnalisation la plus visible vs. le thème M3 stock.
+// -----------------------------------------------------------------------------
+.mdd-field {
+  width: 100%;
+
+  .mat-mdc-text-field-wrapper {
+    border-radius: tokens.$mdd-radius-sm;
+  }
+
+  --mdc-outlined-text-field-outline-color: #{tokens.$mdd-border};
+  --mdc-outlined-text-field-hover-outline-color: #{tokens.$mdd-border};
+  --mdc-outlined-text-field-focus-outline-color: #{tokens.$mdd-primary};
+  --mdc-outlined-text-field-label-text-color: #{tokens.$mdd-text-secondary};
+  --mdc-outlined-text-field-outline-width: 1px;
+  --mdc-outlined-text-field-focus-outline-width: 2px;
+
+  // Pas de label flottant animé dans les maquettes : le label reste au-dessus
+  // du champ. On le simule en gardant un mat-label classique au-dessus plutôt
+  // qu'en placeholder flottant (voir composant de démo).
+}
+
+// -----------------------------------------------------------------------------
+// Cards (thèmes, articles)
+// Fond gris clair plat, pas de bordure, pas d'ombre, coins arrondis larges.
+// -----------------------------------------------------------------------------
+.mdd-card {
+  background-color: tokens.$mdd-surface-variant !important;
+  border-radius: tokens.$mdd-radius-lg !important;
+  box-shadow: none !important;
+  padding: tokens.$mdd-spacing-md;
+
+  .mdd-card__title {
+    font-weight: tokens.$mdd-font-weight-bold;
+    font-size: tokens.$mdd-font-size-h2;
+    margin-bottom: tokens.$mdd-spacing-sm;
+  }
+
+  .mdd-card__meta {
+    display: flex;
+    gap: tokens.$mdd-spacing-lg;
+    color: tokens.$mdd-text-secondary;
+    font-size: tokens.$mdd-font-size-label;
+    margin-bottom: tokens.$mdd-spacing-sm;
+  }
+}
+
+// Bulle de commentaire : même logique que la card mais fond encore plus clair
+.mdd-comment {
+  background-color: tokens.$mdd-surface-muted;
+  border-radius: tokens.$mdd-radius-md;
+  padding: tokens.$mdd-spacing-md;
+}
+
+// -----------------------------------------------------------------------------
+// App bar (mat-toolbar)
+// Fond blanc, séparée du contenu par un simple trait noir (pas d'ombre).
+// Lien de nav actif en violet, "Se déconnecter" toujours en rouge.
+// -----------------------------------------------------------------------------
+.mdd-toolbar {
+  background: tokens.$mdd-surface !important;
+  color: tokens.$mdd-text-primary !important;
+  border-bottom: tokens.$mdd-appbar-border;
+  box-shadow: none !important;
+
+  .mdd-toolbar__nav {
+    display: flex;
+    align-items: center;
+    gap: tokens.$mdd-spacing-lg;
+  }
+
+  .mdd-toolbar__link {
+    color: tokens.$mdd-text-primary;
+    font-weight: tokens.$mdd-font-weight-regular;
+    text-decoration: none;
+    cursor: pointer;
+
+    &.is-active {
+      color: tokens.$mdd-primary;
+      font-weight: tokens.$mdd-font-weight-medium;
+    }
+  }
+
+  .mdd-toolbar__logout {
+    color: tokens.$mdd-error !important;
+    font-weight: tokens.$mdd-font-weight-bold;
+  }
+
+  // Avatar : cercle gris par défaut, contour violet quand la page Profil
+  // est active (vu sur la maquette "Profil utilisateur")
+  .mdd-toolbar__avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: tokens.$mdd-avatar-bg;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid transparent;
+
+    &.is-active {
+      border-color: tokens.$mdd-primary;
+    }
+  }
+}
+
+// -----------------------------------------------------------------------------
+// Divider
+// -----------------------------------------------------------------------------
+.mdd-divider {
+  border-top: 1px solid tokens.$mdd-text-primary;
+  margin: tokens.$mdd-spacing-lg 0;
+}
