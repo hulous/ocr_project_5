@@ -32,13 +32,13 @@ class UsersControllerTest {
   void showReturnsUserWhenFound() {
     User user = new User()
       .setId(1)
-      .setName("John")
+      .setUsername("John")
       .setEmail("john@example.com")
       .setCreatedAt(new Date())
       .setUpdatedAt(new Date());
     UserResponse userResponse = new UserResponse()
       .setId(1)
-      .setName("John")
+      .setUsername("John")
       .setEmail("john@example.com")
       .setCreatedAt(user.getCreatedAt())
       .setUpdatedAt(user.getUpdatedAt());

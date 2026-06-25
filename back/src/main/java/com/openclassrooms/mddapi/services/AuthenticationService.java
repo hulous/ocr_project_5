@@ -45,7 +45,7 @@ public class AuthenticationService {
     }
 
     User user = new User()
-      .setName(input.getName())
+      .setUsername(input.getUsername())
       .setEmail(input.getEmail())
       .setPassword(passwordEncoder.encode(input.getPassword()));
 
@@ -58,7 +58,7 @@ public class AuthenticationService {
     authenticationManager.authenticate(authToken);
 
     return userRepository
-      .findFirstByEmailOrName(login, login)
+      .findFirstByEmailOrUsername(login, login)
       .orElseThrow(() -> new UsernameNotFoundException("Invalid credentials"));
   }
 

@@ -26,13 +26,13 @@ class PlainObjectsAndRepositoriesTest {
     RegisterUserDto register = new RegisterUserDto();
 
     assertSame(login, login.setEmail("a@b.com").setPassword("pwd"));
-    assertSame(register, register.setEmail("a@b.com").setPassword("pwd").setName("Name"));
+    assertSame(register, register.setEmail("a@b.com").setPassword("pwd").setUsername("Name"));
 
     assertEquals("a@b.com", login.getEmail());
     assertEquals("pwd", login.getPassword());
     assertEquals("a@b.com", register.getEmail());
     assertEquals("pwd", register.getPassword());
-    assertEquals("Name", register.getName());
+    assertEquals("Name", register.getUsername());
     assertTrue(login.toString().contains("email=a@b.com"));
     assertTrue(register.toString().contains("name=Name"));
     assertTrue(!login.toString().contains("pwd"));
@@ -48,13 +48,13 @@ class PlainObjectsAndRepositoriesTest {
       .setId(1)
       .setEmail("owner@example.com")
       .setPassword("pwd")
-      .setName("Owner")
+      .setUsername("Owner")
       .setCreatedAt(createdAt)
       .setUpdatedAt(updatedAt);
 
     assertEquals(Integer.valueOf(1), user.getId());
     assertEquals("owner@example.com", user.getUsername());
-    assertEquals("Owner", user.getName());
+    assertEquals("Owner", user.getUsername());
     assertEquals(createdAt, user.getCreatedAt());
     assertEquals(updatedAt, user.getUpdatedAt());
     assertTrue(user.getAuthorities().isEmpty());
@@ -73,7 +73,7 @@ class PlainObjectsAndRepositoriesTest {
 
     assertSame(apiMessageResponse, apiMessageResponse.setMessage("ok"));
     assertSame(loginResponse, loginResponse.setToken("token").setExpiresIn(3600L));
-    assertSame(userResponse, userResponse.setId(1).setName("Alice").setEmail("a@b.com"));
+    assertSame(userResponse, userResponse.setId(1).setUsername("Alice").setEmail("a@b.com"));
 
     Date createdAt = new Date();
     Date updatedAt = new Date();
@@ -83,7 +83,7 @@ class PlainObjectsAndRepositoriesTest {
     assertEquals("token", loginResponse.getToken());
     assertEquals(3600L, loginResponse.getExpiresIn());
     assertEquals(Integer.valueOf(1), userResponse.getId());
-    assertEquals("Alice", userResponse.getName());
+    assertEquals("Alice", userResponse.getUsername());
     assertEquals("a@b.com", userResponse.getEmail());
     assertEquals(createdAt, userResponse.getCreatedAt());
     assertEquals(updatedAt, userResponse.getUpdatedAt());

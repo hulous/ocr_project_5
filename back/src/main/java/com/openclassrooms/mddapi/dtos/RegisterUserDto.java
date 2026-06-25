@@ -36,6 +36,6 @@ public class RegisterUserDto {
   @NotBlank(message = "Password is required")
   private String password;
 
-  @Schema(description = "Displayed full name", example = "Alice Martin")
-  private String name;
+  @Schema(description = "Displayed username", example = "Alice Martin")
+  private String username;
 }

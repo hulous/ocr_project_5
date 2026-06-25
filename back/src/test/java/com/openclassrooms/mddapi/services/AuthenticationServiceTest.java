@@ -50,11 +50,11 @@ class AuthenticationServiceTest {
 
   @Test
   void registrateSavesEncodedPassword() {
-    RegisterUserDto dto = new RegisterUserDto().setName("John").setEmail("john@example.com").setPassword("raw");
+    RegisterUserDto dto = new RegisterUserDto().setUsername("John").setEmail("john@example.com").setPassword("raw");
     when(userRepository.existsByEmail("john@example.com")).thenReturn(false);
     when(passwordEncoder.encode("raw")).thenReturn("encoded");
 
-    User saved = new User().setId(1).setEmail("john@example.com").setName("John").setPassword("encoded");
+    User saved = new User().setId(1).setEmail("john@example.com").setUsername("John").setPassword("encoded");
     when(userRepository.save(any(User.class))).thenReturn(saved);
 
     User result = service.registrate(dto);
@@ -68,7 +68,7 @@ class AuthenticationServiceTest {
     LoginUserDto dto = new LoginUserDto().setEmail("john@example.com").setPassword("pwd");
     User user = new User().setEmail("john@example.com");
 
-    when(userRepository.findFirstByEmailOrName("john@example.com", "john@example.com")).thenReturn(Optional.of(user));
+    when(userRepository.findFirstByEmailOrUsername("john@example.com", "john@example.com")).thenReturn(Optional.of(user));
 
     User result = service.authenticate(dto);
 
@@ -79,9 +79,9 @@ class AuthenticationServiceTest {
   @Test
   void authenticateReturnsUserWhenUsernameCredentialsAreValid() {
     LoginUserDto dto = new LoginUserDto().setEmail("john").setPassword("pwd");
-    User user = new User().setEmail("john@example.com").setName("john");
+    User user = new User().setEmail("john@example.com").setUsername("john");
 
-    when(userRepository.findFirstByEmailOrName("john", "john")).thenReturn(Optional.of(user));
+    when(userRepository.findFirstByEmailOrUsername("john", "john")).thenReturn(Optional.of(user));
 
     User result = service.authenticate(dto);
 
@@ -92,7 +92,7 @@ class AuthenticationServiceTest {
   @Test
   void authenticateThrowsWhenUserCannotBeFoundAfterAuth() {
     LoginUserDto dto = new LoginUserDto().setEmail("john@example.com").setPassword("pwd");
-    when(userRepository.findFirstByEmailOrName("john@example.com", "john@example.com")).thenReturn(Optional.empty());
+    when(userRepository.findFirstByEmailOrUsername("john@example.com", "john@example.com")).thenReturn(Optional.empty());
 
     UsernameNotFoundException exception = assertThrows(UsernameNotFoundException.class, () -> service.authenticate(dto));
 
