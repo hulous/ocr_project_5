@@ -56,7 +56,7 @@ describe('LoginComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should login and navigate to sessions on submit success', () => {
+  it('should login and navigate to home on submit success', () => {
     component.form.setValue({
       login: 'john@doe.com',
       password: 'secret'
@@ -69,7 +69,7 @@ describe('LoginComponent', () => {
       password: 'secret'
     });
     expect(sessionService.logIn).toHaveBeenCalledWith(Session);
-    expect(router.navigate).toHaveBeenCalledWith(['/sessions']);
+    expect(router.navigate).toHaveBeenCalledWith(['/home']);
     expect(component.onError).toBe(false);
   });
 
