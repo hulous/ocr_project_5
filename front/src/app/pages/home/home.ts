@@ -1,18 +1,13 @@
 import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [MatButtonModule],
-  templateUrl: './home.html',
-  styleUrls: ['./home.scss'],
+  imports: [CommonModule, MatButtonModule, RouterModule],
+  templateUrl: './home.html'
 })
 
-export class HomeComponent {
-  constructor() {}
-
-  start() {
-    alert('Commencez par lire le README et à vous de jouer !');
-  }
-}
+export class HomeComponent {}

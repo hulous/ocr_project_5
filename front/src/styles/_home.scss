@@ -1,0 +1,31 @@
+// -----------------------------------------------------------------------------
+// Home page layout
+// -----------------------------------------------------------------------------
+@use './tokens' as tokens;
+
+.mdd-home-page {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.mdd-home-logo {
+  width: 100%;
+  max-width: 420px;
+}
+
+.mdd-home-logo img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.mdd-home-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: tokens.$mdd-spacing-3xl;
+  width: min(100%, 420px);
+}

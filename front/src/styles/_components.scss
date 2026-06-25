@@ -23,6 +23,9 @@
 
 // mat-button[outlined] générique de la home page : contour noir fin
 .mdd-btn--outline {
+  border: 1px solid #{tokens.$mdd-border} !important;
+  background-color: transparent !important;
+  color: #{tokens.$mdd-text-primary} !important;
   --mdc-outlined-button-outline-color: #{tokens.$mdd-border};
   --mdc-outlined-button-label-text-color: #{tokens.$mdd-text-primary};
   --mdc-outlined-button-outline-width: 1px;
