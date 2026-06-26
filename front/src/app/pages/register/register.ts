@@ -6,13 +6,13 @@ import { RegisterRequest } from '../../core/models/register-request.interface.js
 import { MaterialModule } from "src/app/shared/material";
 import { CommonModule } from "@angular/common";
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [CommonModule, MaterialModule],
+  imports: [CommonModule, MaterialModule, RouterModule],
   templateUrl: './register.html',
-  styleUrls: ['./register.scss']
 })
 
 export class RegisterComponent {
