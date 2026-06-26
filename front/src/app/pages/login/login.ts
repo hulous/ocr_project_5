@@ -50,7 +50,7 @@ export class LoginComponent {
     ).subscribe({
       next: (response: Session) => {
         this.sessionService.logIn(response);
-        this.router.navigate(['/home']);
+        this.router.navigate(['/user']);
       },
       error: error => this.onError = true,
     });

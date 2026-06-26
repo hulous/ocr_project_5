@@ -1,44 +1,37 @@
-import { ChangeDetectionStrategy, Component, DestroyRef, Injector, OnInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
-import { User } from '../../core/models/user.interface';
+import { User } from '../../core/models/user.interface.js';
 import { SessionService } from '../../core/services/session';
-import { UserService } from '../../core/services/user';
 import { AuthService } from '../../core/services/auth';
 import { MaterialModule } from "../../shared/material";
 import { CommonModule } from "@angular/common";
-import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
-import { EMPTY, Observable, firstValueFrom } from 'rxjs';
-import { catchError, filter, switchMap, tap } from 'rxjs/operators';
-import { Session } from '../../core/models/session.interface';
+import { EMPTY, Observable } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 
 @Component({
   selector: 'app-user',
   standalone: true,
   imports: [CommonModule, MaterialModule],
   templateUrl: './user.html',
-  styleUrls: ['./user.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
+
 export class UserComponent implements OnInit {
   private router = inject(Router);
   private sessionService = inject(SessionService);
   private matSnackBar = inject(MatSnackBar);
-  private userService = inject(UserService);
   private authService = inject(AuthService);
-  private destroyRef = inject(DestroyRef);
-  private injector = inject(Injector);
   public user$!: Observable<User>;
 
   ngOnInit(): void {
-    this.user$ = toObservable<Session | undefined>(this.sessionService.session, { injector: this.injector }).pipe(
-      tap((session) => {
-        if (!session) {
-          this.router.navigate(['/login']);
-        }
-      }),
-      filter((session): session is Session => !!session),
-      switchMap(() => this.authService.me()),
+    const session = this.sessionService.session();
+    if (!session) {
+      this.router.navigate(['/login']);
+      return;
+    }
+
+    this.user$ = this.authService.me().pipe(
       catchError((error) => {
         this.handleUnauthorizedError(error, 'Unable to load your profile');
         return EMPTY;
@@ -46,6 +39,7 @@ export class UserComponent implements OnInit {
     );
   }
 
+  // used on user view on click on back arrow
   public back(): void {
     window.history.back();
   }

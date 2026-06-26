@@ -7,4 +7,5 @@ import { CommonModule } from '@angular/common';
   imports: [CommonModule],
   templateUrl: './logo.html'
 })
+
 export class NotLoggedLogoComponent {}
