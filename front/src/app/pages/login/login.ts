@@ -7,14 +7,14 @@ import { LoginRequest } from '../../core/models/login-request.interface';
 import { AuthService } from '../../core/services/auth';
 import { MaterialModule } from "../../shared/material";
 import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, MaterialModule],
+  imports: [CommonModule, MaterialModule, RouterModule],
   templateUrl: './login.html',
-  styleUrls: ['./login.scss']
 })
 export class LoginComponent {
   private authService = inject(AuthService);
