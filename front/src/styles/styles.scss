@@ -6,8 +6,6 @@
 @use './tokens';
 @use './components';
 
-@use "./home";
-
 html, body {
   margin: 0;
   font-family: tokens.$mdd-font-family;
@@ -28,8 +26,38 @@ html, body {
   font-weight: tokens.$mdd-font-weight-bold;
 }
 
+// -----------------------------------------------------------------------------
+// Home page layout
+// -----------------------------------------------------------------------------
+.mdd-home-page {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.mdd-not-logged-logo {
+  width: 100%;
+  max-width: 420px;
+}
+
+.mdd-not-logged-logo img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.mdd-home-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: tokens.$mdd-spacing-3xl;
+  width: min(100%, 420px);
+}
+
+// -- Registration and Login forms  ---------------------------------------
 .sign_in_or_up_form {
-  margin-top: 30px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -45,5 +73,51 @@ html, body {
     color: #b00020;
     margin: 0;
     font-size: 0.95rem;
+  }
+}
+
+
+// -----------------------------------------------------------------------------
+// Responsive breakpoints
+// -----------------------------------------------------------------------------
+@media (max-width: 720px) {
+  .mdd-home-page {
+    padding: 0;
+  }
+
+  .mdd-not-logged-logo,
+  .mdd-home-actions,
+  .sign_in_or_up_form {
+    width: min(100%, 100%);
+    max-width: 420px;
+    padding: 0;
+  }
+
+  .mdd-home-actions {
+    gap: tokens.$mdd-spacing-lg;
+    justify-content: stretch;
+  }
+
+  .mdd-home-actions button,
+  .mdd-home-actions a {
+    width: 100%;
+    max-width: none;
+  }
+
+  .sign_in_or_up_form {
+    mat-card {
+      margin: 0 auto;
+      width: 100%;
+    }
+  }
+}
+
+@media (max-width: 420px) {
+  .mdd-page-title {
+    font-size: 1.3rem;
+  }
+
+  .mdd-home-actions {
+    gap: tokens.$mdd-spacing-md;
   }
 }
