@@ -6,9 +6,10 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { RouterTestingModule } from '@angular/router/testing';
 import { expect } from '@jest/globals';
 
-import { RegisterComponent } from './register.js';
+import { RegisterComponent } from './register';
 
 describe('RegisterComponent', () => {
   let component: RegisterComponent;
@@ -24,7 +25,8 @@ describe('RegisterComponent', () => {
         MatCardModule,
         MatFormFieldModule,
         MatIconModule,
-        MatInputModule
+        MatInputModule,
+        RouterTestingModule
       ]
     })
       .compileComponents();
