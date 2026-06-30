@@ -4,6 +4,7 @@ import com.openclassrooms.mddapi.dtos.LoginUserDto;
 import com.openclassrooms.mddapi.dtos.RegisterUserDto;
 import com.openclassrooms.mddapi.entities.User;
 import com.openclassrooms.mddapi.repositories.UserRepository;
+import com.openclassrooms.mddapi.testdata.UserTestData;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -40,7 +41,7 @@ class AuthenticationServiceTest {
 
   @Test
   void registrateThrowsWhenEmailAlreadyExists() {
-    RegisterUserDto dto = new RegisterUserDto().setEmail("john@example.com");
+    RegisterUserDto dto = UserTestData.registerUserDto("john@example.com", null, null);
     when(userRepository.existsByEmail("john@example.com")).thenReturn(true);
 
     IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> service.registrate(dto));
@@ -50,11 +51,11 @@ class AuthenticationServiceTest {
 
   @Test
   void registrateSavesEncodedPassword() {
-    RegisterUserDto dto = new RegisterUserDto().setUsername("John").setEmail("john@example.com").setPassword("raw");
+    RegisterUserDto dto = UserTestData.registerUserDto("john@example.com", "John", "raw");
     when(userRepository.existsByEmail("john@example.com")).thenReturn(false);
     when(passwordEncoder.encode("raw")).thenReturn("encoded");
 
-    User saved = new User().setId(1).setEmail("john@example.com").setUsername("John").setPassword("encoded");
+    User saved = UserTestData.user(1, "John", "john@example.com", "encoded");
     when(userRepository.save(any(User.class))).thenReturn(saved);
 
     User result = service.registrate(dto);
@@ -65,8 +66,8 @@ class AuthenticationServiceTest {
 
   @Test
   void authenticateReturnsUserWhenCredentialsAreValid() {
-    LoginUserDto dto = new LoginUserDto().setEmail("john@example.com").setPassword("pwd");
-    User user = new User().setEmail("john@example.com");
+    LoginUserDto dto = UserTestData.loginUserDto("john@example.com", "pwd");
+    User user = UserTestData.user(0, "", "john@example.com", null);
 
     when(userRepository.findFirstByEmailOrUsername("john@example.com", "john@example.com")).thenReturn(Optional.of(user));
 
@@ -78,8 +79,8 @@ class AuthenticationServiceTest {
 
   @Test
   void authenticateReturnsUserWhenUsernameCredentialsAreValid() {
-    LoginUserDto dto = new LoginUserDto().setEmail("john").setPassword("pwd");
-    User user = new User().setEmail("john@example.com").setUsername("john");
+    LoginUserDto dto = UserTestData.loginUserDto("john", "pwd");
+    User user = UserTestData.user(0, "john", "john@example.com", null);
 
     when(userRepository.findFirstByEmailOrUsername("john", "john")).thenReturn(Optional.of(user));
 
