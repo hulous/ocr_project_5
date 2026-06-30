@@ -2,7 +2,7 @@
 
 ## Front
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.1.3.
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 21.2.14.
 
 Don't forget to install your node_modules before starting (`npm install`).
 
@@ -22,4 +22,41 @@ This library is `@angular/material`, it's one of the most famous in the angular 
 
 Note: I recommend to use material however it's not mandatory, if you prefer you can get rid of it.
 
-Good luck!
+## Back / Spring Boot
+
+The backend is a Spring Boot application located in the `back/` folder.
+
+- Spring Boot starter parent version: `4.0.6`
+- Java version: `21`
+- Maven is used for build and dependency management
+- Spring modules included: Web MVC, Security, Data JPA, Liquibase, OpenAPI
+- Runtime database: PostgreSQL
+- Test database: H2 in-memory
+
+### Running the backend
+
+From the `back/` directory:
+
+```bash
+mvn spring-boot:run
+```
+
+Build the backend jar:
+
+```bash
+mvn clean package
+```
+
+Run tests:
+
+```bash
+mvn test
+```
+
+### Backend config
+
+- Main config: `src/main/resources/application.yaml`
+- Environment values: `src/main/resources/env.properties`
+- Example env file: `.env.sample.properties`
+
+For release notes, see `RELEASE.md`.
