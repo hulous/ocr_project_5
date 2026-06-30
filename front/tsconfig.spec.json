@@ -4,8 +4,16 @@
   "compilerOptions": {
     "outDir": "./out-tsc/spec",
     "types": [
-      "jest"
-    ]
+      "jest",
+      "node"
+    ],
+    "module": "es2022",
+    "moduleResolution": "bundler",
+    "allowSyntheticDefaultImports": true,
+    "skipLibCheck": true,
+    "paths": {
+      "src/*": ["src/*"]
+    }
   },
   "files": [
     "src/test.ts",
