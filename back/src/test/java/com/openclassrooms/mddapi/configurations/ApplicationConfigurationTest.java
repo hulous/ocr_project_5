@@ -39,7 +39,7 @@ class ApplicationConfigurationTest {
   void userDetailsServiceLoadsUserByEmail() {
     ApplicationConfiguration configuration = new ApplicationConfiguration(userRepository);
     User user = new User().setEmail("john@example.com");
-    when(userRepository.findFirstByEmailOrName("john@example.com", "john@example.com")).thenReturn(Optional.of(user));
+    when(userRepository.findFirstByEmailOrUsername("john@example.com", "john@example.com")).thenReturn(Optional.of(user));
 
     UserDetailsService service = configuration.userDetailsService();
 
@@ -60,7 +60,7 @@ class ApplicationConfigurationTest {
   @Test
   void userDetailsServiceThrowsWhenUserMissing() {
     ApplicationConfiguration configuration = new ApplicationConfiguration(userRepository);
-    when(userRepository.findFirstByEmailOrName("missing@example.com", "missing@example.com")).thenReturn(Optional.empty());
+    when(userRepository.findFirstByEmailOrUsername("missing@example.com", "missing@example.com")).thenReturn(Optional.empty());
 
     UserDetailsService service = configuration.userDetailsService();
 

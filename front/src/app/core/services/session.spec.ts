@@ -3,7 +3,7 @@ import { Injector } from '@angular/core';
 import { toObservable } from '@angular/core/rxjs-interop';
 import { Session } from '../models/session.interface.js';
 
-import { SessionService } from './session.js';
+import { SessionService } from './session';
 
 describe('SessionService', () => {
   let service: SessionService;
@@ -20,7 +20,7 @@ describe('SessionService', () => {
   });
 
   it('should start logged out', () => {
-    expect(service.Session()).toBeUndefined();
+    expect(service.session()).toBeUndefined();
     expect(service.isLogged()).toBe(false);
   });
 
@@ -30,14 +30,12 @@ describe('SessionService', () => {
       type: 'Bearer',
       id: 7,
       username: 'admin@site.com',
-      firstName: 'Admin',
-      lastName: 'User',
       admin: true
     };
 
     service.logIn(session);
 
-    expect(service.Session()).toEqual(session);
+    expect(service.session()).toEqual(session);
     expect(service.isLogged()).toBe(true);
   });
 
@@ -51,8 +49,6 @@ describe('SessionService', () => {
       type: 'Bearer',
       id: 1,
       username: 'user@site.com',
-      firstName: 'User',
-      lastName: 'One',
       admin: false
     });
     TestBed.flushEffects();
@@ -74,8 +70,6 @@ describe('SessionService', () => {
       type: 'Bearer',
       id: 2,
       username: 'admin@site.com',
-      firstName: 'Admin',
-      lastName: 'User',
       admin: true
     });
     TestBed.flushEffects();
@@ -89,7 +83,7 @@ describe('SessionService', () => {
 
   it('should emit session object updates', () => {
     const emitted: Array<Session | undefined> = [];
-    const sub = toObservable(service.Session, { injector }).subscribe((value) => emitted.push(value));
+    const sub = toObservable(service.session, { injector }).subscribe((value) => emitted.push(value));
     TestBed.flushEffects();
 
     const session: Session = {
@@ -97,8 +91,6 @@ describe('SessionService', () => {
       type: 'Bearer',
       id: 3,
       username: 'john@site.com',
-      firstName: 'John',
-      lastName: 'Doe',
       admin: false
     };
 

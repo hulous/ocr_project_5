@@ -5,7 +5,7 @@ import { RegisterRequest } from '../models/register-request.interface.js';
 import { Session } from '../models/session.interface.js';
 import { User } from '../models/user.interface.js';
 
-import { AuthService } from './auth.js';
+import { AuthService } from './auth';
 
 describe('AuthService', () => {
   let service: AuthService;
@@ -31,8 +31,7 @@ describe('AuthService', () => {
   it('should register user with POST /api/auth/register', () => {
     const payload: RegisterRequest = {
       email: 'john@doe.com',
-      firstName: 'John',
-      lastName: 'Doe',
+      username: 'john.doe',
       password: 'secret'
     };
 
@@ -48,7 +47,7 @@ describe('AuthService', () => {
 
   it('should login user with POST /api/auth/login', () => {
     const payload: LoginRequest = {
-      email: 'john@doe.com',
+      login: 'john@doe.com',
       password: 'secret'
     };
 
@@ -57,8 +56,6 @@ describe('AuthService', () => {
       type: 'Bearer',
       id: 1,
       username: 'john@doe.com',
-      firstName: 'John',
-      lastName: 'Doe',
       admin: false
     };
 
