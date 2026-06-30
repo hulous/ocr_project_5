@@ -2,7 +2,7 @@ import { HttpClientTestingModule, HttpTestingController } from '@angular/common/
 import { TestBed } from '@angular/core/testing';
 import { User } from '../models/user.interface.js';
 
-import { UserService } from './user.js';
+import { UserService } from './user';
 
 describe('UserService', () => {
   let service: UserService;
@@ -11,8 +11,7 @@ describe('UserService', () => {
   const user: User = {
     id: 1,
     email: 'john@doe.com',
-    firstName: 'John',
-    lastName: 'Doe',
+    username: 'john@doe.com',
     admin: false,
     password: 'secret',
     createdAt: new Date('2026-01-01'),

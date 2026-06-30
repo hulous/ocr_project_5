@@ -1,25 +1,43 @@
-<div class="register" fxLayout="row" fxLayoutAlign="center center">
-  <mat-card>
-    <mat-card-header fxLayoutAlign="center center">
-      <mat-card-title>Register</mat-card-title>
-    </mat-card-header>
-    <form class="register-form" [formGroup]="form" (ngSubmit)="submit()">
-      <mat-card-content fxLayout="column">
-        <mat-form-field fxFlex>
-          <input matInput placeholder="username" formControlName="username">
-        </mat-form-field>
-        <mat-form-field fxFlex>
-          <input matInput placeholder="Email" formControlName="email">
-        </mat-form-field>
-        <mat-form-field fxFlex>
-          <input matInput placeholder="Password" formControlName="password">
-        </mat-form-field>
-      </mat-card-content>
+<div class="sign_in_or_up_form" fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="32px">
+  <app-not-logged-logo></app-not-logged-logo>
 
-      <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid">Submit</button>
-      @if (onError) {
-        <span class="error ml2">An error occurred</span>
-      }
+  <mat-card class="mdd-card">
+    <mat-card-title>
+      <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="12px">
+        <button mat-icon-button routerLink="/home">
+          <mat-icon>arrow_back</mat-icon>
+        </button>
+        <span class="mdd-page-title">Inscription</span>
+      </div>
+    </mat-card-title>
+
+    <form [formGroup]="form" (ngSubmit)="submit()">
+      <mat-card-content fxLayout="column" fxLayoutGap="24px">
+        <mat-form-field appearance="outline" class="mdd-field">
+          <mat-label>Nom d’utilisateur</mat-label>
+          <input matInput formControlName="username" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="mdd-field">
+          <mat-label>Adresse e-mail</mat-label>
+          <input matInput type="email" formControlName="email" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="mdd-field">
+          <mat-label>Mot de passe</mat-label>
+          <input matInput type="password" formControlName="password" />
+        </mat-form-field>
+
+        <div fxLayout="column" fxLayoutAlign="center center">
+          <button mat-flat-button color="primary" class="mdd-btn mdd-btn--primary" type="submit" [disabled]="form.invalid">
+            S’inscrire
+          </button>
+
+          @if (onError) {
+            <p class="error">Une erreur est survenue</p>
+          }
+        </div>
+      </mat-card-content>
     </form>
   </mat-card>
 </div>

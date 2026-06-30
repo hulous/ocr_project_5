@@ -7,14 +7,15 @@ import { LoginRequest } from '../../core/models/login-request.interface';
 import { AuthService } from '../../core/services/auth';
 import { MaterialModule } from "../../shared/material";
 import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
+import { NotLoggedLogoComponent } from '../../components/logo/logo';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, MaterialModule],
+  imports: [CommonModule, MaterialModule, RouterModule, NotLoggedLogoComponent],
   templateUrl: './login.html',
-  styleUrls: ['./login.scss']
 })
 export class LoginComponent {
   private authService = inject(AuthService);
@@ -49,7 +50,7 @@ export class LoginComponent {
     ).subscribe({
       next: (response: Session) => {
         this.sessionService.logIn(response);
-        this.router.navigate(['/home']);
+        this.router.navigate(['/user']);
       },
       error: error => this.onError = true,
     });

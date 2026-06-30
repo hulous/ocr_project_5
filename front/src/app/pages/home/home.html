@@ -1,5 +1,8 @@
-<div class="center">
-  <img src="/assets/logo_p6.png" alt="logo" />
-  <h1>Welcome to MDD</h1>
-  <button mat-raised-button color="primary" (click)="start()">Commencer</button>
+<div class="mdd-home-page">
+  <app-not-logged-logo></app-not-logged-logo>
+
+  <div class="mdd-home-actions">
+    <button mat-stroked-button class="mdd-btn mdd-btn--outline" routerLink="/login">Se connecter</button>
+    <button mat-stroked-button class="mdd-btn mdd-btn--outline" routerLink="/register">S’inscrire</button>
+  </div>
 </div>
