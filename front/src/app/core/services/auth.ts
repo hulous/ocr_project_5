@@ -11,7 +11,6 @@ import { User } from '../models/user.interface.js';
 })
 
 export class AuthService {
-
   private readonly pathService = '/api/auth';
 
   constructor(private httpClient: HttpClient) { }

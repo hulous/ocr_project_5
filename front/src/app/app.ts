@@ -9,7 +9,6 @@ import { MaterialModule } from "./shared/material";
   standalone: true,
   imports: [CommonModule, MaterialModule, RouterOutlet, RouterModule],
   templateUrl: './app.html',
-  styleUrls: ['./app.scss']
 })
 
 export class AppComponent {
