@@ -186,3 +186,57 @@ databaseChangeLog:
             constraintName: fk_comments_post_id
             referencedTableName: posts
             referencedColumnNames: id
+  - changeSet:
+      id: 6
+      author: liquibase
+      preConditions:
+        onFail: MARK_RAN
+        sqlCheck:
+          expectedResult: 0
+          sql: SELECT COUNT(*) FROM topics
+      changes:
+        - insert:
+            tableName: topics
+            columns:
+              - column:
+                  name: title
+                  value: "General"
+              - column:
+                  name: description
+                  value: "General discussions about platform use and announcements."
+        - insert:
+            tableName: topics
+            columns:
+              - column:
+                  name: title
+                  value: "Development"
+              - column:
+                  name: description
+                  value: "Technical tutorials, tips, and code review discussions."
+        - insert:
+            tableName: topics
+            columns:
+              - column:
+                  name: title
+                  value: "Community"
+              - column:
+                  name: description
+                  value: "Community events, meetups, and introductions."
+        - insert:
+            tableName: topics
+            columns:
+              - column:
+                  name: title
+                  value: "Features"
+              - column:
+                  name: description
+                  value: "Ideas and feature requests for improving the platform."
+        - insert:
+            tableName: topics
+            columns:
+              - column:
+                  name: title
+                  value: "Support"
+              - column:
+                  name: description
+                  value: "Help and troubleshooting for users encountering issues."
