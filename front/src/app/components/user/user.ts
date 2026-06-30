@@ -18,10 +18,10 @@ import { catchError } from 'rxjs/operators';
 })
 
 export class UserComponent implements OnInit {
-  private router = inject(Router);
-  private sessionService = inject(SessionService);
-  private matSnackBar = inject(MatSnackBar);
-  private authService = inject(AuthService);
+  private readonly router = inject(Router);
+  private readonly sessionService = inject(SessionService);
+  private readonly matSnackBar = inject(MatSnackBar);
+  private readonly authService = inject(AuthService);
   public user$!: Observable<User>;
 
   ngOnInit(): void {
