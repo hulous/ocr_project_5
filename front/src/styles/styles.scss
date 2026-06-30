@@ -1,4 +1,123 @@
-/* You can add global styles to this file, and also import other style files */
+// =============================================================================
+// MDD — Point d'entrée du design system
+// À référencer dans angular.json > styles, ou @use depuis styles.scss racine.
+// =============================================================================
+@use './theme';
+@use './tokens';
+@use './components';
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html, body {
+  margin: 0;
+  font-family: tokens.$mdd-font-family;
+  background-color: tokens.$mdd-surface;
+  color: tokens.$mdd-text-primary;
+}
+
+// Titres génériques de page (ex: "Inscription", "Créer un nouvel article")
+.mdd-page-title {
+  font-size: tokens.$mdd-font-size-h1;
+  font-weight: tokens.$mdd-font-weight-bold;
+  text-align: center;
+  margin: tokens.$mdd-spacing-lg 0;
+}
+
+.mdd-section-title {
+  font-size: tokens.$mdd-font-size-h2;
+  font-weight: tokens.$mdd-font-weight-bold;
+}
+
+// -----------------------------------------------------------------------------
+// Home page layout
+// -----------------------------------------------------------------------------
+.mdd-home-page {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.mdd-not-logged-logo {
+  width: 100%;
+  max-width: 420px;
+}
+
+.mdd-not-logged-logo img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.mdd-home-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: tokens.$mdd-spacing-3xl;
+  width: min(100%, 420px);
+}
+
+// -- Registration and Login forms  ---------------------------------------
+.sign_in_or_up_form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+
+  mat-card {
+    margin: 0 20px;
+    max-width: 420px;
+    width: min(100%, 420px);
+  }
+
+  .error {
+    color: #b00020;
+    margin: 0;
+    font-size: 0.95rem;
+  }
+}
+
+
+// -----------------------------------------------------------------------------
+// Responsive breakpoints
+// -----------------------------------------------------------------------------
+@media (max-width: 720px) {
+  .mdd-home-page {
+    padding: 0;
+  }
+
+  .mdd-not-logged-logo,
+  .mdd-home-actions,
+  .sign_in_or_up_form {
+    width: min(100%, 100%);
+    max-width: 420px;
+    padding: 0;
+  }
+
+  .mdd-home-actions {
+    gap: tokens.$mdd-spacing-lg;
+    justify-content: stretch;
+  }
+
+  .mdd-home-actions button,
+  .mdd-home-actions a {
+    width: 100%;
+    max-width: none;
+  }
+
+  .sign_in_or_up_form {
+    mat-card {
+      margin: 0 auto;
+      width: 100%;
+    }
+  }
+}
+
+@media (max-width: 420px) {
+  .mdd-page-title {
+    font-size: 1.3rem;
+  }
+
+  .mdd-home-actions {
+    gap: tokens.$mdd-spacing-md;
+  }
+}

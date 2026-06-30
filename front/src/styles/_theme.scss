@@ -1,0 +1,63 @@
+// =============================================================================
+// MDD — Thème Angular Material (M3)
+// Compatible Angular Material 17+ / 22 — API @use 'sass:map' + mat.theme()
+// =============================================================================
+@use 'sass:map';
+@use '@angular/material' as mat;
+@use './tokens' as tokens;
+
+// -----------------------------------------------------------------------------
+// Palette M3 personnalisée
+// Générée à partir du violet de marque (#7763c5).
+// Pour une palette M3 "officielle" pixel-perfect (tons 0-100, neutral variants),
+// régénère-la sur https://material.angular.io/theming et colle le résultat ici :
+// $_mdd-palettes: mat.m3-define-colors(...);
+// En attendant, on dérive un thème M3 depuis une palette M2 custom, ce qui est
+// stable et suffisant pour matcher les maquettes.
+// -----------------------------------------------------------------------------
+$mdd-primary-palette: mat.$violet-palette; // fallback de départ (overridé ci-dessous)
+
+html {
+  // mat.theme() injecte les system-level CSS custom properties (M3).
+  // On part de la palette violette de Material et on surcharge les tokens
+  // critiques (primary, surface, erreur) avec les valeurs exactes de la maquette.
+  @include mat.theme((
+    color: (
+      theme-type: light,
+      primary: mat.$violet-palette,
+      tertiary: mat.$violet-palette,
+    ),
+    typography: tokens.$mdd-font-family,
+    density: 0,
+  ));
+
+  // ---- Surcharge des tokens système M3 avec les couleurs exactes MDD ----
+  // (mat.theme() ne connaît pas notre hex de marque exact tant qu'on n'a pas
+  // généré la vraie palette M3 ; on pin les variables critiques ici)
+  --mat-sys-primary: #{tokens.$mdd-primary};
+  --mat-sys-on-primary: #{tokens.$mdd-white};
+  --mat-sys-primary-container: #{tokens.$mdd-primary-light};
+  --mat-sys-on-primary-container: #{tokens.$mdd-primary};
+
+  --mat-sys-error: #{tokens.$mdd-error};
+  --mat-sys-on-error: #{tokens.$mdd-white};
+
+  --mat-sys-surface: #{tokens.$mdd-surface};
+  --mat-sys-surface-container: #{tokens.$mdd-surface-variant};
+  --mat-sys-surface-container-low: #{tokens.$mdd-surface-muted};
+  --mat-sys-on-surface: #{tokens.$mdd-text-primary};
+  --mat-sys-on-surface-variant: #{tokens.$mdd-text-secondary};
+
+  --mat-sys-outline: #{tokens.$mdd-border};
+  --mat-sys-outline-variant: #{tokens.$mdd-border-subtle};
+
+  --mat-sys-corner-small: #{tokens.$mdd-radius-sm};
+  --mat-sys-corner-medium: #{tokens.$mdd-radius-md};
+  --mat-sys-corner-large: #{tokens.$mdd-radius-lg};
+
+  // Le design est plat : on neutralise les élévations par défaut de M3.
+  --mat-sys-level0: none;
+  --mat-sys-level1: none;
+  --mat-sys-level2: none;
+  --mat-sys-level3: none;
+}

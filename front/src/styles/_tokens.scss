@@ -1,0 +1,106 @@
+// =============================================================================
+// MDD — Design Tokens
+// Extraits des maquettes Figma (mobile + desktop)
+// =============================================================================
+
+// -----------------------------------------------------------------------------
+// Couleurs de marque
+// -----------------------------------------------------------------------------
+$mdd-primary: #7763c5;        // violet principal (logo, CTA, focus, liens actifs)
+$mdd-primary-hover: #6856ab;  // hover/active du violet (shade 600)
+$mdd-primary-light: #efecf8;  // fond léger violet (badges, hover subtil)
+
+$mdd-error: #a40f0f;          // "Se déconnecter" — rouge texte uniquement, pas de fond
+$mdd-error-light: #bb4b4b;    // variante plus douce si besoin (hover)
+
+// Neutres
+$mdd-white: #ffffff;
+$mdd-surface: #ffffff;        // fond de page
+$mdd-surface-variant: #f5f5f5; // fond des cards (thème/article)
+$mdd-surface-muted: #eeeeee;  // fond des bulles de commentaire
+$mdd-border: #000000;         // bordure des inputs au repos (noir fin, style outline strict)
+$mdd-border-subtle: #808080;  // séparateurs (<hr>), bordure secondaire
+$mdd-disabled-bg: #939393;    // bouton "Déjà abonné" / état désactivé
+$mdd-disabled-fg: #ffffff;
+$mdd-avatar-bg: #e0e0e0;      // fond du cercle avatar par défaut
+
+$mdd-text-primary: #1a1a1a;
+$mdd-text-secondary: #5f5f5f;
+$mdd-placeholder: #9e9e9e;
+
+// Palette tonale complète (générée depuis $mdd-primary, ratios Material standard)
+// Utile pour mat.define-palette() / tokens M3 personnalisés.
+$mdd-violet-palette: (
+  50: #efecf8,
+  100: #d6d0ee,
+  200: #bbb1e2,
+  300: #a092d6,
+  400: #8977cd,
+  500: #7763c5,
+  // = primaire
+  600: #6856ab,
+  700: #53458a,
+  800: #40356a,
+  900: #1e1931,
+  A100: #c9c1e8,
+  A200: #ada1dc,
+  A400: #8b7ace,
+  A700: #7e6bc8,
+  contrast: (
+    50: $mdd-text-primary,
+    100: $mdd-text-primary,
+    200: $mdd-text-primary,
+    300: $mdd-text-primary,
+    400: $mdd-white,
+    500: $mdd-white,
+    600: $mdd-white,
+    700: $mdd-white,
+    800: $mdd-white,
+    900: $mdd-white,
+    A100: $mdd-text-primary,
+    A200: $mdd-text-primary,
+    A400: $mdd-white,
+    A700: $mdd-white,
+  ),
+);
+
+// -----------------------------------------------------------------------------
+// Typographie
+// Police observée : sans-serif neutre (Roboto par défaut Angular Material —
+// cohérent avec les maquettes, aucune police custom détectée).
+// -----------------------------------------------------------------------------
+$mdd-font-family: 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+
+$mdd-font-size-h1: 1.5rem;     // "Inscription", "Se connecter", titres de page — 24px, bold
+$mdd-font-size-h2: 1.25rem;    // "Titre du thème", "Profil utilisateur" — 20px, bold
+$mdd-font-size-body: 0.9375rem; // texte courant — 15px
+$mdd-font-size-label: 0.875rem; // labels de champs, "Date / Auteur" — 14px
+$mdd-font-size-small: 0.8125rem; // mentions secondaires — 13px
+
+$mdd-font-weight-bold: 700;
+$mdd-font-weight-medium: 500;
+$mdd-font-weight-regular: 400;
+
+// -----------------------------------------------------------------------------
+// Forme / Espacement
+// -----------------------------------------------------------------------------
+$mdd-radius-sm: 4px;   // inputs (légèrement arrondis)
+$mdd-radius-md: 8px;   // boutons
+$mdd-radius-lg: 12px;  // cards (thème / article)
+$mdd-radius-pill: 999px;
+
+$mdd-spacing-xs: 4px;
+$mdd-spacing-sm: 8px;
+$mdd-spacing-md: 16px;
+$mdd-spacing-lg: 24px;
+$mdd-spacing-xl: 32px;
+$mdd-spacing-2xl: 64px;
+$mdd-spacing-3xl: 96px;
+$mdd-spacing-4xl: 128px;
+// -----------------------------------------------------------------------------
+// Élévation
+// Design globalement PLAT : aucune ombre détectée sur cards, boutons, app-bar.
+// -----------------------------------------------------------------------------
+$mdd-elevation-flat: none;
+$mdd-appbar-border: 1px solid #000000; // l'app bar est délimitée par un simple
+                                        // trait noir, pas une ombre

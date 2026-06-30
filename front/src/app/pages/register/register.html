@@ -1,0 +1,43 @@
+<div class="sign_in_or_up_form" fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="32px">
+  <app-not-logged-logo></app-not-logged-logo>
+
+  <mat-card class="mdd-card">
+    <mat-card-title>
+      <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="12px">
+        <button mat-icon-button routerLink="/home">
+          <mat-icon>arrow_back</mat-icon>
+        </button>
+        <span class="mdd-page-title">Inscription</span>
+      </div>
+    </mat-card-title>
+
+    <form [formGroup]="form" (ngSubmit)="submit()">
+      <mat-card-content fxLayout="column" fxLayoutGap="24px">
+        <mat-form-field appearance="outline" class="mdd-field">
+          <mat-label for="username-input">Nom d’utilisateur</mat-label>
+          <input id="username-input" matInput formControlName="username" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="mdd-field">
+          <mat-label for="email-input">Adresse e-mail</mat-label>
+          <input id="email-input" matInput type="email" formControlName="email" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="mdd-field">
+          <mat-label for="password-input">Mot de passe</mat-label>
+          <input id="password-input" matInput type="password" formControlName="password" />
+        </mat-form-field>
+
+        <div fxLayout="column" fxLayoutAlign="center center">
+          <button mat-flat-button color="primary" class="mdd-btn mdd-btn--primary" type="submit" [disabled]="form.invalid">
+            S’inscrire
+          </button>
+
+          @if (onError) {
+            <p class="error">Une erreur est survenue</p>
+          }
+        </div>
+      </mat-card-content>
+    </form>
+  </mat-card>
+</div>
