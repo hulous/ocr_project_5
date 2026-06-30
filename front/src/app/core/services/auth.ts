@@ -12,7 +12,7 @@ import { User } from '../models/user.interface.js';
 
 export class AuthService {
 
-  private pathService = '/api/auth';
+  private readonly pathService = '/api/auth';
 
   constructor(private httpClient: HttpClient) { }
 

@@ -9,7 +9,7 @@ import { User } from '../models/user.interface.js';
 
 export class UserService {
 
-  private pathService = 'api/user';
+  private readonly pathService = 'api/user';
 
   constructor(private httpClient: HttpClient) { }
 

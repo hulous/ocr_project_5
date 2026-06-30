@@ -13,8 +13,8 @@ import { MaterialModule } from "./shared/material";
 })
 
 export class AppComponent {
-  private router = inject(Router);
-  private sessionService = inject(SessionService);
+  private readonly router = inject(Router);
+  private readonly sessionService = inject(SessionService);
   public isLogged = this.sessionService.isLogged;
 
   public logout(): void {
