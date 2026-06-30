@@ -41,7 +41,7 @@ export class UserComponent implements OnInit {
 
   // used on user view on click on back arrow
   public back(): void {
-    window.history.back();
+    globalThis.history.back();
   }
 
   private handleUnauthorizedError(error: unknown, message: string): void {

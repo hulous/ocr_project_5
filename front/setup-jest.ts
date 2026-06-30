@@ -13,9 +13,9 @@ const mock = () => {
   };
 };
 
-Object.defineProperty(window, 'localStorage', { value: mock() });
-Object.defineProperty(window, 'sessionStorage', { value: mock() });
-Object.defineProperty(window, 'getComputedStyle', {
+Object.defineProperty(globalThis, 'localStorage', { value: mock() });
+Object.defineProperty(globalThis, 'sessionStorage', { value: mock() });
+Object.defineProperty(globalThis, 'getComputedStyle', {
   value: () => ['-webkit-appearance'],
 });
 
