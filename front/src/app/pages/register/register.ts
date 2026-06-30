@@ -1,6 +1,5 @@
 import { Component, DestroyRef, inject } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
 import { AuthService } from '../../core/services/auth';
 import { RegisterRequest } from '../../core/models/register-request.interface.js';
 import { MaterialModule } from "src/app/shared/material";
@@ -19,7 +18,7 @@ import { RouterModule } from '@angular/router';
 export class RegisterComponent {
   private readonly authService = inject(AuthService);
   private readonly fb = inject(FormBuilder);
-  private readonly router = inject(Router);
+  private readonly router = inject(RouterModule);
   private readonly destroyRef = inject(DestroyRef);
   public onError = false;
 

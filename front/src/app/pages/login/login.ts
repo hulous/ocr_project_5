@@ -1,6 +1,5 @@
 import { Component, DestroyRef, inject } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
 import { Session } from 'src/app/core/models/session.interface';
 import { SessionService } from 'src/app/core/services/session';
 import { LoginRequest } from '../../core/models/login-request.interface';
@@ -21,7 +20,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 export class LoginComponent {
   private readonly authService = inject(AuthService);
   private readonly fb = inject(FormBuilder);
-  private readonly router = inject(Router);
+  private readonly router = inject(RouterModule);
   private readonly sessionService = inject(SessionService);
   private readonly destroyRef = inject(DestroyRef);
 
