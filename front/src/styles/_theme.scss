@@ -7,7 +7,7 @@
 @use './tokens' as tokens;
 
 // -----------------------------------------------------------------------------
-// 1. Palette M3 personnalisée
+// Palette M3 personnalisée
 // Générée à partir du violet de marque (#7763c5).
 // Pour une palette M3 "officielle" pixel-perfect (tons 0-100, neutral variants),
 // régénère-la sur https://material.angular.io/theming et colle le résultat ici :
@@ -61,25 +61,3 @@ html {
   --mat-sys-level2: none;
   --mat-sys-level3: none;
 }
-
-// -----------------------------------------------------------------------------
-// 2. Alternative M2 (si le projet n'est pas encore migré vers les system tokens M3)
-// Décommente ce bloc et commente le bloc html{} ci-dessus si besoin.
-// -----------------------------------------------------------------------------
-// $mdd-primary: mat.define-palette(tokens.$mdd-violet-palette, 500, 300, 700);
-// $mdd-accent: mat.define-palette(mat.$grey-palette, 700);
-// $mdd-warn: mat.define-palette(mat.$red-palette);
-//
-// $mdd-theme: mat.define-light-theme((
-//   color: (
-//     primary: $mdd-primary,
-//     accent: $mdd-accent,
-//     warn: $mdd-warn,
-//   ),
-//   typography: mat.define-typography-config(
-//     $font-family: tokens.$mdd-font-family,
-//   ),
-//   density: 0,
-// ));
-//
-// @include mat.all-component-themes($mdd-theme);
