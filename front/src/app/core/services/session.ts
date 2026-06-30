@@ -7,9 +7,9 @@ import { Session } from '../models/session.interface.js';
 export class SessionService {
   private readonly _session = signal<Session | undefined>(undefined);
 
-  readonly session = this._session.asReadonly();
-  readonly isLogged = computed(() => !!this._session());
-  readonly isAdmin = computed(() => !!this._session()?.admin);
+  public readonly session = this._session.asReadonly();
+  public readonly isLogged = computed(() => !!this._session());
+  public readonly isAdmin = computed(() => !!this._session()?.admin);
 
   public logIn(user: Session): void {
     this._session.set(user);

@@ -17,6 +17,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
   imports: [CommonModule, MaterialModule, RouterModule, NotLoggedLogoComponent],
   templateUrl: './login.html',
 })
+
 export class LoginComponent {
   private readonly authService = inject(AuthService);
   private readonly fb = inject(FormBuilder);
