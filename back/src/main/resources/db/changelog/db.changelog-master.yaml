@@ -34,3 +34,155 @@ databaseChangeLog:
               - column:
                   name: updated_at
                   type: timestamp
+  - changeSet:
+      id: 2
+      author: liquibase
+      changes:
+        - createTable:
+            tableName: topics
+            columns:
+              - column:
+                  name: id
+                  type: serial
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: title
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: description
+                  type: text
+  - changeSet:
+      id: 3
+      author: liquibase
+      changes:
+        - createTable:
+            tableName: subscriptions
+            columns:
+              - column:
+                  name: id
+                  type: serial
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: user_id
+                  type: integer
+                  constraints:
+                    nullable: false
+              - column:
+                  name: topic_id
+                  type: integer
+                  constraints:
+                    nullable: false
+              - column:
+                  name: created_at
+                  type: timestamp
+        - addForeignKeyConstraint:
+            baseTableName: subscriptions
+            baseColumnNames: user_id
+            constraintName: fk_subscriptions_user_id
+            referencedTableName: users
+            referencedColumnNames: id
+        - addForeignKeyConstraint:
+            baseTableName: subscriptions
+            baseColumnNames: topic_id
+            constraintName: fk_subscriptions_topic_id
+            referencedTableName: topics
+            referencedColumnNames: id
+  - changeSet:
+      id: 4
+      author: liquibase
+      changes:
+        - createTable:
+            tableName: posts
+            columns:
+              - column:
+                  name: id
+                  type: serial
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: author_id
+                  type: integer
+                  constraints:
+                    nullable: false
+              - column:
+                  name: topic_id
+                  type: integer
+                  constraints:
+                    nullable: false
+              - column:
+                  name: title
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: content
+                  type: text
+              - column:
+                  name: created_at
+                  type: timestamp
+              - column:
+                  name: updated_at
+                  type: timestamp
+        - addForeignKeyConstraint:
+            baseTableName: posts
+            baseColumnNames: author_id
+            constraintName: fk_posts_author_id
+            referencedTableName: users
+            referencedColumnNames: id
+        - addForeignKeyConstraint:
+            baseTableName: posts
+            baseColumnNames: topic_id
+            constraintName: fk_posts_topic_id
+            referencedTableName: topics
+            referencedColumnNames: id
+  - changeSet:
+      id: 5
+      author: liquibase
+      changes:
+        - createTable:
+            tableName: comments
+            columns:
+              - column:
+                  name: id
+                  type: serial
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: author_id
+                  type: integer
+                  constraints:
+                    nullable: false
+              - column:
+                  name: post_id
+                  type: integer
+                  constraints:
+                    nullable: false
+              - column:
+                  name: content
+                  type: text
+              - column:
+                  name: created_at
+                  type: timestamp
+              - column:
+                  name: updated_at
+                  type: timestamp
+        - addForeignKeyConstraint:
+            baseTableName: comments
+            baseColumnNames: author_id
+            constraintName: fk_comments_author_id
+            referencedTableName: users
+            referencedColumnNames: id
+        - addForeignKeyConstraint:
+            baseTableName: comments
+            baseColumnNames: post_id
+            constraintName: fk_comments_post_id
+            referencedTableName: posts
+            referencedColumnNames: id
