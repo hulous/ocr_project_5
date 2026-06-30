@@ -9,4 +9,5 @@ import { NotLoggedLogoComponent } from '../../components/logo/logo';
   imports: [MatButtonModule, RouterModule, NotLoggedLogoComponent],
   templateUrl: './home.html'
 })
+
 export class HomeComponent {}

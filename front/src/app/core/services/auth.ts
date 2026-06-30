@@ -11,10 +11,9 @@ import { User } from '../models/user.interface.js';
 })
 
 export class AuthService {
+  private readonly pathService = '/api/auth';
 
-  private pathService = '/api/auth';
-
-  constructor(private httpClient: HttpClient) { }
+  constructor(private readonly httpClient: HttpClient) { }
 
   public register(registerRequest: RegisterRequest): Observable<void> {
     return this.httpClient.post<void>(`${this.pathService}/register`, registerRequest);

@@ -9,12 +9,11 @@ import { MaterialModule } from "./shared/material";
   standalone: true,
   imports: [CommonModule, MaterialModule, RouterOutlet, RouterModule],
   templateUrl: './app.html',
-  styleUrls: ['./app.scss']
 })
 
 export class AppComponent {
-  private router = inject(Router);
-  private sessionService = inject(SessionService);
+  private readonly router = inject(Router);
+  private readonly sessionService = inject(SessionService);
   public isLogged = this.sessionService.isLogged;
 
   public logout(): void {

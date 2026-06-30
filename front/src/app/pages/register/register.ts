@@ -17,10 +17,10 @@ import { RouterModule } from '@angular/router';
 })
 
 export class RegisterComponent {
-  private authService = inject(AuthService);
-  private fb = inject(FormBuilder);
-  private router = inject(Router);
-  private destroyRef = inject(DestroyRef);
+  private readonly authService = inject(AuthService);
+  private readonly fb = inject(FormBuilder);
+  private readonly router = inject(Router);
+  private readonly destroyRef = inject(DestroyRef);
   public onError = false;
 
   public form = this.fb.group({
