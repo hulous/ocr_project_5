@@ -8,7 +8,7 @@ export default {
   transform: {
     '^.+\\.(ts|js|mjs|html|svg)$': ['jest-preset-angular/build/index.js', {
       tsconfig: '<rootDir>/tsconfig.spec.json',
-      stringifyContentPathRegex: '\\.(html|svg)$',
+      stringifyContentPathRegex: String.raw`\.(html|svg)$`,
       useESM: true,
       diagnostics: {
         ignoreCodes: [151002]
@@ -19,7 +19,7 @@ export default {
   verbose: false,
   collectCoverage: false,
   coverageDirectory: './coverage/jest',
-  testPathIgnorePatterns: ['<rootDir>/node_modules/', '<rootDir>/src/test.ts', '\\.(int|e2e)\\.spec\\.ts$'],
+  testPathIgnorePatterns: ['<rootDir>/node_modules/', '<rootDir>/src/test.ts', String.raw`\.(int|e2e)\.spec\.ts$`],
   coveragePathIgnorePatterns: ['<rootDir>/node_modules/'],
   coverageThreshold: {
     global: {
