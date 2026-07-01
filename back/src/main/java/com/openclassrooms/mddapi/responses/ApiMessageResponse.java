@@ -14,6 +14,6 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 @ToString
 public class ApiMessageResponse {
-  @Schema(example = "Invalid email or password")
+  @Schema(example = "Something wrong just happened")
   private String message;
 }
