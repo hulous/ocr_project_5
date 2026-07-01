@@ -1,5 +1,6 @@
 package com.openclassrooms.mddapi.controllers;
 
+import com.openclassrooms.mddapi.dtos.PostDto;
 import com.openclassrooms.mddapi.dtos.TopicDto;
 import com.openclassrooms.mddapi.responses.ApiMessageResponse;
 import com.openclassrooms.mddapi.services.TopicService;
@@ -72,5 +73,16 @@ public class TopicsController {
   })
   public ResponseEntity<ApiMessageResponse> unsubscribe(@PathVariable Integer topicId) {
     return ResponseEntity.ok(topicService.unsubscribeCurrentUser(topicId));
+  }
+
+  @GetMapping("/{topicId}/posts")
+  @Operation(summary = "List all posts for a topic")
+  @ApiResponses(value = {
+    @ApiResponse(responseCode = "200", description = "List of posts", content = @Content(schema = @Schema(implementation = PostDto.class))),
+    @ApiResponse(responseCode = "404", description = "Topic not found", content = @Content(schema = @Schema(implementation = ApiMessageResponse.class))),
+    @ApiResponse(responseCode = "500", description = "Server error", content = @Content(schema = @Schema(implementation = ApiMessageResponse.class)))
+  })
+  public ResponseEntity<List<PostDto>> listPosts(@PathVariable Integer topicId) {
+    return ResponseEntity.ok(topicService.listPostsForTopic(topicId));
   }
 }

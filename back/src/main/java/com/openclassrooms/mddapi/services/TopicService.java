@@ -1,11 +1,15 @@
 package com.openclassrooms.mddapi.services;
 
+import com.openclassrooms.mddapi.dtos.PostDto;
 import com.openclassrooms.mddapi.dtos.TopicDto;
+import com.openclassrooms.mddapi.entities.Post;
 import com.openclassrooms.mddapi.entities.Subscription;
 import com.openclassrooms.mddapi.entities.Topic;
 import com.openclassrooms.mddapi.entities.User;
 import com.openclassrooms.mddapi.exceptions.ApiException;
+import com.openclassrooms.mddapi.mappers.PostMapper;
 import com.openclassrooms.mddapi.mappers.TopicMapper;
+import com.openclassrooms.mddapi.repositories.PostRepository;
 import com.openclassrooms.mddapi.repositories.SubscriptionRepository;
 import com.openclassrooms.mddapi.repositories.TopicRepository;
 import com.openclassrooms.mddapi.responses.ApiMessageResponse;
@@ -22,17 +26,23 @@ public class TopicService {
 
   private final TopicRepository topicRepository;
   private final TopicMapper topicMapper;
+  private final PostRepository postRepository;
+  private final PostMapper postMapper;
   private final SubscriptionRepository subscriptionRepository;
   private final CurrentUserService currentUserService;
 
   public TopicService(
     TopicRepository topicRepository,
     TopicMapper topicMapper,
+    PostRepository postRepository,
+    PostMapper postMapper,
     SubscriptionRepository subscriptionRepository,
     CurrentUserService currentUserService
   ) {
     this.topicRepository = topicRepository;
     this.topicMapper = topicMapper;
+    this.postRepository = postRepository;
+    this.postMapper = postMapper;
     this.subscriptionRepository = subscriptionRepository;
     this.currentUserService = currentUserService;
   }
@@ -80,5 +90,17 @@ public class TopicService {
     subscriptionRepository.delete(subscription.get());
 
     return new ApiMessageResponse().setMessage("Subscription removed successfully");
+  }
+
+  public List<PostDto> listPostsForTopic(Integer topicId) {
+    topicRepository
+      .findById(topicId)
+      .orElseThrow(() -> new ApiException(HttpStatus.NOT_FOUND, "Topic not found"));
+
+    return postRepository
+      .findAllByTopicId(topicId)
+      .stream()
+      .map(postMapper::toDto)
+      .collect(Collectors.toList());
   }
 }
