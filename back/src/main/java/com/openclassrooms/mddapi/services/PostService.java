@@ -5,13 +5,13 @@ import com.openclassrooms.mddapi.dtos.PostDto;
 import com.openclassrooms.mddapi.entities.Post;
 import com.openclassrooms.mddapi.entities.Topic;
 import com.openclassrooms.mddapi.entities.User;
-import com.openclassrooms.mddapi.exceptions.ApiException;
+import com.openclassrooms.mddapi.exceptions.PostNotFoundException;
+import com.openclassrooms.mddapi.exceptions.TopicNotFoundException;
 import com.openclassrooms.mddapi.mappers.PostMapper;
 import com.openclassrooms.mddapi.repositories.PostRepository;
 import com.openclassrooms.mddapi.repositories.TopicRepository;
 import com.openclassrooms.mddapi.services.CurrentUserService;
 
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -37,7 +37,7 @@ public class PostService {
   public PostDto show(Integer postId) {
     Post post = postRepository
       .findById(postId)
-      .orElseThrow(() -> new ApiException(HttpStatus.NOT_FOUND, "Post not found"));
+      .orElseThrow(() -> new PostNotFoundException(postId));
 
     return postMapper.toDto(post);
   }
@@ -45,7 +45,7 @@ public class PostService {
   public PostDto createPostForTopic(Integer topicId, CreatePostDto input) {
     Topic topic = topicRepository
       .findById(topicId)
-      .orElseThrow(() -> new ApiException(HttpStatus.NOT_FOUND, "Topic not found"));
+      .orElseThrow(() -> new TopicNotFoundException(topicId));
 
     User currentUser = currentUserService.getCurrentUser();
 
@@ -63,7 +63,7 @@ public class PostService {
   public List<PostDto> listPostsForTopic(Integer topicId) {
     topicRepository
       .findById(topicId)
-      .orElseThrow(() -> new ApiException(HttpStatus.NOT_FOUND, "Topic not found"));
+      .orElseThrow(() -> new TopicNotFoundException(topicId));
 
     return postRepository
       .findAllByTopicId(topicId)

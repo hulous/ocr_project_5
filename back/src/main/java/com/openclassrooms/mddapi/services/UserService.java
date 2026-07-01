@@ -1,12 +1,11 @@
 package com.openclassrooms.mddapi.services;
 
 import com.openclassrooms.mddapi.entities.User;
-import com.openclassrooms.mddapi.exceptions.ApiException;
+import com.openclassrooms.mddapi.exceptions.UserNotFoundException;
 import com.openclassrooms.mddapi.mappers.UserMapper;
 import com.openclassrooms.mddapi.repositories.UserRepository;
 import com.openclassrooms.mddapi.responses.UserResponse;
 
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -20,10 +19,9 @@ public class UserService {
   }
 
   public UserResponse show(Integer id) {
-    User user = userRepository.findById(id).orElse(null);
-    if (user == null) {
-      throw new ApiException(HttpStatus.NOT_FOUND, "User not found");
-    }
+    User user = userRepository
+      .findById(id)
+      .orElseThrow(() -> new UserNotFoundException(id));
 
     return userMapper.toResponse(user);
   }
