@@ -1,5 +1,6 @@
 package com.openclassrooms.mddapi.controllers;
 
+import com.openclassrooms.mddapi.dtos.CreatePostDto;
 import com.openclassrooms.mddapi.dtos.PostDto;
 import com.openclassrooms.mddapi.dtos.TopicDto;
 import com.openclassrooms.mddapi.responses.ApiMessageResponse;
@@ -84,5 +85,24 @@ public class TopicsController {
   })
   public ResponseEntity<List<PostDto>> listPosts(@PathVariable Integer topicId) {
     return ResponseEntity.ok(topicService.listPostsForTopic(topicId));
+  }
+
+  @PostMapping("/{topicId}/posts")
+  @Operation(
+    summary = "Create a new post for a topic",
+    security = {@SecurityRequirement(name = "bearerAuth")}
+  )
+  @ApiResponses(value = {
+    @ApiResponse(responseCode = "200", description = "Post created successfully", content = @Content(schema = @Schema(implementation = PostDto.class))),
+    @ApiResponse(responseCode = "400", description = "Invalid input", content = @Content(schema = @Schema(implementation = ApiMessageResponse.class))),
+    @ApiResponse(responseCode = "401", description = "Unauthorized request", content = @Content(schema = @Schema(implementation = ApiMessageResponse.class))),
+    @ApiResponse(responseCode = "404", description = "Topic not found", content = @Content(schema = @Schema(implementation = ApiMessageResponse.class))),
+    @ApiResponse(responseCode = "500", description = "Server error", content = @Content(schema = @Schema(implementation = ApiMessageResponse.class)))
+  })
+  public ResponseEntity<PostDto> createPost(
+    @PathVariable Integer topicId,
+    @jakarta.validation.Valid @org.springframework.web.bind.annotation.RequestBody CreatePostDto input
+  ) {
+    return ResponseEntity.ok(topicService.createPostForTopic(topicId, input));
   }
 }

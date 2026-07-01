@@ -1,5 +1,6 @@
 package com.openclassrooms.mddapi.services;
 
+import com.openclassrooms.mddapi.dtos.CreatePostDto;
 import com.openclassrooms.mddapi.dtos.PostDto;
 import com.openclassrooms.mddapi.dtos.TopicDto;
 import com.openclassrooms.mddapi.entities.Post;
@@ -90,6 +91,24 @@ public class TopicService {
     subscriptionRepository.delete(subscription.get());
 
     return new ApiMessageResponse().setMessage("Subscription removed successfully");
+  }
+
+  public PostDto createPostForTopic(Integer topicId, CreatePostDto input) {
+    Topic topic = topicRepository
+      .findById(topicId)
+      .orElseThrow(() -> new ApiException(HttpStatus.NOT_FOUND, "Topic not found"));
+
+    User currentUser = currentUserService.getCurrentUser();
+
+    Post post = new Post()
+      .setTopic(topic)
+      .setAuthor(currentUser)
+      .setTitle(input.getTitle())
+      .setContent(input.getContent());
+
+    Post saved = postRepository.save(post);
+
+    return postMapper.toDto(saved);
   }
 
   public List<PostDto> listPostsForTopic(Integer topicId) {
