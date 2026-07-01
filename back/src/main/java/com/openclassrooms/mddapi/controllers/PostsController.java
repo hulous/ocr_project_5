@@ -14,6 +14,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -60,7 +61,7 @@ public class PostsController {
   })
   public ResponseEntity<CommentDto> createComment(
     @PathVariable Integer postId,
-    @jakarta.validation.Valid @RequestBody CreateCommentDto input
+    @Valid @RequestBody CreateCommentDto input
   ) {
     return ResponseEntity.ok(commentService.createCommentForPost(postId, input));
   }
