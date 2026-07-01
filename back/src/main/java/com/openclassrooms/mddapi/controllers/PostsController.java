@@ -4,6 +4,7 @@ import com.openclassrooms.mddapi.dtos.CommentDto;
 import com.openclassrooms.mddapi.dtos.CreateCommentDto;
 import com.openclassrooms.mddapi.dtos.PostDto;
 import com.openclassrooms.mddapi.responses.ApiMessageResponse;
+import com.openclassrooms.mddapi.services.CommentService;
 import com.openclassrooms.mddapi.services.PostService;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -27,9 +28,11 @@ import org.springframework.web.bind.annotation.RestController;
 public class PostsController {
 
   private final PostService postService;
+  private final CommentService commentService;
 
-  public PostsController(PostService postService) {
+  public PostsController(PostService postService, CommentService commentService) {
     this.postService = postService;
+    this.commentService = commentService;
   }
 
   @GetMapping("/{postId}")
@@ -59,6 +62,6 @@ public class PostsController {
     @PathVariable Integer postId,
     @jakarta.validation.Valid @RequestBody CreateCommentDto input
   ) {
-    return ResponseEntity.ok(postService.createCommentForPost(postId, input));
+    return ResponseEntity.ok(commentService.createCommentForPost(postId, input));
   }
 }
