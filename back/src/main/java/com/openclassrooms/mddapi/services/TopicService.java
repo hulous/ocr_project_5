@@ -14,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -62,5 +63,22 @@ public class TopicService {
     subscriptionRepository.save(subscription);
 
     return new ApiMessageResponse().setMessage("Subscription created successfully");
+  }
+
+  public ApiMessageResponse unsubscribeCurrentUser(Integer topicId) {
+    Topic topic = topicRepository
+      .findById(topicId)
+      .orElseThrow(() -> new ApiException(HttpStatus.NOT_FOUND, "Topic not found"));
+
+    User currentUser = currentUserService.getCurrentUser();
+
+    Optional<Subscription> subscription = subscriptionRepository.findByUserAndTopic(currentUser, topic);
+    if (subscription.isEmpty()) {
+      throw new ApiException(HttpStatus.BAD_REQUEST, "No subscription found for this topic");
+    }
+
+    subscriptionRepository.delete(subscription.get());
+
+    return new ApiMessageResponse().setMessage("Subscription removed successfully");
   }
 }

@@ -13,6 +13,7 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -55,5 +56,21 @@ public class TopicsController {
   })
   public ResponseEntity<ApiMessageResponse> subscribe(@PathVariable Integer topicId) {
     return ResponseEntity.ok(topicService.subscribeCurrentUser(topicId));
+  }
+
+  @DeleteMapping("/{topicId}/subscription")
+  @Operation(
+    summary = "Unsubscribe the current authenticated user from a topic",
+    security = {@SecurityRequirement(name = "bearerAuth")}
+  )
+  @ApiResponses(value = {
+    @ApiResponse(responseCode = "200", description = "Subscription removed successfully", content = @Content(schema = @Schema(implementation = ApiMessageResponse.class))),
+    @ApiResponse(responseCode = "400", description = "No existing subscription or invalid request", content = @Content(schema = @Schema(implementation = ApiMessageResponse.class))),
+    @ApiResponse(responseCode = "401", description = "Unauthorized request", content = @Content(schema = @Schema(implementation = ApiMessageResponse.class))),
+    @ApiResponse(responseCode = "404", description = "Topic not found", content = @Content(schema = @Schema(implementation = ApiMessageResponse.class))),
+    @ApiResponse(responseCode = "500", description = "Server error", content = @Content(schema = @Schema(implementation = ApiMessageResponse.class)))
+  })
+  public ResponseEntity<ApiMessageResponse> unsubscribe(@PathVariable Integer topicId) {
+    return ResponseEntity.ok(topicService.unsubscribeCurrentUser(topicId));
   }
 }
