@@ -4,6 +4,7 @@ import com.openclassrooms.mddapi.dtos.CreatePostDto;
 import com.openclassrooms.mddapi.dtos.PostDto;
 import com.openclassrooms.mddapi.dtos.TopicDto;
 import com.openclassrooms.mddapi.responses.ApiMessageResponse;
+import com.openclassrooms.mddapi.services.SubscriptionService;
 import com.openclassrooms.mddapi.services.TopicService;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -29,9 +30,11 @@ import java.util.List;
 @Tag(name = "Topics", description = "Topic resource endpoints")
 public class TopicsController {
   private final TopicService topicService;
+  private final SubscriptionService subscriptionService;
 
-  public TopicsController(TopicService topicService) {
+  public TopicsController(TopicService topicService, SubscriptionService subscriptionService) {
     this.topicService = topicService;
+    this.subscriptionService = subscriptionService;
   }
 
   @GetMapping
@@ -57,7 +60,7 @@ public class TopicsController {
     @ApiResponse(responseCode = "500", description = "Server error", content = @Content(schema = @Schema(implementation = ApiMessageResponse.class)))
   })
   public ResponseEntity<ApiMessageResponse> subscribe(@PathVariable Integer topicId) {
-    return ResponseEntity.ok(topicService.subscribeCurrentUser(topicId));
+    return ResponseEntity.ok(subscriptionService.subscribeCurrentUser(topicId));
   }
 
   @DeleteMapping("/{topicId}/subscription")
@@ -73,7 +76,7 @@ public class TopicsController {
     @ApiResponse(responseCode = "500", description = "Server error", content = @Content(schema = @Schema(implementation = ApiMessageResponse.class)))
   })
   public ResponseEntity<ApiMessageResponse> unsubscribe(@PathVariable Integer topicId) {
-    return ResponseEntity.ok(topicService.unsubscribeCurrentUser(topicId));
+    return ResponseEntity.ok(subscriptionService.unsubscribeCurrentUser(topicId));
   }
 
   @GetMapping("/{topicId}/posts")
