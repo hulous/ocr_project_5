@@ -14,6 +14,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -37,6 +38,9 @@ public class User implements UserDetails {
 
   @Column(unique = true, length = 100, nullable = false)
   private String email;
+
+  @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+  private List<Subscription> subscriptions = new ArrayList<>();
 
   @Column(nullable = false)
   private String password;

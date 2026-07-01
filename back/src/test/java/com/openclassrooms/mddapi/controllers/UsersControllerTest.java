@@ -1,9 +1,9 @@
 package com.openclassrooms.mddapi.controllers;
 
 import com.openclassrooms.mddapi.services.UserService;
-import com.openclassrooms.mddapi.entities.User;
 import com.openclassrooms.mddapi.exceptions.ApiException;
 import com.openclassrooms.mddapi.responses.UserResponse;
+import com.openclassrooms.mddapi.testdata.UserTestData;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -30,18 +30,8 @@ class UsersControllerTest {
 
   @Test
   void showReturnsUserWhenFound() {
-    User user = new User()
-      .setId(1)
-      .setUsername("John")
-      .setEmail("john@example.com")
-      .setCreatedAt(new Date())
-      .setUpdatedAt(new Date());
-    UserResponse userResponse = new UserResponse()
-      .setId(1)
-      .setUsername("John")
-      .setEmail("john@example.com")
-      .setCreatedAt(user.getCreatedAt())
-      .setUpdatedAt(user.getUpdatedAt());
+    Date now = new Date();
+    UserResponse userResponse = UserTestData.userResponse(1, "John", "john@example.com", now, now);
     when(userService.show(1)).thenReturn(userResponse);
 
     ResponseEntity<UserResponse> response = controller.show(1);

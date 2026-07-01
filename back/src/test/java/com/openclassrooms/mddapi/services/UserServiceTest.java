@@ -5,6 +5,7 @@ import com.openclassrooms.mddapi.exceptions.ApiException;
 import com.openclassrooms.mddapi.mappers.UserMapper;
 import com.openclassrooms.mddapi.repositories.UserRepository;
 import com.openclassrooms.mddapi.responses.UserResponse;
+import com.openclassrooms.mddapi.testdata.UserTestData;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -32,8 +33,8 @@ class UserServiceTest {
 
   @Test
   void showReturnsMappedResponseWhenUserExists() {
-    User user = new User().setId(1).setEmail("test@example.com").setUsername("test");
-    UserResponse response = new UserResponse().setId(1).setUsername("test").setEmail("test@example.com");
+    User user = UserTestData.user(1, "test", "test@example.com", "password");
+    UserResponse response = UserTestData.userResponse(1, "test", "test@example.com", new Date(), new Date());
 
     when(userRepository.findById(1)).thenReturn(Optional.of(user));
     when(userMapper.toResponse(user)).thenReturn(response);

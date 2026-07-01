@@ -3,9 +3,9 @@ package com.openclassrooms.mddapi.controllers;
 import com.openclassrooms.mddapi.services.AuthenticationService;
 import com.openclassrooms.mddapi.dtos.LoginUserDto;
 import com.openclassrooms.mddapi.dtos.RegisterUserDto;
-import com.openclassrooms.mddapi.entities.User;
 import com.openclassrooms.mddapi.responses.LoginResponse;
 import com.openclassrooms.mddapi.responses.UserResponse;
+import com.openclassrooms.mddapi.testdata.UserTestData;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -33,8 +33,8 @@ class AuthenticationsControllerTest {
 
   @Test
   void registrateReturnsCreatedUser() {
-    RegisterUserDto dto = new RegisterUserDto().setEmail("john@example.com").setPassword("pwd").setUsername("John");
-    UserResponse responseBody = new UserResponse().setId(1).setEmail("john@example.com").setUsername("John");
+    RegisterUserDto dto = UserTestData.registerUserDto("john@example.com", "John", "pwd");
+    UserResponse responseBody = UserTestData.userResponse(1, "John", "john@example.com", null, null);
 
     when(authenticationService.registrateResponse(dto)).thenReturn(responseBody);
 
@@ -62,7 +62,7 @@ class AuthenticationsControllerTest {
 
   @Test
   void authenticateReturnsLoginResponse() {
-    LoginUserDto dto = new LoginUserDto().setEmail("john@example.com").setPassword("pwd");
+    LoginUserDto dto = UserTestData.loginUserDto("john@example.com", "pwd");
     LoginResponse loginResponse = new LoginResponse().setToken("jwt-token").setExpiresIn(3600L);
 
     when(authenticationService.authenticateResponse(dto)).thenReturn(loginResponse);
@@ -93,18 +93,8 @@ class AuthenticationsControllerTest {
 
   @Test
   void authenticatedUserReturnsCurrentPrincipal() {
-    User current = new User()
-      .setId(99)
-      .setUsername("Alice")
-      .setEmail("alice@example.com")
-      .setCreatedAt(new Date())
-      .setUpdatedAt(new Date());
-    UserResponse responseBody = new UserResponse()
-      .setId(99)
-      .setUsername("Alice")
-      .setEmail("alice@example.com")
-      .setCreatedAt(current.getCreatedAt())
-      .setUpdatedAt(current.getUpdatedAt());
+    Date now = new Date();
+    UserResponse responseBody = UserTestData.userResponse(99, "Alice", "alice@example.com", now, now);
 
     when(authenticationService.authenticatedUser()).thenReturn(responseBody);
 
