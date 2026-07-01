@@ -3,23 +3,13 @@ package com.openclassrooms.mddapi.mappers;
 import com.openclassrooms.mddapi.dtos.PostDto;
 import com.openclassrooms.mddapi.entities.Post;
 
-import org.springframework.stereotype.Component;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 
-@Component
-public class PostMapper {
+@Mapper(componentModel = "spring")
+public interface PostMapper {
 
-  public PostDto toDto(Post post) {
-    if (post == null) {
-      return null;
-    }
-
-    return new PostDto()
-      .setId(post.getId())
-      .setAuthorId(post.getAuthor() != null ? post.getAuthor().getId() : null)
-      .setTopicId(post.getTopic() != null ? post.getTopic().getId() : null)
-      .setTitle(post.getTitle())
-      .setContent(post.getContent())
-      .setCreatedAt(post.getCreatedAt())
-      .setUpdatedAt(post.getUpdatedAt());
-  }
+  @Mapping(target = "authorId", source = "author.id")
+  @Mapping(target = "topicId", source = "topic.id")
+  PostDto toDto(Post post);
 }
