@@ -4,6 +4,7 @@ import com.openclassrooms.mddapi.dtos.CreatePostDto;
 import com.openclassrooms.mddapi.dtos.PostDto;
 import com.openclassrooms.mddapi.dtos.TopicDto;
 import com.openclassrooms.mddapi.responses.ApiMessageResponse;
+import com.openclassrooms.mddapi.services.PostService;
 import com.openclassrooms.mddapi.services.SubscriptionService;
 import com.openclassrooms.mddapi.services.TopicService;
 
@@ -30,10 +31,12 @@ import java.util.List;
 @Tag(name = "Topics", description = "Topic resource endpoints")
 public class TopicsController {
   private final TopicService topicService;
+  private final PostService postService;
   private final SubscriptionService subscriptionService;
 
-  public TopicsController(TopicService topicService, SubscriptionService subscriptionService) {
+  public TopicsController(TopicService topicService, PostService postService, SubscriptionService subscriptionService) {
     this.topicService = topicService;
+    this.postService = postService;
     this.subscriptionService = subscriptionService;
   }
 
@@ -87,7 +90,7 @@ public class TopicsController {
     @ApiResponse(responseCode = "500", description = "Server error", content = @Content(schema = @Schema(implementation = ApiMessageResponse.class)))
   })
   public ResponseEntity<List<PostDto>> listPosts(@PathVariable Integer topicId) {
-    return ResponseEntity.ok(topicService.listPostsForTopic(topicId));
+    return ResponseEntity.ok(postService.listPostsForTopic(topicId));
   }
 
   @PostMapping("/{topicId}/posts")
@@ -106,6 +109,6 @@ public class TopicsController {
     @PathVariable Integer topicId,
     @jakarta.validation.Valid @org.springframework.web.bind.annotation.RequestBody CreatePostDto input
   ) {
-    return ResponseEntity.ok(topicService.createPostForTopic(topicId, input));
+    return ResponseEntity.ok(postService.createPostForTopic(topicId, input));
   }
 }
