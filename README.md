@@ -28,7 +28,7 @@ The backend is a Spring Boot application located in the `back/` folder.
 
 - Spring Boot starter parent version: `4.0.6`
 - Java version: `21`
-- Maven is used for build and dependency management
+- Maven wrapper included: `./mvnw`
 - Spring modules included: Web MVC, Security, Data JPA, Liquibase, OpenAPI
 - Runtime database: PostgreSQL
 - Test database: H2 in-memory
@@ -38,19 +38,19 @@ The backend is a Spring Boot application located in the `back/` folder.
 From the `back/` directory:
 
 ```bash
-mvn spring-boot:run
+./mvnw spring-boot:run
 ```
 
 Build the backend jar:
 
 ```bash
-mvn clean package
+./mvnw clean package
 ```
 
 Run tests:
 
 ```bash
-mvn test
+./mvnw test
 ```
 
 ### Backend config
@@ -58,5 +58,6 @@ mvn test
 - Main config: `src/main/resources/application.yaml`
 - Environment values: `src/main/resources/env.properties`
 - Example env file: `.env.sample.properties`
+- Liquibase changelog path: `src/main/resources/db/changelog/db.changelog-master.yaml`
 
 For release notes, see `RELEASE.md`.
