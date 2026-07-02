@@ -1,13 +1,12 @@
 package com.openclassrooms.mddapi.responses;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import java.time.LocalDateTime;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.Accessors;
-
-import java.util.Date;
 
 @Getter
 @Setter
@@ -29,8 +28,8 @@ public class CommentResponse {
   private String content;
 
   @Schema(description = "Creation timestamp")
-  private Date createdAt;
+  private LocalDateTime createdAt;
 
   @Schema(description = "Last update timestamp")
-  private Date updatedAt;
+  private LocalDateTime updatedAt;
 }

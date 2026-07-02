@@ -11,7 +11,7 @@ import lombok.experimental.Accessors;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Table(name = "comments")
 @Entity
@@ -40,9 +40,9 @@ public class Comment {
 
   @CreationTimestamp
   @Column(updatable = false, name = "created_at")
-  private Date createdAt;
+  private LocalDateTime createdAt;
 
   @UpdateTimestamp
   @Column(name = "updated_at")
-  private Date updatedAt;
+  private LocalDateTime updatedAt;
 }

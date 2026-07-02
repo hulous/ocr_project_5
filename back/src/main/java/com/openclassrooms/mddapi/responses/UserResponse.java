@@ -1,6 +1,6 @@
 package com.openclassrooms.mddapi.responses;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,7 +17,7 @@ public class UserResponse {
   private Integer id;
   private String username;
   private String email;
-  private Date createdAt;
-  private Date updatedAt;
+  private LocalDateTime createdAt;
+  private LocalDateTime updatedAt;
   private List<SubscriptionResponse> subscriptions;
 }
