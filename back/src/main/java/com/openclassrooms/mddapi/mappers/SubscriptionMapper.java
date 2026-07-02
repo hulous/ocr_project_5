@@ -7,6 +7,7 @@ import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring")
 public interface SubscriptionMapper {
+  @Mapping(target = "userId", source = "user.id")
   @Mapping(target = "topicId", source = "topic.id")
   @Mapping(target = "topicTitle", source = "topic.title")
   SubscriptionResponse toDto(Subscription subscription);

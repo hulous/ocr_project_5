@@ -8,6 +8,5 @@ import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring", uses = { SubscriptionMapper.class })
 public interface UserMapper {
-  @Mapping(target = "subscriptions", ignore = true)
   UserResponse toResponse(User user);
 }
