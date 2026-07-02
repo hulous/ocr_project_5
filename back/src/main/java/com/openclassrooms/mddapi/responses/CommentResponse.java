@@ -1,4 +1,4 @@
-package com.openclassrooms.mddapi.dtos;
+package com.openclassrooms.mddapi.responses;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
@@ -12,10 +12,10 @@ import java.util.Date;
 @Getter
 @Setter
 @NoArgsConstructor
-@Schema(description = "Data transfer object for a comment")
+@Schema(description = "Response payload for a comment")
 @Accessors(chain = true)
 @ToString
-public class CommentDto {
+public class CommentResponse {
 
   private Integer id;
 
