@@ -11,6 +11,7 @@ import com.openclassrooms.mddapi.repositories.CommentRepository;
 import com.openclassrooms.mddapi.repositories.PostRepository;
 
 import org.springframework.stereotype.Service;
+import java.util.List;
 
 @Service
 public class CommentService {
@@ -45,5 +46,13 @@ public class CommentService {
       .setContent(input.getContent());
 
     return commentMapper.toDto(commentRepository.save(comment));
+  }
+
+  public List<CommentResponse> listCommentsForPost(Integer postId) {
+    return commentRepository
+      .findAllByPostId(postId)
+      .stream()
+      .map(commentMapper::toDto)
+      .collect(java.util.stream.Collectors.toList());
   }
 }
