@@ -14,4 +14,18 @@ public interface PostMapper {
   @Mapping(target = "authorId", source = "author.id")
   @Mapping(target = "topicId", source = "topic.id")
   PostDto toDto(Post post);
+
+  @Mapping(target = "authorId", source = "author.id")
+  @Mapping(target = "authorUsername", source = "author.username")
+  @Mapping(target = "topicId", source = "topic.id")
+  @Mapping(target = "topicTitle", source = "topic.title")
+  @Mapping(target = "topicDescription", source = "topic.description")
+  PostResponse toResponse(Post post);
+
+  @Mapping(target = "authorId", source = "author.id")
+  @Mapping(target = "authorUsername", source = "author.username")
+  @Mapping(target = "topicId", source = "topic.id")
+  @Mapping(target = "topicTitle", source = "topic.title")
+  @Mapping(target = "topicDescription", source = "topic.description")
+  PostDetailResponse toDetailResponse(Post post);
 }

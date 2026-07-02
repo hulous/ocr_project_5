@@ -18,4 +18,5 @@ public class UserResponse {
   private String email;
   private Date createdAt;
   private Date updatedAt;
+  private List<SubscriptionResponse> subscriptions;
 }

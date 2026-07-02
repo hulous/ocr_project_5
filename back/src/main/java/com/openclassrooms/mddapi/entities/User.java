@@ -25,7 +25,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @Accessors(chain = true)
-@ToString(exclude = "password")
+@ToString(exclude = {"password", "subscriptions"})
 public class User implements UserDetails {
 
   @Id
