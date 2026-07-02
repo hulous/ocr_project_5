@@ -2,6 +2,8 @@ package com.openclassrooms.mddapi.mappers;
 
 import com.openclassrooms.mddapi.dtos.PostDto;
 import com.openclassrooms.mddapi.entities.Post;
+import com.openclassrooms.mddapi.responses.PostDetailResponse;
+import com.openclassrooms.mddapi.responses.PostResponse;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

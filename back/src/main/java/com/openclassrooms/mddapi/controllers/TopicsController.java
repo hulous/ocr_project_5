@@ -1,9 +1,9 @@
 package com.openclassrooms.mddapi.controllers;
 
 import com.openclassrooms.mddapi.dtos.CreatePostDto;
-import com.openclassrooms.mddapi.dtos.PostDto;
-import com.openclassrooms.mddapi.dtos.TopicDto;
 import com.openclassrooms.mddapi.responses.ApiMessageResponse;
+import com.openclassrooms.mddapi.responses.PostResponse;
+import com.openclassrooms.mddapi.responses.TopicResponse;
 import com.openclassrooms.mddapi.services.PostService;
 import com.openclassrooms.mddapi.services.SubscriptionService;
 import com.openclassrooms.mddapi.services.TopicService;
@@ -45,10 +45,10 @@ public class TopicsController {
   @GetMapping
   @Operation(summary = "List all topics")
   @ApiResponses(value = {
-    @ApiResponse(responseCode = "200", description = "List of topics", content = @Content(schema = @Schema(implementation = TopicDto.class))),
+    @ApiResponse(responseCode = "200", description = "List of topics", content = @Content(schema = @Schema(implementation = TopicResponse.class))),
     @ApiResponse(responseCode = "500", description = "Server error", content = @Content(schema = @Schema(implementation = ApiMessageResponse.class)))
   })
-  public ResponseEntity<List<TopicDto>> list() {
+  public ResponseEntity<List<TopicResponse>> list() {
     return ResponseEntity.ok(topicService.listTopics());
   }
 
@@ -87,11 +87,11 @@ public class TopicsController {
   @GetMapping("/{topicId}/posts")
   @Operation(summary = "List all posts for a topic")
   @ApiResponses(value = {
-    @ApiResponse(responseCode = "200", description = "List of posts", content = @Content(schema = @Schema(implementation = PostDto.class))),
+    @ApiResponse(responseCode = "200", description = "List of posts", content = @Content(schema = @Schema(implementation = PostResponse.class))),
     @ApiResponse(responseCode = "404", description = "Topic not found", content = @Content(schema = @Schema(implementation = ApiMessageResponse.class))),
     @ApiResponse(responseCode = "500", description = "Server error", content = @Content(schema = @Schema(implementation = ApiMessageResponse.class)))
   })
-  public ResponseEntity<List<PostDto>> listPosts(@PathVariable Integer topicId) {
+  public ResponseEntity<List<PostResponse>> listPosts(@PathVariable Integer topicId) {
     return ResponseEntity.ok(postService.listPostsForTopic(topicId));
   }
 
@@ -101,13 +101,13 @@ public class TopicsController {
     security = {@SecurityRequirement(name = "bearerAuth")}
   )
   @ApiResponses(value = {
-    @ApiResponse(responseCode = "200", description = "Post created successfully", content = @Content(schema = @Schema(implementation = PostDto.class))),
+    @ApiResponse(responseCode = "200", description = "Post created successfully", content = @Content(schema = @Schema(implementation = PostResponse.class))),
     @ApiResponse(responseCode = "400", description = "Invalid input", content = @Content(schema = @Schema(implementation = ApiMessageResponse.class))),
     @ApiResponse(responseCode = "401", description = "Unauthorized request", content = @Content(schema = @Schema(implementation = ApiMessageResponse.class))),
     @ApiResponse(responseCode = "404", description = "Topic not found", content = @Content(schema = @Schema(implementation = ApiMessageResponse.class))),
     @ApiResponse(responseCode = "500", description = "Server error", content = @Content(schema = @Schema(implementation = ApiMessageResponse.class)))
   })
-  public ResponseEntity<PostDto> createPost(
+  public ResponseEntity<PostResponse> createPost(
     @PathVariable Integer topicId,
     @Valid @RequestBody CreatePostDto input
   ) {

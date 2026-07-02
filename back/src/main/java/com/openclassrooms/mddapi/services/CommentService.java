@@ -1,6 +1,6 @@
 package com.openclassrooms.mddapi.services;
 
-import com.openclassrooms.mddapi.dtos.CommentDto;
+import com.openclassrooms.mddapi.responses.CommentResponse;
 import com.openclassrooms.mddapi.dtos.CreateCommentDto;
 import com.openclassrooms.mddapi.entities.Comment;
 import com.openclassrooms.mddapi.entities.Post;
@@ -32,7 +32,7 @@ public class CommentService {
     this.currentUserService = currentUserService;
   }
 
-  public CommentDto createCommentForPost(Integer postId, CreateCommentDto input) {
+  public CommentResponse createCommentForPost(Integer postId, CreateCommentDto input) {
     Post post = postRepository
       .findById(postId)
       .orElseThrow(() -> new PostNotFoundException(postId));

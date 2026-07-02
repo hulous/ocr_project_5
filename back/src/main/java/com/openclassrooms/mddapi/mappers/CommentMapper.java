@@ -1,6 +1,6 @@
 package com.openclassrooms.mddapi.mappers;
 
-import com.openclassrooms.mddapi.dtos.CommentDto;
+import com.openclassrooms.mddapi.responses.CommentResponse;
 import com.openclassrooms.mddapi.entities.Comment;
 
 import org.mapstruct.Mapper;
@@ -11,5 +11,5 @@ public interface CommentMapper {
 
   @Mapping(target = "authorId", source = "author.id")
   @Mapping(target = "postId", source = "post.id")
-  CommentDto toDto(Comment comment);
+  CommentResponse toDto(Comment comment);
 }

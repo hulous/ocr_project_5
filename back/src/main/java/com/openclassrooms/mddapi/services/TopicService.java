@@ -1,6 +1,6 @@
 package com.openclassrooms.mddapi.services;
 
-import com.openclassrooms.mddapi.dtos.TopicDto;
+import com.openclassrooms.mddapi.responses.TopicResponse;
 import com.openclassrooms.mddapi.mappers.TopicMapper;
 import com.openclassrooms.mddapi.repositories.TopicRepository;
 
@@ -23,7 +23,7 @@ public class TopicService {
     this.topicMapper = topicMapper;
   }
 
-  public List<TopicDto> listTopics() {
+  public List<TopicResponse> listTopics() {
     return topicRepository
       .findAll()
       .stream()

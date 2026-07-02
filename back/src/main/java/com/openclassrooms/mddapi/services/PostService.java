@@ -1,7 +1,6 @@
 package com.openclassrooms.mddapi.services;
 
 import com.openclassrooms.mddapi.dtos.CreatePostDto;
-import com.openclassrooms.mddapi.dtos.PostDto;
 import com.openclassrooms.mddapi.entities.Post;
 import com.openclassrooms.mddapi.entities.Topic;
 import com.openclassrooms.mddapi.entities.User;
@@ -10,9 +9,13 @@ import com.openclassrooms.mddapi.exceptions.TopicNotFoundException;
 import com.openclassrooms.mddapi.mappers.PostMapper;
 import com.openclassrooms.mddapi.repositories.PostRepository;
 import com.openclassrooms.mddapi.repositories.TopicRepository;
-import com.openclassrooms.mddapi.services.CurrentUserService;
+import com.openclassrooms.mddapi.responses.PostDetailResponse;
+import com.openclassrooms.mddapi.responses.PostResponse;
 
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class PostService {
@@ -20,29 +23,35 @@ public class PostService {
   private final PostRepository postRepository;
   private final TopicRepository topicRepository;
   private final PostMapper postMapper;
+  private final CommentService commentService;
   private final CurrentUserService currentUserService;
 
   public PostService(
     PostRepository postRepository,
     TopicRepository topicRepository,
     PostMapper postMapper,
+    CommentService commentService,
     CurrentUserService currentUserService
   ) {
     this.postRepository = postRepository;
     this.topicRepository = topicRepository;
     this.postMapper = postMapper;
+    this.commentService = commentService;
     this.currentUserService = currentUserService;
   }
 
-  public PostDto show(Integer postId) {
+  public PostDetailResponse show(Integer postId) {
     Post post = postRepository
       .findById(postId)
       .orElseThrow(() -> new PostNotFoundException(postId));
 
-    return postMapper.toDto(post);
+    PostDetailResponse detail = postMapper.toDetailResponse(post);
+    detail.setComments(commentService.listCommentsForPost(postId));
+
+    return detail;
   }
 
-  public PostDto createPostForTopic(Integer topicId, CreatePostDto input) {
+  public PostResponse createPostForTopic(Integer topicId, CreatePostDto input) {
     Topic topic = topicRepository
       .findById(topicId)
       .orElseThrow(() -> new TopicNotFoundException(topicId));
@@ -57,10 +66,10 @@ public class PostService {
 
     Post saved = postRepository.save(post);
 
-    return postMapper.toDto(saved);
+    return postMapper.toResponse(saved);
   }
 
-  public List<PostDto> listPostsForTopic(Integer topicId) {
+  public List<PostResponse> listPostsForTopic(Integer topicId) {
     topicRepository
       .findById(topicId)
       .orElseThrow(() -> new TopicNotFoundException(topicId));
@@ -68,7 +77,7 @@ public class PostService {
     return postRepository
       .findAllByTopicId(topicId)
       .stream()
-      .map(postMapper::toDto)
+      .map(postMapper::toResponse)
       .collect(Collectors.toList());
   }
 }

@@ -1,9 +1,9 @@
 package com.openclassrooms.mddapi.controllers;
 
-import com.openclassrooms.mddapi.dtos.CommentDto;
 import com.openclassrooms.mddapi.dtos.CreateCommentDto;
-import com.openclassrooms.mddapi.dtos.PostDto;
 import com.openclassrooms.mddapi.responses.ApiMessageResponse;
+import com.openclassrooms.mddapi.responses.CommentResponse;
+import com.openclassrooms.mddapi.responses.PostDetailResponse;
 import com.openclassrooms.mddapi.services.CommentService;
 import com.openclassrooms.mddapi.services.PostService;
 
@@ -39,11 +39,11 @@ public class PostsController {
   @GetMapping("/{postId}")
   @Operation(summary = "Get one post by id")
   @ApiResponses(value = {
-    @ApiResponse(responseCode = "200", description = "Post found", content = @Content(schema = @Schema(implementation = PostDto.class))),
+    @ApiResponse(responseCode = "200", description = "Post found", content = @Content(schema = @Schema(implementation = PostDetailResponse.class))),
     @ApiResponse(responseCode = "404", description = "Post not found", content = @Content(schema = @Schema(implementation = ApiMessageResponse.class))),
     @ApiResponse(responseCode = "500", description = "Server error", content = @Content(schema = @Schema(implementation = ApiMessageResponse.class)))
   })
-  public ResponseEntity<PostDto> show(@PathVariable Integer postId) {
+  public ResponseEntity<PostDetailResponse> show(@PathVariable Integer postId) {
     return ResponseEntity.ok(postService.show(postId));
   }
 
@@ -53,13 +53,13 @@ public class PostsController {
     security = {@SecurityRequirement(name = "bearerAuth")}
   )
   @ApiResponses(value = {
-    @ApiResponse(responseCode = "200", description = "Comment created successfully", content = @Content(schema = @Schema(implementation = CommentDto.class))),
+    @ApiResponse(responseCode = "200", description = "Comment created successfully", content = @Content(schema = @Schema(implementation = CommentResponse.class))),
     @ApiResponse(responseCode = "400", description = "Invalid input", content = @Content(schema = @Schema(implementation = ApiMessageResponse.class))),
     @ApiResponse(responseCode = "401", description = "Unauthorized request", content = @Content(schema = @Schema(implementation = ApiMessageResponse.class))),
     @ApiResponse(responseCode = "404", description = "Post not found", content = @Content(schema = @Schema(implementation = ApiMessageResponse.class))),
     @ApiResponse(responseCode = "500", description = "Server error", content = @Content(schema = @Schema(implementation = ApiMessageResponse.class)))
   })
-  public ResponseEntity<CommentDto> createComment(
+  public ResponseEntity<CommentResponse> createComment(
     @PathVariable Integer postId,
     @Valid @RequestBody CreateCommentDto input
   ) {
