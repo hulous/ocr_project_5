@@ -1,4 +1,4 @@
-package com.openclassrooms.mddapi.dtos;
+package com.openclassrooms.mddapi.responses;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
@@ -10,10 +10,10 @@ import lombok.experimental.Accessors;
 @Getter
 @Setter
 @NoArgsConstructor
-@Schema(description = "Data transfer object for a topic")
+@Schema(description = "Response payload for a topic")
 @Accessors(chain = true)
 @ToString
-public class TopicDto {
+public class TopicResponse {
 
   private Integer id;
 
