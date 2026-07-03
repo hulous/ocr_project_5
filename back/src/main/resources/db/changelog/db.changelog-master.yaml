@@ -31,9 +31,15 @@ databaseChangeLog:
               - column:
                   name: created_at
                   type: timestamp
+                  defaultValueComputed: CURRENT_TIMESTAMP
+                  constraints:
+                    nullable: false
               - column:
                   name: updated_at
                   type: timestamp
+                  defaultValueComputed: CURRENT_TIMESTAMP
+                  constraints:
+                    nullable: false
   - changeSet:
       id: 2
       author: liquibase
@@ -81,6 +87,9 @@ databaseChangeLog:
               - column:
                   name: created_at
                   type: timestamp
+                  defaultValueComputed: CURRENT_TIMESTAMP
+                  constraints:
+                    nullable: false
         - addForeignKeyConstraint:
             baseTableName: subscriptions
             baseColumnNames: user_id
@@ -127,9 +136,15 @@ databaseChangeLog:
               - column:
                   name: created_at
                   type: timestamp
+                  defaultValueComputed: CURRENT_TIMESTAMP
+                  constraints:
+                    nullable: false
               - column:
                   name: updated_at
                   type: timestamp
+                  defaultValueComputed: CURRENT_TIMESTAMP
+                  constraints:
+                    nullable: false
         - addForeignKeyConstraint:
             baseTableName: posts
             baseColumnNames: author_id
@@ -171,9 +186,15 @@ databaseChangeLog:
               - column:
                   name: created_at
                   type: timestamp
+                  defaultValueComputed: CURRENT_TIMESTAMP
+                  constraints:
+                    nullable: false
               - column:
                   name: updated_at
                   type: timestamp
+                  defaultValueComputed: CURRENT_TIMESTAMP
+                  constraints:
+                    nullable: false
         - addForeignKeyConstraint:
             baseTableName: comments
             baseColumnNames: author_id

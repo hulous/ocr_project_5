@@ -1,4 +1,4 @@
-package com.openclassrooms.mddapi.dtos;
+package com.openclassrooms.mddapi.responses;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
@@ -12,10 +12,10 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @NoArgsConstructor
-@Schema(description = "Data transfer object for a subscription")
+@Schema(description = "Response payload for a subscription")
 @Accessors(chain = true)
 @ToString
-public class SubscriptionDto {
+public class SubscriptionResponse {
 
   private Integer id;
 
@@ -24,6 +24,9 @@ public class SubscriptionDto {
 
   @Schema(description = "Topic id", example = "2")
   private Integer topicId;
+
+  @Schema(description = "Topic title", example = "Development")
+  private String topicTitle;
 
   @Schema(description = "Creation timestamp")
   private LocalDateTime createdAt;

@@ -1,91 +1,106 @@
-# mySringBootBase
+# MondeDeDev Backend
 
-Spring Boot base project with:
+Spring Boot backend service with:
 
 - Spring Web MVC
 - Spring Security
 - Spring Data JPA
-- Liquibase
-- PostgreSQL
+- Liquibase database migrations
+- PostgreSQL runtime database
 - H2 in-memory database for tests
-- OpenAPI UI (springdoc)
+- OpenAPI UI via springdoc
 
 ## Prerequisites
 
 - Java 21+
-- Maven 3.8+
+- Maven 3.8+ or the included Maven wrapper
 - PostgreSQL running locally or reachable from this app
 
 ## Project Structure
 
-- Application entry point: src/main/java/com/hulous/base/BaseApplication.java
-- Main config: src/main/resources/application.yaml
-- Environment values: src/main/resources/env.properties
-- Example environment values: .env.sample.properties
+- Application entry point: `src/main/java/com/openclassrooms/mddapi/BaseApplication.java`
+- Main configuration: `src/main/resources/application.yaml`
+- Environment values: `src/main/resources/env.properties`
+- Environment sample: `.env.sample.properties`
+- Liquibase changelogs: `src/main/resources/db/changelog`
 
 ## Environment Configuration
 
-The app imports env values from src/main/resources/env.properties.
+The application loads environment values from `src/main/resources/env.properties` using Spring Boot config import.
 
-1. Copy the sample file:
+1. Copy the sample file into the backend folder:
 
 ```bash
+cd back
 cp .env.sample.properties src/main/resources/env.properties
 ```
 
-2. Update values in src/main/resources/env.properties.
+2. Update the values in `src/main/resources/env.properties`.
 
 Required keys:
 
-- DB_NAME
-- DB_HOST
-- DB_PORT
-- DB_USER
-- DB_PASSWORD
-- JWT_SECRET_TOKEN
-- MAIN_APP_PORT
+- `DB_NAME`
+- `DB_HOST`
+- `DB_PORT`
+- `DB_USER`
+- `DB_PASSWORD`
+- `JWT_SECRET_TOKEN`
+- `MAIN_APP_PORT`
 
 Notes:
 
-- Use a strong random value for JWT_SECRET_TOKEN.
-- MAIN_APP_PORT controls the HTTP port used by Spring Boot.
+- Use a strong random value for `JWT_SECRET_TOKEN`.
+- `MAIN_APP_PORT` controls the HTTP port that Spring Boot listens on.
 
 ## Run the Application
 
-Start with Maven:
+From the `back/` folder:
 
 ```bash
-mvn spring-boot:run
+./mvnw spring-boot:run
 ```
 
-Build a jar:
+Build the jar:
 
 ```bash
-mvn clean package
+./mvnw clean package
 ```
 
-Run tests:
+Run the packaged jar:
 
 ```bash
-mvn test
+java -jar target/mdd-api-0.0.1-SNAPSHOT.jar
 ```
 
-## Testing
+## Tests
 
-- Unit and integration tests are configured to use an H2 in-memory database.
-- The Maven `pom.xml` now includes `com.h2database:h2` as a test dependency.
-- Test datasource settings are defined in `src/test/resources/application.yaml`.
-- Liquibase runs during tests using `classpath:db/changelog/db.changelog-master.yaml`.
+Run tests from `back/`:
 
-## API Docs
+```bash
+./mvnw test
+```
 
-Once the app is running, OpenAPI UI is available at:
+Test configuration uses H2 in-memory database settings from `src/test/resources/application.yaml`.
+If needed, update `src/test/resources/env.properties` with test-specific values such as `MAIN_APP_PORT` and `JWT_SECRET_TOKEN`.
 
-- http://localhost:${MAIN_APP_PORT}/swagger-ui/index.html
+## API Documentation
+
+When the application is running, OpenAPI UI is available at:
+
+- `http://localhost:${MAIN_APP_PORT}/swagger-ui/index.html`
+
+The raw OpenAPI JSON is available at:
+
+- `http://localhost:${MAIN_APP_PORT}/v3/api-docs`
 
 ## Database Migrations
 
-Liquibase dependency is included. Add changelogs under:
+Liquibase is enabled in `application.yaml`.
+Add changelog files under:
 
-- src/main/resources/db/changelog
+- `src/main/resources/db/changelog`
+
+The main changelog is:
+
+- `classpath:db/changelog/db.changelog-master.yaml`
 

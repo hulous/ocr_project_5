@@ -1,9 +1,11 @@
 package com.openclassrooms.mddapi.controllers;
 
 import com.openclassrooms.mddapi.dtos.CreatePostDto;
-import com.openclassrooms.mddapi.dtos.PostDto;
-import com.openclassrooms.mddapi.dtos.TopicDto;
 import com.openclassrooms.mddapi.responses.ApiMessageResponse;
+import com.openclassrooms.mddapi.responses.PostResponse;
+import com.openclassrooms.mddapi.responses.TopicResponse;
+import com.openclassrooms.mddapi.services.PostService;
+import com.openclassrooms.mddapi.services.SubscriptionService;
 import com.openclassrooms.mddapi.services.TopicService;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -14,11 +16,13 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -29,18 +33,22 @@ import java.util.List;
 @Tag(name = "Topics", description = "Topic resource endpoints")
 public class TopicsController {
   private final TopicService topicService;
+  private final PostService postService;
+  private final SubscriptionService subscriptionService;
 
-  public TopicsController(TopicService topicService) {
+  public TopicsController(TopicService topicService, PostService postService, SubscriptionService subscriptionService) {
     this.topicService = topicService;
+    this.postService = postService;
+    this.subscriptionService = subscriptionService;
   }
 
   @GetMapping
   @Operation(summary = "List all topics")
   @ApiResponses(value = {
-    @ApiResponse(responseCode = "200", description = "List of topics", content = @Content(schema = @Schema(implementation = TopicDto.class))),
+    @ApiResponse(responseCode = "200", description = "List of topics", content = @Content(schema = @Schema(implementation = TopicResponse.class))),
     @ApiResponse(responseCode = "500", description = "Server error", content = @Content(schema = @Schema(implementation = ApiMessageResponse.class)))
   })
-  public ResponseEntity<List<TopicDto>> list() {
+  public ResponseEntity<List<TopicResponse>> list() {
     return ResponseEntity.ok(topicService.listTopics());
   }
 
@@ -57,7 +65,7 @@ public class TopicsController {
     @ApiResponse(responseCode = "500", description = "Server error", content = @Content(schema = @Schema(implementation = ApiMessageResponse.class)))
   })
   public ResponseEntity<ApiMessageResponse> subscribe(@PathVariable Integer topicId) {
-    return ResponseEntity.ok(topicService.subscribeCurrentUser(topicId));
+    return ResponseEntity.ok(subscriptionService.subscribeCurrentUser(topicId));
   }
 
   @DeleteMapping("/{topicId}/subscription")
@@ -73,18 +81,18 @@ public class TopicsController {
     @ApiResponse(responseCode = "500", description = "Server error", content = @Content(schema = @Schema(implementation = ApiMessageResponse.class)))
   })
   public ResponseEntity<ApiMessageResponse> unsubscribe(@PathVariable Integer topicId) {
-    return ResponseEntity.ok(topicService.unsubscribeCurrentUser(topicId));
+    return ResponseEntity.ok(subscriptionService.unsubscribeCurrentUser(topicId));
   }
 
   @GetMapping("/{topicId}/posts")
   @Operation(summary = "List all posts for a topic")
   @ApiResponses(value = {
-    @ApiResponse(responseCode = "200", description = "List of posts", content = @Content(schema = @Schema(implementation = PostDto.class))),
+    @ApiResponse(responseCode = "200", description = "List of posts", content = @Content(schema = @Schema(implementation = PostResponse.class))),
     @ApiResponse(responseCode = "404", description = "Topic not found", content = @Content(schema = @Schema(implementation = ApiMessageResponse.class))),
     @ApiResponse(responseCode = "500", description = "Server error", content = @Content(schema = @Schema(implementation = ApiMessageResponse.class)))
   })
-  public ResponseEntity<List<PostDto>> listPosts(@PathVariable Integer topicId) {
-    return ResponseEntity.ok(topicService.listPostsForTopic(topicId));
+  public ResponseEntity<List<PostResponse>> listPosts(@PathVariable Integer topicId) {
+    return ResponseEntity.ok(postService.listPostsForTopic(topicId));
   }
 
   @PostMapping("/{topicId}/posts")
@@ -93,16 +101,16 @@ public class TopicsController {
     security = {@SecurityRequirement(name = "bearerAuth")}
   )
   @ApiResponses(value = {
-    @ApiResponse(responseCode = "200", description = "Post created successfully", content = @Content(schema = @Schema(implementation = PostDto.class))),
+    @ApiResponse(responseCode = "200", description = "Post created successfully", content = @Content(schema = @Schema(implementation = PostResponse.class))),
     @ApiResponse(responseCode = "400", description = "Invalid input", content = @Content(schema = @Schema(implementation = ApiMessageResponse.class))),
     @ApiResponse(responseCode = "401", description = "Unauthorized request", content = @Content(schema = @Schema(implementation = ApiMessageResponse.class))),
     @ApiResponse(responseCode = "404", description = "Topic not found", content = @Content(schema = @Schema(implementation = ApiMessageResponse.class))),
     @ApiResponse(responseCode = "500", description = "Server error", content = @Content(schema = @Schema(implementation = ApiMessageResponse.class)))
   })
-  public ResponseEntity<PostDto> createPost(
+  public ResponseEntity<PostResponse> createPost(
     @PathVariable Integer topicId,
-    @jakarta.validation.Valid @org.springframework.web.bind.annotation.RequestBody CreatePostDto input
+    @Valid @RequestBody CreatePostDto input
   ) {
-    return ResponseEntity.ok(topicService.createPostForTopic(topicId, input));
+    return ResponseEntity.ok(postService.createPostForTopic(topicId, input));
   }
 }

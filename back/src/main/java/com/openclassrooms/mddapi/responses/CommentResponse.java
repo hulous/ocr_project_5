@@ -1,39 +1,35 @@
-package com.openclassrooms.mddapi.dtos;
+package com.openclassrooms.mddapi.responses;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import java.time.LocalDateTime;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.Accessors;
 
-import java.util.Date;
-
 @Getter
 @Setter
 @NoArgsConstructor
-@Schema(description = "Data transfer object for a post")
+@Schema(description = "Response payload for a comment")
 @Accessors(chain = true)
 @ToString
-public class PostDto {
+public class CommentResponse {
 
   private Integer id;
 
   @Schema(description = "Author user id", example = "1")
   private Integer authorId;
 
-  @Schema(description = "Topic id", example = "2")
-  private Integer topicId;
+  @Schema(description = "Post id", example = "3")
+  private Integer postId;
 
-  @Schema(description = "Post title", example = "How to use the platform")
-  private String title;
-
-  @Schema(description = "Post content")
+  @Schema(description = "Comment content")
   private String content;
 
   @Schema(description = "Creation timestamp")
-  private Date createdAt;
+  private LocalDateTime createdAt;
 
   @Schema(description = "Last update timestamp")
-  private Date updatedAt;
+  private LocalDateTime updatedAt;
 }
