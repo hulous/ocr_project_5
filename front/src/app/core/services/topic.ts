@@ -14,4 +14,8 @@ export class TopicService {
   public list(): Observable<Topic[]> {
     return this.httpClient.get<Topic[]>(this.pathService);
   }
+
+  public subscribe(topicId: number): Observable<unknown> {
+    return this.httpClient.post<unknown>(`${this.pathService}/${topicId}/subscription`, null);
+  }
 }

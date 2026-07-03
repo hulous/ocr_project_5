@@ -15,21 +15,31 @@
 
   @if (!loading && !error) {
     <div class="mdd-topic-list-content">
-      <mat-grid-list cols="2" gutterSize="16px">
+      <div class="mdd-topic-grid">
         @for (topic of topics; track topic.id) {
-          <mat-grid-tile>
+          <div class="mdd-topic-grid-item">
             <mat-card class="mdd-card">
               <mat-card-content>
-                <h2 class="mdd-card__title">{{ topic.title }}</h2>
+                <div>
+                  <h2 class="mdd-card__title">{{ topic.title }}</h2>
+                </div>
                 <p>Description: {{ topic.description }}</p>
               </mat-card-content>
               <mat-card-actions>
-                <button mat-flat-button class="mdd-btn mdd-btn--primary">S’abonner</button>
+                <button mat-flat-button color="primary" class="mdd-btn mdd-btn--primary" (click)="subscribeTopic(topic.id)" [disabled]="topic.subscribed || subscribingTopicIds.has(topic.id)">
+                  @if (subscribingTopicIds.has(topic.id)) {
+                    En cours...
+                  } @else if (topic.subscribed) {
+                    Abonnée
+                  } @else {
+                    S’abonner
+                  }
+                </button>
               </mat-card-actions>
             </mat-card>
-          </mat-grid-tile>
+          </div>
         }
-      </mat-grid-list>
+      </div>
     </div>
   }
 </div>
