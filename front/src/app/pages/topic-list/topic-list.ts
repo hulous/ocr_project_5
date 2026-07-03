@@ -4,12 +4,13 @@ import { RouterModule } from '@angular/router';
 import { MaterialModule } from '../../shared/material';
 import { TopicService } from '../../core/services/topic';
 import { Topic } from '../../core/models/topic.interface';
+import { HeaderBarComponent } from '../../components/header-bar/header-bar';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-topic-list',
   standalone: true,
-  imports: [CommonModule, RouterModule, MaterialModule],
+  imports: [CommonModule, RouterModule, MaterialModule, HeaderBarComponent],
   templateUrl: './topic-list.html',
 })
 export class TopicListComponent {

@@ -1,10 +1,5 @@
 <div>
-  <mat-toolbar class="mdd-toolbar">
-    <div class="mdd-toolbar__nav">
-      <h1 class="mdd-page-title">Thèmes</h1>
-      <button mat-stroked-button color="primary" routerLink="/home">Retour</button>
-    </div>
-  </mat-toolbar>
+  <app-header-bar></app-header-bar>
 
   @if (loading) {
     <mat-card class="mdd-card">

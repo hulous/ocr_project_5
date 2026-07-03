@@ -86,6 +86,60 @@ html, body {
 
 
 
+// logged headbar - nav
+.mdd-logged-logo {
+  width: 100%;
+  max-width: 200px;
+}
+
+.mdd-logged-logo img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.mdd-toolbar__nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.mdd-header-bar__actions {
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+  gap: 0.5rem;
+}
+
+.mdd-header-bar__links {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.mdd-header-bar__logout-button,
+.mdd-header-bar__logout-button .mat-button-wrapper {
+  color: var(--mat-sys-error) !important;
+}
+
+.mdd-header-bar__link--active,
+.mdd-header-bar__link--active .mat-button-wrapper {
+  color: var(--mat-sys-primary) !important;
+}
+
+.mdd-header-bar__user-link img {
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
+  display: block;
+}
+
+.mdd-header-bar__menu-trigger {
+  display: none !important;
+}
+
+
 // -----------------------------------------------------------------------------
 // Responsive breakpoints
 // -----------------------------------------------------------------------------
@@ -118,6 +172,14 @@ html, body {
       margin: 0 auto;
       width: 100%;
     }
+  }
+
+  .mdd-header-bar__links {
+    display: none !important;
+  }
+
+  .mdd-header-bar__menu-trigger {
+    display: inline-flex !important;
   }
 }
 
