@@ -10,6 +10,7 @@ describe('SessionService', () => {
   let injector: Injector;
 
   beforeEach(() => {
+    localStorage.clear();
     TestBed.configureTestingModule({});
     service = TestBed.inject(SessionService);
     injector = TestBed.inject(Injector);
