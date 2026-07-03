@@ -1,27 +1,40 @@
-<div class="mdd-topic-list-page">
-  <div class="mdd-page-header">
-    <h1>Topics</h1>
-    <button mat-stroked-button color="primary" routerLink="/home">Retour</button>
-  </div>
+<div>
+  <mat-toolbar class="mdd-toolbar">
+    <div class="mdd-toolbar__nav">
+      <h1 class="mdd-page-title">Thèmes</h1>
+      <button mat-stroked-button color="primary" routerLink="/home">Retour</button>
+    </div>
+  </mat-toolbar>
 
   @if (loading) {
-    <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+    <mat-card class="mdd-card">
+      <mat-card-content>
+        <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+      </mat-card-content>
+    </mat-card>
   }
 
   @if (error) {
-    <div class="mdd-error-message">Impossible de charger les thèmes.</div>
+    <p class="error">Impossible de charger les thèmes.</p>
   }
 
   @if (!loading && !error) {
-    <mat-list>
-      @for (topic of topics; track topic.id) {
-        <mat-list-item>
-          <div class="mdd-topic-item">
-            <h2>{{ topic.title }}</h2>
-            <p>{{ topic.description }}</p>
-          </div>
-        </mat-list-item>
-      }
-    </mat-list>
+    <div class="mdd-topic-list-content">
+      <mat-grid-list cols="2" gutterSize="16px">
+        @for (topic of topics; track topic.id) {
+          <mat-grid-tile>
+            <mat-card class="mdd-card">
+              <mat-card-content>
+                <h2 class="mdd-card__title">{{ topic.title }}</h2>
+                <p>Description: {{ topic.description }}</p>
+              </mat-card-content>
+              <mat-card-actions>
+                <button mat-flat-button class="mdd-btn mdd-btn--primary">S’abonner</button>
+              </mat-card-actions>
+            </mat-card>
+          </mat-grid-tile>
+        }
+      </mat-grid-list>
+    </div>
   }
 </div>

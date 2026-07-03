@@ -76,6 +76,15 @@ html, body {
   }
 }
 
+// Topic page
+.mdd-topic-list-content {
+  max-width: min(800px, 95%);
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 tokens.$mdd-spacing-md;
+}
+
+
 
 // -----------------------------------------------------------------------------
 // Responsive breakpoints
