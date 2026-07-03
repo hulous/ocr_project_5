@@ -13,6 +13,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class AuthenticationService {
@@ -77,9 +78,14 @@ public class AuthenticationService {
       .setExpiresIn(jwtService.getExpirationTime());
   }
 
+  @Transactional(readOnly = true)
   public UserResponse authenticatedUser() {
     User currentUser = currentUserService.getCurrentUser();
 
-    return userMapper.toResponse(currentUser);
+    User user = userRepository
+      .findById(currentUser.getId())
+      .orElseThrow(() -> new UsernameNotFoundException("Authenticated user not found"));
+
+    return userMapper.toResponse(user);
   }
 }
