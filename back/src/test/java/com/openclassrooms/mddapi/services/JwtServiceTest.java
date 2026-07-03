@@ -24,12 +24,12 @@ class JwtServiceTest {
     ReflectionTestUtils.setField(service, "secretKey", TEST_SECRET);
     ReflectionTestUtils.setField(service, "jwtExpiration", 3600000L);
 
-    User user = new User().setEmail("alice@example.com");
+    User user = new User().setUsername("alice").setEmail("alice@example.com");
 
     String token = service.generateToken(user);
 
     assertNotNull(token);
-    assertEquals("alice@example.com", service.extractUsername(token));
+    assertEquals("alice", service.extractUsername(token));
     assertTrue(service.isTokenValid(token, user));
     assertEquals(3600000L, service.getExpirationTime());
   }
@@ -40,8 +40,8 @@ class JwtServiceTest {
     ReflectionTestUtils.setField(service, "secretKey", TEST_SECRET);
     ReflectionTestUtils.setField(service, "jwtExpiration", 3600000L);
 
-    User user = new User().setEmail("alice@example.com");
-    User other = new User().setEmail("bob@example.com");
+    User user = new User().setUsername("alice").setEmail("alice@example.com");
+    User other = new User().setUsername("bob").setEmail("bob@example.com");
 
     String token = service.generateToken(Map.of("role", "USER"), user);
 
@@ -54,7 +54,7 @@ class JwtServiceTest {
     ReflectionTestUtils.setField(service, "secretKey", TEST_SECRET);
     ReflectionTestUtils.setField(service, "jwtExpiration", -1000L);
 
-    User user = new User().setEmail("alice@example.com");
+    User user = new User().setUsername("alice").setEmail("alice@example.com");
 
     String token = service.generateToken(user);
 

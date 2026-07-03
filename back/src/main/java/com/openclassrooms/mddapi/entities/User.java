@@ -78,8 +78,12 @@ public class User implements UserDetails {
     return true;
   }
 
+  public String getEmail() {
+    return email;
+  }
+
   @Override
   public String getUsername() {
-    return email;
+    return username;
   }
 }

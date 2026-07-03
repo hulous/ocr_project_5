@@ -56,8 +56,8 @@ class PlainObjectsAndRepositoriesTest {
     assertEquals("owner@example.com", user.getEmail());
     assertEquals(createdAt, user.getCreatedAt());
     assertEquals(updatedAt, user.getUpdatedAt());
-    assertEquals("owner@example.com", user.getUsername());
-    assertTrue(user.toString().contains("username=owner@example.com") || user.toString().contains("username=Owner"));
+    assertEquals("Owner", user.getUsername());
+    assertTrue(user.toString().contains("username=Owner"));
     assertTrue(user.getAuthorities().isEmpty());
     assertTrue(user.isAccountNonExpired());
     assertTrue(user.isAccountNonLocked());
