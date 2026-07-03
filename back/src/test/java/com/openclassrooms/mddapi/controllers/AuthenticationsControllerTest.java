@@ -16,7 +16,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -93,7 +93,7 @@ class AuthenticationsControllerTest {
 
   @Test
   void authenticatedUserReturnsCurrentPrincipal() {
-    Date now = new Date();
+    LocalDateTime now = LocalDateTime.now();
     UserResponse responseBody = UserTestData.userResponse(99, "Alice", "alice@example.com", now, now);
 
     when(authenticationService.authenticatedUser()).thenReturn(responseBody);

@@ -11,7 +11,7 @@ import com.openclassrooms.mddapi.responses.UserResponse;
 import org.junit.jupiter.api.Test;
 import org.springframework.stereotype.Repository;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -41,8 +41,8 @@ class PlainObjectsAndRepositoriesTest {
 
   @Test
   void entitySupportsUserDetailsAndHidesPasswordInToString() {
-    Date createdAt = new Date();
-    Date updatedAt = new Date();
+    LocalDateTime createdAt = LocalDateTime.now();
+    LocalDateTime updatedAt = LocalDateTime.now();
 
     User user = new User()
       .setId(1)
@@ -76,8 +76,8 @@ class PlainObjectsAndRepositoriesTest {
     assertSame(loginResponse, loginResponse.setToken("token").setExpiresIn(3600L));
     assertSame(userResponse, userResponse.setId(1).setUsername("Alice").setEmail("a@b.com"));
 
-    Date createdAt = new Date();
-    Date updatedAt = new Date();
+    LocalDateTime createdAt = LocalDateTime.now();
+    LocalDateTime updatedAt = LocalDateTime.now();
     assertSame(userResponse, userResponse.setCreatedAt(createdAt).setUpdatedAt(updatedAt));
 
     assertEquals("ok", apiMessageResponse.getMessage());

@@ -5,7 +5,7 @@ import com.openclassrooms.mddapi.dtos.RegisterUserDto;
 import com.openclassrooms.mddapi.entities.User;
 import com.openclassrooms.mddapi.responses.UserResponse;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 public final class UserTestData {
 
@@ -28,7 +28,7 @@ public final class UserTestData {
       .setPassword(password);
   }
 
-  public static UserResponse userResponse(int id, String username, String email, Date createdAt, Date updatedAt) {
+  public static UserResponse userResponse(int id, String username, String email, LocalDateTime createdAt, LocalDateTime updatedAt) {
     return new UserResponse()
       .setId(id)
       .setUsername(username)
