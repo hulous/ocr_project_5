@@ -1,0 +1,53 @@
+<div>
+  <app-header-bar></app-header-bar>
+  <br />
+
+  <div class="mdd-page-header">
+    <button mat-flat-button color="primary" class="mdd-btn" routerLink="create">Créer une publication</button>
+  </div>
+
+  @if (loading) {
+    <mat-card class="mdd-card">
+      <mat-card-content>
+        <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+      </mat-card-content>
+    </mat-card>
+  }
+
+  @if (error) {
+    <p class="error">Impossible de charger les publications pour vos thèmes abonnés.</p>
+  }
+
+  @if (!loading && !error) {
+    <div class="mdd-post-list">
+      @if (topicPosts.length === 0) {
+        <mat-card class="mdd-card">
+          <mat-card-content>Aucune publication disponible pour vos thèmes abonnés.</mat-card-content>
+        </mat-card>
+      } @else {
+        @for (group of topicPosts; track group.topic.id) {
+          <section class="mdd-topic-post-group">
+            <h2>{{ group.topic.title }}</h2>
+            @if (group.posts.length === 0) {
+              <mat-card class="mdd-card">
+                <mat-card-content>Aucune publication pour ce thème.</mat-card-content>
+              </mat-card>
+            } @else {
+              @for (post of group.posts; track post.id) {
+                <mat-card class="mdd-card mdd-card--item">
+                  <mat-card-title>{{ post.title }}</mat-card-title>
+                  <mat-card-subtitle>
+                    Par {{ post.authorUsername }} • {{ post.createdAt | date:'medium' }}
+                  </mat-card-subtitle>
+                  <mat-card-content>
+                    <p>{{ post.content }}</p>
+                  </mat-card-content>
+                </mat-card>
+              }
+            }
+          </section>
+        }
+      }
+    </div>
+  }
+</div>
