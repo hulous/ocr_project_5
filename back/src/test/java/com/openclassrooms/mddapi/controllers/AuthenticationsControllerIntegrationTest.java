@@ -62,4 +62,29 @@ class AuthenticationsControllerIntegrationTest {
       .andExpect(jsonPath("$.token").isNotEmpty())
       .andExpect(jsonPath("$.expiresIn").value(3600000));
   }
+
+  @Test
+  void loginReturnsJwtWhenCredentialsAreValidUsingUsername() throws Exception {
+    RegisterUserDto registerRequest = new RegisterUserDto()
+      .setEmail("jane@example.com")
+      .setUsername("jane")
+      .setPassword("pwd");
+
+    mockMvc.perform(post("/api/auth/register")
+        .contentType(MediaType.APPLICATION_JSON)
+        .content(objectMapper.writeValueAsString(registerRequest)))
+      .andExpect(status().isOk());
+
+    LoginUserDto loginRequest = new LoginUserDto()
+      .setEmail("jane")
+      .setPassword("pwd");
+
+    mockMvc.perform(post("/api/auth/login")
+        .contentType(MediaType.APPLICATION_JSON)
+        .content(objectMapper.writeValueAsString(loginRequest)))
+      .andDo(print())
+      .andExpect(status().isOk())
+      .andExpect(jsonPath("$.token").isNotEmpty())
+      .andExpect(jsonPath("$.expiresIn").value(3600000));
+  }
 }
