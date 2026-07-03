@@ -81,6 +81,17 @@ class TopicPostCreationIntegrationTest {
 
     Integer createdPostId = objectMapper.readTree(postResult.getResponse().getContentAsString()).get("id").asInt();
 
+    mockMvc.perform(post("/api/posts/" + createdPostId + "/comments")
+        .contentType(MediaType.APPLICATION_JSON)
+        .header("Authorization", "Bearer " + token)
+        .content(objectMapper.writeValueAsString(new com.openclassrooms.mddapi.dtos.CreateCommentDto()
+          .setContent("Great article!"))))
+      .andExpect(status().isOk())
+      .andExpect(jsonPath("$.id").isNumber())
+      .andExpect(jsonPath("$.authorId").isNumber())
+      .andExpect(jsonPath("$.postId").value(createdPostId))
+      .andExpect(jsonPath("$.content").value("Great article!"));
+
     mockMvc.perform(get("/api/topics/1/posts")
         .header("Authorization", "Bearer " + token))
       .andExpect(status().isOk())
