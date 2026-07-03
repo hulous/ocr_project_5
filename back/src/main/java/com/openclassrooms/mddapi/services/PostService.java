@@ -13,6 +13,7 @@ import com.openclassrooms.mddapi.responses.PostDetailResponse;
 import com.openclassrooms.mddapi.responses.PostResponse;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -40,6 +41,7 @@ public class PostService {
     this.currentUserService = currentUserService;
   }
 
+  @Transactional(readOnly = true)
   public PostDetailResponse show(Integer postId) {
     Post post = postRepository
       .findById(postId)
@@ -69,6 +71,7 @@ public class PostService {
     return postMapper.toResponse(saved);
   }
 
+  @Transactional(readOnly = true)
   public List<PostResponse> listPostsForTopic(Integer topicId) {
     topicRepository
       .findById(topicId)
