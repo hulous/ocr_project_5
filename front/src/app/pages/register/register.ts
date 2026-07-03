@@ -6,7 +6,7 @@ import { MaterialModule } from "src/app/shared/material";
 import { CommonModule } from "@angular/common";
 import { NotLoggedLogoComponent } from '../../components/logo/logo';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -18,7 +18,7 @@ import { RouterModule } from '@angular/router';
 export class RegisterComponent {
   private readonly authService = inject(AuthService);
   private readonly fb = inject(FormBuilder);
-  private readonly router = inject(RouterModule);
+  private readonly router = inject(Router);
   private readonly destroyRef = inject(DestroyRef);
   public onError = false;
 

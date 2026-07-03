@@ -6,7 +6,7 @@ import { LoginRequest } from '../../core/models/login-request.interface';
 import { AuthService } from '../../core/services/auth';
 import { MaterialModule } from "../../shared/material";
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { NotLoggedLogoComponent } from '../../components/logo/logo';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
@@ -20,7 +20,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 export class LoginComponent {
   private readonly authService = inject(AuthService);
   private readonly fb = inject(FormBuilder);
-  private readonly router = inject(RouterModule);
+  private readonly router = inject(Router);
   private readonly sessionService = inject(SessionService);
   private readonly destroyRef = inject(DestroyRef);
 
