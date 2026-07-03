@@ -4,9 +4,14 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
+import io.jsonwebtoken.io.DecodingException;
 import io.jsonwebtoken.security.Keys;
 
+import java.nio.charset.StandardCharsets;
 import java.security.Key;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.Base64;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -81,8 +86,27 @@ public class JwtService {
   }
 
   private Key getSignInKey() {
-    byte[] keyBytes = Decoders.BASE64.decode(secretKey);
+    byte[] keyBytes;
+
+    try {
+      keyBytes = Decoders.BASE64.decode(secretKey);
+    } catch (DecodingException e) {
+      keyBytes = secretKey.getBytes(StandardCharsets.UTF_8);
+    }
+
+    if (keyBytes.length < 32) {
+      keyBytes = expandToRequiredLength(keyBytes);
+    }
 
     return Keys.hmacShaKeyFor(keyBytes);
+  }
+
+  private byte[] expandToRequiredLength(byte[] keyBytes) {
+    try {
+      MessageDigest digest = MessageDigest.getInstance("SHA-256");
+      return digest.digest(keyBytes);
+    } catch (NoSuchAlgorithmException e) {
+      throw new IllegalStateException("SHA-256 not available for JWT key expansion", e);
+    }
   }
 }
