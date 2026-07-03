@@ -1,10 +1,12 @@
 package com.openclassrooms.mddapi.configurations;
 
 import com.openclassrooms.mddapi.services.JwtService;
+import io.jsonwebtoken.JwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.http.MediaType;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -81,6 +83,10 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
       }
 
       filterChain.doFilter(request, response);
+    } catch (JwtException exception) {
+      response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+      response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+      response.getWriter().write("{\"message\":\"Unauthorized request\"}");
     } catch (Exception exception) {
       handlerExceptionResolver.resolveException(request, response, null, exception);
     }

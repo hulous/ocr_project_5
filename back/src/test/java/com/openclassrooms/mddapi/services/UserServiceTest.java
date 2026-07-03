@@ -12,7 +12,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.http.HttpStatus;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -35,7 +35,7 @@ class UserServiceTest {
   @Test
   void showReturnsMappedResponseWhenUserExists() {
     User user = UserTestData.user(1, "test", "test@example.com", "password");
-    UserResponse response = UserTestData.userResponse(1, "test", "test@example.com", new Date(), new Date());
+    UserResponse response = UserTestData.userResponse(1, "test", "test@example.com", LocalDateTime.now(), LocalDateTime.now());
 
     when(userRepository.findById(1)).thenReturn(Optional.of(user));
     when(userMapper.toResponse(user)).thenReturn(response);

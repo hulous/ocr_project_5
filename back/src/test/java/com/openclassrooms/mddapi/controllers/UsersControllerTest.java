@@ -13,7 +13,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -30,7 +30,7 @@ class UsersControllerTest {
 
   @Test
   void showReturnsUserWhenFound() {
-    Date now = new Date();
+    LocalDateTime now = LocalDateTime.now();
     UserResponse userResponse = UserTestData.userResponse(1, "John", "john@example.com", now, now);
     when(userService.show(1)).thenReturn(userResponse);
 

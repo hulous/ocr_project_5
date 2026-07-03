@@ -12,7 +12,7 @@
 	<artifactId>mdd-api</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>mdd-api</name>
-	<description>Demo project for Spring Boot with template base</description>
+	<description>Developper social network project</description>
 	<url/>
 	<licenses>
 		<license/>
@@ -76,7 +76,7 @@
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-webmvc-test</artifactId>
+			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
 
@@ -156,6 +156,13 @@
 						<id>report</id>
 						<phase>test</phase>
 						<goals><goal>report</goal></goals>
+						<configuration>
+							<excludes>
+								<exclude>**/*Mapper.class</exclude>
+								<exclude>**/*MapperImpl.class</exclude>
+								<exclude>**/mappers/**/*.class</exclude>
+							</excludes>
+						</configuration>
 					</execution>
 				</executions>
 			</plugin>
