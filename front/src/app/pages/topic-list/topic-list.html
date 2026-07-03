@@ -1,0 +1,27 @@
+<div class="mdd-topic-list-page">
+  <div class="mdd-page-header">
+    <h1>Topics</h1>
+    <button mat-stroked-button color="primary" routerLink="/home">Retour</button>
+  </div>
+
+  @if (loading) {
+    <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+  }
+
+  @if (error) {
+    <div class="mdd-error-message">Impossible de charger les thèmes.</div>
+  }
+
+  @if (!loading && !error) {
+    <mat-list>
+      @for (topic of topics; track topic.id) {
+        <mat-list-item>
+          <div class="mdd-topic-item">
+            <h2>{{ topic.title }}</h2>
+            <p>{{ topic.description }}</p>
+          </div>
+        </mat-list-item>
+      }
+    </mat-list>
+  }
+</div>
