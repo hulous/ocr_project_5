@@ -7,6 +7,7 @@ import com.openclassrooms.mddapi.repositories.UserRepository;
 import com.openclassrooms.mddapi.responses.UserResponse;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class UserService {
@@ -18,6 +19,7 @@ public class UserService {
     this.userMapper = userMapper;
   }
 
+  @Transactional(readOnly = true)
   public UserResponse show(Integer id) {
     User user = userRepository
       .findById(id)
