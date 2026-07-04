@@ -17,36 +17,6 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
   standalone: true,
   imports: [CommonModule, RouterModule, MaterialModule, HeaderBarComponent],
   templateUrl: './posts-create.html',
-  styles: [
-    `
-      .mdd-card--form {
-        max-width: 660px;
-        margin: 0 auto;
-      }
-
-      .mdd-page-header {
-        align-items: center;
-        gap: 12px;
-      }
-
-      .mdd-page-title-row {
-        display: flex;
-        align-items: center;
-      }
-
-      .mdd-form {
-        display: flex;
-        flex-direction: column;
-        gap: 18px;
-      }
-
-      .mdd-form-actions {
-        display: flex;
-        justify-content: center;
-        padding-top: 6px;
-      }
-    `
-  ]
 })
 export class PostsCreateComponent {
   private readonly postService = inject(PostService);
@@ -115,7 +85,7 @@ export class PostsCreateComponent {
     this.postService.create(topicIdValue, payload).pipe(
       takeUntilDestroyed(this.destroyRef)
     ).subscribe({
-      next: post => {
+      next: (post: Post) => {
         this.submitting = false;
         this.formError = false;
         this.snackBar.open('Publication créée.', 'Fermer', { duration: 3000 });

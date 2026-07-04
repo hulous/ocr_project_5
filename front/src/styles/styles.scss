@@ -185,6 +185,36 @@ html, body {
 // Post
 // -----
 
+// Create
+.post-create {
+  .mdd-card--form {
+    max-width: 660px;
+    margin: 0 auto;
+  }
+
+  .mdd-page-header {
+    align-items: center;
+    gap: 12px;
+  }
+
+  .mdd-page-title-row {
+    display: flex;
+    align-items: center;
+  }
+
+  .mdd-form {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+
+  .mdd-form-actions {
+    display: flex;
+    justify-content: center;
+    padding-top: 6px;
+  }
+}
+
 // Show
 .mdd-post-detail-page {
   padding: tokens.$mdd-spacing-md;

@@ -1,4 +1,4 @@
-<div class="main-app">
+<div class="main-app post-create">
   <app-header-bar></app-header-bar>
 
   <div class="mdd-page-header mdd-page-header--left">
@@ -26,12 +26,6 @@
 
   @if (!loading && !error) {
     <mat-card class="mdd-card mdd-card--form">
-      <mat-card-title>
-        <div class="mdd-page-title-row">
-          <span class="mdd-page-title">Créer un nouvel article</span>
-        </div>
-      </mat-card-title>
-
       <mat-card-content>
         @if (topics.length === 0) {
           <p>Vous n’êtes abonné à aucun thème pour le moment. Abonnez-vous à un thème avant de créer un article.</p>
