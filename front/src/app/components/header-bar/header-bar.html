@@ -16,10 +16,12 @@
         <mat-icon>menu</mat-icon>
       </button>
       <mat-menu #actionsMenu="matMenu">
-        <button mat-menu-item class="mdd-header-bar__logout-button" (click)="logout()">Se déconnecter</button>
-        <button mat-menu-item routerLink="/post" routerLinkActive="mdd-header-bar__link--active" [routerLinkActiveOptions]="{ exact: true }">Articles</button>
-        <button mat-menu-item routerLink="/topics" routerLinkActive="mdd-header-bar__link--active" [routerLinkActiveOptions]="{ exact: true }">Thèmes</button>
-        <button mat-menu-item routerLink="/user">Utilisateur</button>
+        <button mat-menu-item  class="mdd-header-bar__logout-button" (click)="logout()">Se déconnecter</button>
+        <button mat-menu-item  routerLink="/posts" routerLinkActive="mdd-header-bar__link--active" [routerLinkActiveOptions]="{ exact: true }">Articles</button>
+        <button mat-menu-item  routerLink="/topics" routerLinkActive="mdd-header-bar__link--active" [routerLinkActiveOptions]="{ exact: true }">Thèmes</button>
+        <button mat-menu-item class="mdd-header-bar__user-link" routerLink="/user" routerLinkActive="active" #userLink="routerLinkActive" [routerLinkActiveOptions]="{ exact: true }" aria-label="Utilisateur">
+          <img [src]="userLink.isActive ? '/assets/user_logo_active.png' : '/assets/user_logo.png'" alt="Utilisateur" />
+        </button>
       </mat-menu>
     </div>
   </div>
