@@ -97,6 +97,58 @@
   }
 }
 
+.mdd-page-header {
+  display: flex;
+  justify-content: flex-end;
+  padding: tokens.$mdd-spacing-md;
+  max-width: min(1200px, 100%);
+  margin: 0 auto;
+}
+
+.mdd-page-header--left {
+  justify-content: flex-start;
+}
+
+.mdd-post-list {
+  max-width: min(1200px, 95%);
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 tokens.$mdd-spacing-md tokens.$mdd-spacing-lg;
+}
+
+.mdd-topic-post-group {
+  margin-bottom: tokens.$mdd-spacing-3xl;
+}
+
+.mdd-topic-post-group > h2 {
+  font-size: tokens.$mdd-font-size-h2;
+  font-weight: tokens.$mdd-font-weight-bold;
+  margin: 0 0 tokens.$mdd-spacing-md;
+}
+
+.mdd-post-grid {
+  display: grid;
+  gap: tokens.$mdd-spacing-lg;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+
+.mdd-card--item {
+  cursor: pointer;
+  min-height: 220px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.mdd-card--item mat-card-title,
+.mdd-card--item mat-card-subtitle {
+  display: block;
+}
+
+.mdd-card--item mat-card-content {
+  padding-top: tokens.$mdd-spacing-sm;
+}
+
 // Bulle de commentaire : même logique que la card mais fond encore plus clair
 .mdd-comment {
   background-color: tokens.$mdd-surface-muted;
