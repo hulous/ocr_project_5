@@ -13,6 +13,12 @@ html, body {
   color: tokens.$mdd-text-primary;
 }
 
+.main-app {
+  padding: 0 16px 32px;
+  max-width: 960px;
+  margin: 0 auto;
+}
+
 // Titres génériques de page (ex: "Inscription", "Créer un nouvel article")
 .mdd-page-title {
   font-size: tokens.$mdd-font-size-h1;
