@@ -27,8 +27,9 @@ public class Comment {
   @Column(nullable = false)
   private Integer id;
 
+  // Relationship to user
   @ManyToOne(fetch = FetchType.LAZY, optional = false)
-  @JoinColumn(name = "author_id", nullable = false)
+  @JoinColumn(name = "author_id", nullable = false, updatable = false)
   private User author;
 
   @ManyToOne(fetch = FetchType.LAZY, optional = false)

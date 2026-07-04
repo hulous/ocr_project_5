@@ -1,3 +1,5 @@
+import { Comment } from './comment.interface';
+
 export interface Post {
   id: number;
   authorId: number;
@@ -9,4 +11,5 @@ export interface Post {
   content: string;
   createdAt: string;
   updatedAt: string;
+  comments?: Comment[];
 }
