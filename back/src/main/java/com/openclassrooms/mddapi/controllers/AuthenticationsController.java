@@ -3,16 +3,19 @@ package com.openclassrooms.mddapi.controllers;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.openclassrooms.mddapi.dtos.LoginUserDto;
 import com.openclassrooms.mddapi.dtos.RegisterUserDto;
+import com.openclassrooms.mddapi.dtos.UpdateUserDto;
 import com.openclassrooms.mddapi.responses.ApiMessageResponse;
 import com.openclassrooms.mddapi.responses.LoginResponse;
 import com.openclassrooms.mddapi.responses.UserResponse;
 import com.openclassrooms.mddapi.services.AuthenticationService;
+import com.openclassrooms.mddapi.services.UserUpdateService;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -30,9 +33,11 @@ import jakarta.validation.Valid;
 @Tag(name = "Authentication", description = "Authentication and account endpoints")
 public class AuthenticationsController {
   private final AuthenticationService authenticationService;
+  private final UserUpdateService userUpdateService;
 
-  public AuthenticationsController(AuthenticationService authenticationService) {
+  public AuthenticationsController(AuthenticationService authenticationService, UserUpdateService userUpdateService) {
     this.authenticationService = authenticationService;
+    this.userUpdateService = userUpdateService;
   }
 
   @PostMapping("/register")
@@ -72,5 +77,21 @@ public class AuthenticationsController {
   })
   public ResponseEntity<UserResponse> authenticatedUser() {
     return ResponseEntity.ok(authenticationService.authenticatedUser());
+  }
+
+  @PutMapping("/me")
+  @Operation(
+    summary = "Update current authenticated user profile",
+    security = { @SecurityRequirement(name = "bearerAuth") }
+  )
+  @ApiResponses(value = {
+    @ApiResponse(responseCode = "200", description = "Updated authenticated user", content = @Content(schema = @Schema(implementation = UserResponse.class))),
+    @ApiResponse(responseCode = "400", description = "Invalid update payload", content = @Content(schema = @Schema(implementation = ApiMessageResponse.class))),
+    @ApiResponse(responseCode = "401", description = "Invalid token or unauthorized request", content = @Content(schema = @Schema(implementation = ApiMessageResponse.class))),
+    @ApiResponse(responseCode = "403", description = "Authentication required", content = @Content(schema = @Schema(implementation = ApiMessageResponse.class))),
+    @ApiResponse(responseCode = "500", description = "Server error", content = @Content(schema = @Schema(implementation = ApiMessageResponse.class)))
+  })
+  public ResponseEntity<UserResponse> updateAuthenticatedUser(@Valid @RequestBody UpdateUserDto updateUserDto) {
+    return ResponseEntity.ok(userUpdateService.updateCurrentUser(updateUserDto));
   }
 }
