@@ -18,4 +18,8 @@ export class TopicService {
   public subscribe(topicId: number): Observable<unknown> {
     return this.httpClient.post<unknown>(`${this.pathService}/${topicId}/subscription`, null);
   }
+
+  public unsubscribe(topicId: number): Observable<unknown> {
+    return this.httpClient.delete<unknown>(`${this.pathService}/${topicId}/subscription`);
+  }
 }

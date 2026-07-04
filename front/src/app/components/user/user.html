@@ -1,25 +1,77 @@
-<div class="m3">
-  <mat-card>
+<div class="main-app">
+  <app-header-bar></app-header-bar>
+
+  <mat-card class="mdd-card user-card">
     <mat-card-title>
-      <div fxLayout="row" fxLayoutAlign="start center">
-        <button mat-icon-button (click)="back()">
+      <div class="user-card__header">
+        <button mat-icon-button (click)="back()" aria-label="Retour">
           <mat-icon>arrow_back</mat-icon>
         </button>
-        <h1>User information</h1>
+        <h1 class="user-card__title">Profil utilisateur</h1>
       </div>
     </mat-card-title>
-    <mat-card-content>
-      @if (user$ | async; as user) {
-        <div fxLayout="column" fxLayoutAlign="start center">
-          <p>Username: {{ user.username }}</p>
-          <p>Email: {{ user.email }}</p>
 
-          <div fxLayoutAlign="space-between center" class="p2 w100">
-            <p><i>Create at:</i> {{ user.createdAt | date:'longDate' }}</p>
-            <p><i>Last update:</i> {{ user.updatedAt | date:'longDate' }}</p>
+    <mat-card-content>
+      <div class="user-profile">
+        @if (user()) {
+          <form class="user-form" [formGroup]="userForm" (ngSubmit)="saveProfile()">
+            <mat-form-field appearance="outline" class="mdd-field user-form__field">
+              <mat-label>Username</mat-label>
+              <input matInput formControlName="username" />
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="mdd-field user-form__field">
+              <mat-label>Email</mat-label>
+              <input matInput formControlName="email" type="email" />
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="mdd-field user-form__field">
+              <mat-label>Mot de passe</mat-label>
+              <input matInput formControlName="password" type="password" />
+            </mat-form-field>
+
+            <div class="user-form-buttons">
+              <button mat-flat-button color="primary" class="mdd-btn mdd-btn--primary" type="submit">
+                Sauvegarder
+              </button>
+            </div>
+          </form>
+
+          <div class="user-summary">
+            <div class="user-summary__item">
+              <span class="user-summary__label">Créé le</span>
+              <span class="user-summary__value">{{ user()?.createdAt | date:'longDate' }}</span>
+            </div>
+            <div class="user-summary__item">
+              <span class="user-summary__label">Dernière mise à jour</span>
+              <span class="user-summary__value">{{ user()?.updatedAt | date:'longDate' }}</span>
+            </div>
           </div>
-        </div>
-      }
+        }
+
+        <section class="user-subscriptions">
+          <h2 class="user-subscriptions__title">Abonnements</h2>
+          <div class="user-subscription-list">
+            @if (subscribedTopics().length > 0) {
+              @for (topic of subscribedTopics(); track topic.id) {
+                <mat-card class="mdd-card subscription-card">
+                  <div>
+                    <h3 class="subscription-card__title">{{ topic.title }}</h3>
+                    <p class="subscription-card__description">Description: {{ topic.description }}</p>
+                  </div>
+                  <div class="subscription-card__actions">
+                    <button mat-flat-button color="primary" class="mdd-btn mdd-btn--primary" (click)="unsubscribeTopic(topic.id)" [disabled]="unsubscribingTopicIds().includes(topic.id)">
+                      Se désabonner
+                    </button>
+                  </div>
+                </mat-card>
+              }
+            } @else {
+              <p class="user-empty">Aucun abonnement trouvé.</p>
+            }
+          </div>
+        </section>
+      </div>
     </mat-card-content>
   </mat-card>
 </div>
