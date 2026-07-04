@@ -2,7 +2,7 @@ import { Component, DestroyRef, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { MaterialModule } from '../../shared/material';
 import { TopicService } from '../../core/services/topic';
 import { PostService } from '../../core/services/post';
@@ -23,12 +23,14 @@ export class PostsCreateComponent {
   private readonly topicService = inject(TopicService);
   private readonly fb = inject(FormBuilder);
   private readonly snackBar = inject(MatSnackBar);
+  private readonly router = inject(Router);
   private readonly destroyRef = inject(DestroyRef);
 
   public topics: Topic[] = [];
   public loading = true;
   public error = false;
   public formError = false;
+  public submitted = false;
   public submitting = false;
 
   public form = this.fb.group({
@@ -60,6 +62,7 @@ export class PostsCreateComponent {
   }
 
   public submit(): void {
+    this.submitted = true;
     this.formError = false;
 
     if (this.form.invalid) {
@@ -82,10 +85,11 @@ export class PostsCreateComponent {
     this.postService.create(topicIdValue, payload).pipe(
       takeUntilDestroyed(this.destroyRef)
     ).subscribe({
-      next: post => {
-        this.form.reset();
+      next: (post: Post) => {
         this.submitting = false;
+        this.formError = false;
         this.snackBar.open('Publication créée.', 'Fermer', { duration: 3000 });
+        this.router.navigate(['/posts']);
       },
       error: () => {
         this.submitting = false;
