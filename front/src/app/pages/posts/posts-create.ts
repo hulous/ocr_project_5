@@ -2,7 +2,7 @@ import { Component, DestroyRef, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { MaterialModule } from '../../shared/material';
 import { TopicService } from '../../core/services/topic';
 import { PostService } from '../../core/services/post';
@@ -17,18 +17,50 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
   standalone: true,
   imports: [CommonModule, RouterModule, MaterialModule, HeaderBarComponent],
   templateUrl: './posts-create.html',
+  styles: [
+    `
+      .mdd-card--form {
+        max-width: 660px;
+        margin: 0 auto;
+      }
+
+      .mdd-page-header {
+        align-items: center;
+        gap: 12px;
+      }
+
+      .mdd-page-title-row {
+        display: flex;
+        align-items: center;
+      }
+
+      .mdd-form {
+        display: flex;
+        flex-direction: column;
+        gap: 18px;
+      }
+
+      .mdd-form-actions {
+        display: flex;
+        justify-content: center;
+        padding-top: 6px;
+      }
+    `
+  ]
 })
 export class PostsCreateComponent {
   private readonly postService = inject(PostService);
   private readonly topicService = inject(TopicService);
   private readonly fb = inject(FormBuilder);
   private readonly snackBar = inject(MatSnackBar);
+  private readonly router = inject(Router);
   private readonly destroyRef = inject(DestroyRef);
 
   public topics: Topic[] = [];
   public loading = true;
   public error = false;
   public formError = false;
+  public submitted = false;
   public submitting = false;
 
   public form = this.fb.group({
@@ -60,6 +92,7 @@ export class PostsCreateComponent {
   }
 
   public submit(): void {
+    this.submitted = true;
     this.formError = false;
 
     if (this.form.invalid) {
@@ -83,9 +116,10 @@ export class PostsCreateComponent {
       takeUntilDestroyed(this.destroyRef)
     ).subscribe({
       next: post => {
-        this.form.reset();
         this.submitting = false;
+        this.formError = false;
         this.snackBar.open('Publication créée.', 'Fermer', { duration: 3000 });
+        this.router.navigate(['/posts']);
       },
       error: () => {
         this.submitting = false;

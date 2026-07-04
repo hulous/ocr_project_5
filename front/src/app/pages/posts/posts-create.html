@@ -1,13 +1,15 @@
 <div class="main-app">
   <app-header-bar></app-header-bar>
-  <br />
 
   <div class="mdd-page-header mdd-page-header--left">
-    <button mat-flat-button color="primary" class="mdd-btn" routerLink="/posts">Retour aux publications</button>
+    <button mat-icon-button routerLink="/posts" aria-label="Retour aux publications">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+    <span class="mdd-page-title">Créer un nouvel article</span>
   </div>
 
   @if (loading) {
-    <mat-card class="mdd-card">
+    <mat-card class="mdd-card mdd-card--form">
       <mat-card-content>
         <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
       </mat-card-content>
@@ -15,42 +17,51 @@
   }
 
   @if (error) {
-    <p class="error">Impossible de charger vos thèmes abonnés.</p>
+    <mat-card class="mdd-card mdd-card--form">
+      <mat-card-content>
+        <p class="error">Impossible de charger vos thèmes abonnés.</p>
+      </mat-card-content>
+    </mat-card>
   }
 
   @if (!loading && !error) {
-    <mat-card class="mdd-card">
-      <mat-card-title>Créer une publication</mat-card-title>
+    <mat-card class="mdd-card mdd-card--form">
+      <mat-card-title>
+        <div class="mdd-page-title-row">
+          <span class="mdd-page-title">Créer un nouvel article</span>
+        </div>
+      </mat-card-title>
+
       <mat-card-content>
         @if (topics.length === 0) {
-          <p>Vous n’êtes abonné à aucun thème pour le moment. Abonnez-vous à un thème avant de créer une publication.</p>
+          <p>Vous n’êtes abonné à aucun thème pour le moment. Abonnez-vous à un thème avant de créer un article.</p>
         } @else {
-          <form [formGroup]="form" (ngSubmit)="submit()">
-            <mat-form-field appearance="fill" class="mdd-full-width">
-              <mat-label for="topic-select">Thème</mat-label>
+          <form [formGroup]="form" (ngSubmit)="submit()" class="mdd-form">
+            <mat-form-field appearance="outline" class="mdd-field">
+              <mat-label for="topic-select">Sélectionner un thème</mat-label>
               <mat-select id="topic-select" formControlName="topicId">
                 @for (topic of topics; track topic.id) {
                   <mat-option [value]="topic.id">{{ topic.title }}</mat-option>
                 }
               </mat-select>
-              <mat-error *ngIf="form.controls.topicId.invalid && form.controls.topicId.touched">
+              <mat-error *ngIf="form.controls.topicId.invalid && submitted">
                 Sélectionnez un thème auquel vous êtes abonné.
               </mat-error>
             </mat-form-field>
 
-            <mat-form-field appearance="fill" class="mdd-full-width">
-              <mat-label for="post-title">Titre</mat-label>
+            <mat-form-field appearance="outline" class="mdd-field">
+              <mat-label for="post-title">Titre de l’article</mat-label>
               <input id="post-title" matInput formControlName="title" />
-              @if (form.controls.title.invalid && form.controls.title.touched) {
+              @if (form.controls.title.invalid && submitted) {
                 <mat-error *ngIf="form.controls.title.errors?.['required']">Le titre est requis.</mat-error>
                 <mat-error *ngIf="form.controls.title.errors?.['minlength']">Le titre doit comporter au moins 3 caractères.</mat-error>
               }
             </mat-form-field>
 
-            <mat-form-field appearance="fill" class="mdd-full-width">
-              <mat-label for="post-content">Contenu</mat-label>
+            <mat-form-field appearance="outline" class="mdd-field">
+              <mat-label for="post-content">Contenu de l’article</mat-label>
               <textarea id="post-content" matInput rows="6" formControlName="content"></textarea>
-              @if (form.controls.content.invalid && form.controls.content.touched) {
+              @if (form.controls.content.invalid && submitted) {
                 <mat-error *ngIf="form.controls.content.errors?.['required']">Le contenu est requis.</mat-error>
                 <mat-error *ngIf="form.controls.content.errors?.['minlength']">Le contenu doit comporter au moins 10 caractères.</mat-error>
               }
@@ -61,7 +72,7 @@
             }
 
             <div class="mdd-form-actions">
-              <button mat-flat-button color="primary" class="mdd-btn mdd-btn--primary" type="submit" [disabled]="form.invalid || submitting">Publier</button>
+              <button mat-flat-button color="primary" class="mdd-btn mdd-btn--primary" type="submit" [disabled]="form.invalid || submitting">Créer</button>
             </div>
           </form>
         }
