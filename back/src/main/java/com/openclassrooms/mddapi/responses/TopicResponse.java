@@ -22,4 +22,7 @@ public class TopicResponse {
 
   @Schema(description = "Topic description", example = "Technical tutorials, tips, and code review discussions.")
   private String description;
+
+  @Schema(description = "Whether the current user is subscribed to the topic", example = "true")
+  private boolean subscribed;
 }

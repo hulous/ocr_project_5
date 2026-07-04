@@ -5,7 +5,8 @@ import { UserComponent } from "./components/user/user";
 // import { NotFoundComponent } from "./pages/not-found/not-found.component";
 import { HomeComponent } from "./pages/home/home";
 import { LoginComponent } from "./pages/login/login";
-import { RegisterComponent} from "./pages/register/register";
+import { RegisterComponent } from "./pages/register/register";
+import { TopicListComponent } from "./pages/topic-list/topic-list";
 
 export const routes: Routes = [
   {
@@ -32,6 +33,11 @@ export const routes: Routes = [
     path: 'user',
     canActivate: [AuthGuard],
     component: UserComponent
+  },
+  {
+    path: 'topics',
+    canActivate: [AuthGuard],
+    component: TopicListComponent
   },
   // { path: '404', component: NotFoundComponent },
   { path: '**', redirectTo: '404' },

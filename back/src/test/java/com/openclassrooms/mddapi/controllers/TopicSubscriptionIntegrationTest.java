@@ -20,10 +20,14 @@ import org.springframework.web.context.WebApplicationContext;
 
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import com.fasterxml.jackson.databind.JsonNode;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @TestPropertySource("classpath:env.test.properties")
@@ -74,6 +78,24 @@ class TopicSubscriptionIntegrationTest {
         .header("Authorization", "Bearer " + token))
       .andExpect(status().isOk())
       .andExpect(jsonPath("$.message").value("Subscription created successfully"));
+
+    String topicsContent = mockMvc.perform(get("/api/topics")
+        .header("Authorization", "Bearer " + token))
+      .andExpect(status().isOk())
+      .andReturn()
+      .getResponse()
+      .getContentAsString();
+
+    JsonNode topics = objectMapper.readTree(topicsContent);
+    JsonNode subscribedTopic = null;
+    for (JsonNode topicNode : topics) {
+      if (topicNode.get("id").asInt() == topicId) {
+        subscribedTopic = topicNode;
+        break;
+      }
+    }
+
+    assertTrue(subscribedTopic != null && subscribedTopic.get("subscribed").asBoolean());
 
     mockMvc.perform(delete("/api/topics/" + topicId + "/subscription")
         .header("Authorization", "Bearer " + token))

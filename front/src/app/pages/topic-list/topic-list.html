@@ -1,0 +1,45 @@
+<div>
+  <app-header-bar></app-header-bar>
+
+  @if (loading) {
+    <mat-card class="mdd-card">
+      <mat-card-content>
+        <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+      </mat-card-content>
+    </mat-card>
+  }
+
+  @if (error) {
+    <p class="error">Impossible de charger les thèmes.</p>
+  }
+
+  @if (!loading && !error) {
+    <div class="mdd-topic-list-content">
+      <div class="mdd-topic-grid">
+        @for (topic of topics; track topic.id) {
+          <div class="mdd-topic-grid-item">
+            <mat-card class="mdd-card">
+              <mat-card-content>
+                <div>
+                  <h2 class="mdd-card__title">{{ topic.title }}</h2>
+                </div>
+                <p>Description: {{ topic.description }}</p>
+              </mat-card-content>
+              <mat-card-actions>
+                <button mat-flat-button color="primary" class="mdd-btn mdd-btn--primary" (click)="subscribeTopic(topic.id)" [disabled]="topic.subscribed || subscribingTopicIds.has(topic.id)">
+                  @if (subscribingTopicIds.has(topic.id)) {
+                    En cours...
+                  } @else if (topic.subscribed) {
+                    Abonnée
+                  } @else {
+                    S’abonner
+                  }
+                </button>
+              </mat-card-actions>
+            </mat-card>
+          </div>
+        }
+      </div>
+    </div>
+  }
+</div>

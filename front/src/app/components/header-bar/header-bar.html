@@ -1,0 +1,26 @@
+<mat-toolbar class="mdd-toolbar">
+  <div class="mdd-toolbar__nav">
+    <div class="mdd-logged-logo">
+      <img src="/assets/logo_p6.png" alt="MDD logo" />
+    </div>
+    <div class="mdd-header-bar__actions">
+      <div class="mdd-header-bar__links">
+        <button mat-button class="mdd-header-bar__logout-button" (click)="logout()">Se déconnecter</button>
+        <button mat-button routerLink="/post" routerLinkActive="mdd-header-bar__link--active" [routerLinkActiveOptions]="{ exact: true }">Articles</button>
+        <button mat-button routerLink="/topics" routerLinkActive="mdd-header-bar__link--active" [routerLinkActiveOptions]="{ exact: true }">Thèmes</button>
+        <button mat-icon-button class="mdd-header-bar__user-link" routerLink="/user" routerLinkActive="active" #userLink="routerLinkActive" [routerLinkActiveOptions]="{ exact: true }" aria-label="Utilisateur">
+          <img [src]="userLink.isActive ? '/assets/user_logo_active.png' : '/assets/user_logo.png'" alt="Utilisateur" />
+        </button>
+      </div>
+      <button mat-icon-button class="mdd-header-bar__menu-trigger" [matMenuTriggerFor]="actionsMenu" aria-label="Open navigation menu">
+        <mat-icon>menu</mat-icon>
+      </button>
+      <mat-menu #actionsMenu="matMenu">
+        <button mat-menu-item class="mdd-header-bar__logout-button" (click)="logout()">Se déconnecter</button>
+        <button mat-menu-item routerLink="/post" routerLinkActive="mdd-header-bar__link--active" [routerLinkActiveOptions]="{ exact: true }">Articles</button>
+        <button mat-menu-item routerLink="/topics" routerLinkActive="mdd-header-bar__link--active" [routerLinkActiveOptions]="{ exact: true }">Thèmes</button>
+        <button mat-menu-item routerLink="/user">Utilisateur</button>
+      </mat-menu>
+    </div>
+  </div>
+</mat-toolbar>
