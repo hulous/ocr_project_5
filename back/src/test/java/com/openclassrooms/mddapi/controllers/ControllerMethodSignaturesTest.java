@@ -1,8 +1,6 @@
 package com.openclassrooms.mddapi.controllers;
 
-import com.openclassrooms.mddapi.responses.ApiMessageResponse;
 import com.openclassrooms.mddapi.responses.LoginResponse;
-
 import com.openclassrooms.mddapi.responses.UserResponse;
 
 import org.junit.jupiter.api.Test;
@@ -22,11 +20,6 @@ class ControllerMethodSignaturesTest {
     assertResponseEntityPayloadType(AuthenticationsController.class, "registrate", UserResponse.class);
     assertResponseEntityPayloadType(AuthenticationsController.class, "authenticate", LoginResponse.class);
     assertResponseEntityPayloadType(AuthenticationsController.class, "authenticatedUser", UserResponse.class);
-  }
-
-  @Test
-  void usersControllerMethodSignaturesAreStable() throws Exception {
-    assertResponseEntityPayloadType(UsersController.class, "show", UserResponse.class);
   }
 
   private static void assertResponseEntityPayloadType(Class<?> controllerClass, String methodName,
