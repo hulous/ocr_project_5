@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { LoginRequest } from '../models/login-request.interface.js';
 import { RegisterRequest } from '../models/register-request.interface.js';
+import { UpdateUserRequest } from '../models/update-user-request.interface.js';
 import { Session } from '../models/session.interface.js';
 import { User } from '../models/user.interface.js';
 
@@ -25,5 +26,9 @@ export class AuthService {
 
   public me(): Observable<User> {
     return this.httpClient.get<User>(`${this.pathService}/me`);
+  }
+
+  public update(updateRequest: UpdateUserRequest): Observable<User> {
+    return this.httpClient.put<User>(`${this.pathService}/me`, updateRequest);
   }
 }
