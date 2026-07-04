@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnInit, inject, signal } from '@angular/core';
-import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { User } from '../../core/models/user.interface';
@@ -34,9 +34,9 @@ export class UserComponent implements OnInit {
   public unsubscribingTopicIds = signal<number[]>([]);
 
   public userForm = this.formBuilder.group({
-    username: [''],
-    email: [''],
-    password: ['']
+    username: ['', [Validators.required]],
+    email: ['', [Validators.required, Validators.email]],
+    password: ['', [Validators.minLength(6)]]
   });
 
   ngOnInit(): void {
@@ -64,7 +64,28 @@ export class UserComponent implements OnInit {
   }
 
   public saveProfile(): void {
-    this.matSnackBar.open('Sauvegarde du profil non disponible pour le moment.', 'Fermer', { duration: 3000 });
+    if (this.userForm.invalid) {
+      this.matSnackBar.open('Veuillez vérifier les champs du formulaire.', 'Fermer', { duration: 3000 });
+      return;
+    }
+
+    const updatePayload = {
+      username: this.userForm.controls.username.value?.trim() || undefined,
+      email: this.userForm.controls.email.value?.trim() || undefined,
+      password: this.userForm.controls.password.value?.trim() || undefined,
+    };
+
+    this.authService.update(updatePayload).pipe(
+      tap(user => {
+        this.user.set(user);
+        this.userForm.patchValue({ password: '' });
+        this.matSnackBar.open('Profil mis à jour.', 'Fermer', { duration: 3000 });
+      }),
+      catchError((error) => {
+        this.matSnackBar.open('Impossible de mettre à jour le profil.', 'Fermer', { duration: 3000 });
+        return EMPTY;
+      })
+    ).subscribe();
   }
 
   public unsubscribeTopic(topicId: number): void {

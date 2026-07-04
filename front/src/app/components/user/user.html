@@ -18,16 +18,38 @@
             <mat-form-field appearance="outline" class="mdd-field user-form__field">
               <mat-label>Username</mat-label>
               <input matInput formControlName="username" />
+
+              @if (userForm.controls.username.invalid && userForm.controls.username.touched) {
+                @if (userForm.controls.username.errors?.['required']) {
+                  <mat-error>Le nom d'utilisateur est requis.</mat-error>
+                }
+              }
             </mat-form-field>
 
             <mat-form-field appearance="outline" class="mdd-field user-form__field">
               <mat-label>Email</mat-label>
               <input matInput formControlName="email" type="email" />
+
+              @if (userForm.controls.email.invalid && userForm.controls.email.touched) {
+                @if (userForm.controls.email.errors?.['required']) {
+                  <mat-error>L'email est requis.</mat-error>
+                }
+
+                @if (userForm.controls.email.errors?.['email']) {
+                  <mat-error>L'email n'est pas valide.</mat-error>
+                }
+              }
             </mat-form-field>
 
             <mat-form-field appearance="outline" class="mdd-field user-form__field">
               <mat-label>Mot de passe</mat-label>
               <input matInput formControlName="password" type="password" />
+
+              @if (userForm.controls.password.invalid && userForm.controls.password.touched) {
+                @if (userForm.controls.password.errors?.['minlength']) {
+                  <mat-error>Le mot de passe doit faire au moins 6 caractères.</mat-error>
+                }
+              }
             </mat-form-field>
 
             <div class="user-form-buttons">
