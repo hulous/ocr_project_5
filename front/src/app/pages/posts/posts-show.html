@@ -1,0 +1,30 @@
+<div>
+  <app-header-bar></app-header-bar>
+  <br />
+
+  <div class="mdd-page-header">
+    <button mat-flat-button color="primary" class="mdd-btn" (click)="backToPosts()">Retour aux publications</button>
+  </div>
+
+  <mat-card class="mdd-card">
+    <mat-card-content>
+      <ng-container *ngIf="loading">
+        <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+      </ng-container>
+
+      <ng-container *ngIf="error && !loading">
+        <p class="error">Impossible de charger la publication.</p>
+      </ng-container>
+
+      <ng-container *ngIf="!loading && !error && post">
+        <mat-card-title>{{ post.title }}</mat-card-title>
+        <mat-card-subtitle>
+          {{ post.topicTitle }} • Par {{ post.authorUsername }} • {{ post.createdAt | date:'medium' }}
+        </mat-card-subtitle>
+        <mat-card-content>
+          <p>{{ post.content }}</p>
+        </mat-card-content>
+      </ng-container>
+    </mat-card-content>
+  </mat-card>
+</div>

@@ -34,7 +34,7 @@
               </mat-card>
             } @else {
               @for (post of group.posts; track post.id) {
-                <mat-card class="mdd-card mdd-card--item">
+                <mat-card class="mdd-card mdd-card--item" routerLink="/posts/{{ post.id }}" style="cursor: pointer;">
                   <mat-card-title>{{ post.title }}</mat-card-title>
                   <mat-card-subtitle>
                     Par {{ post.authorUsername }} • {{ post.createdAt | date:'medium' }}
