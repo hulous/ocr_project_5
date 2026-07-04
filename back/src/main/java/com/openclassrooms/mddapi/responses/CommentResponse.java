@@ -21,6 +21,9 @@ public class CommentResponse {
   @Schema(description = "Author user id", example = "1")
   private Integer authorId;
 
+  @Schema(description = "Author username", example = "alice")
+  private String authorUsername;
+
   @Schema(description = "Post id", example = "3")
   private Integer postId;
 

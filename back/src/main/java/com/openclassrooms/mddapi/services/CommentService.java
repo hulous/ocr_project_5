@@ -45,14 +45,31 @@ public class CommentService {
       .setAuthor(currentUser)
       .setContent(input.getContent());
 
-    return commentMapper.toDto(commentRepository.save(comment));
+    Comment savedComment = commentRepository.save(comment);
+    CommentResponse response = commentMapper.toDto(savedComment);
+
+    if (response.getAuthorUsername() == null && savedComment.getAuthor() != null) {
+      response.setAuthorUsername(savedComment.getAuthor().getUsername());
+    }
+
+    return response;
   }
 
   public List<CommentResponse> listCommentsForPost(Integer postId) {
     return commentRepository
       .findAllByPostId(postId)
       .stream()
-      .map(commentMapper::toDto)
+      .map(this::mapCommentToResponse)
       .collect(java.util.stream.Collectors.toList());
+  }
+
+  private CommentResponse mapCommentToResponse(Comment comment) {
+    CommentResponse response = commentMapper.toDto(comment);
+
+    if (response.getAuthorUsername() == null && comment.getAuthor() != null) {
+      response.setAuthorUsername(comment.getAuthor().getUsername());
+    }
+
+    return response;
   }
 }

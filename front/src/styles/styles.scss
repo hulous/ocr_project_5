@@ -174,6 +174,131 @@ html, body {
 }
 
 
+
+// -----
+// Post
+// -----
+
+// Show
+.mdd-post-detail-page {
+  padding: tokens.$mdd-spacing-md;
+  // display: flex;
+  justify-content: center;
+
+  .mdd-post-card {
+    width: 100%;
+    max-width: 960px;
+    padding: tokens.$mdd-spacing-lg;
+    margin: auto;
+  }
+
+  .mdd-post-header {
+    display: flex;
+    align-items: center;
+    gap: tokens.$mdd-spacing-md;
+    margin-bottom: tokens.$mdd-spacing-lg;
+
+    .mdd-back-button {
+      color: tokens.$mdd-text-primary;
+    }
+
+    .mdd-post-title {
+      font-size: tokens.$mdd-font-size-h2;
+      font-weight: tokens.$mdd-font-weight-bold;
+      margin: 0;
+    }
+  }
+
+  .mdd-post-metadata {
+    display: grid;
+    gap: tokens.$mdd-spacing-xs;
+    margin-bottom: tokens.$mdd-spacing-lg;
+
+    &-labels,
+    &-values {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: tokens.$mdd-spacing-lg;
+    }
+
+    &-labels {
+      color: tokens.$mdd-text-secondary;
+    }
+  }
+
+  .mdd-post-content-box {
+    background-color: tokens.$mdd-surface;
+    border-radius: tokens.$mdd-radius-lg;
+    padding: tokens.$mdd-spacing-lg;
+    margin-bottom: tokens.$mdd-spacing-lg;
+  }
+
+  .mdd-divider {
+    border-top: 1px solid tokens.$mdd-border-subtle;
+    margin: tokens.$mdd-spacing-lg 0;
+  }
+
+  .mdd-comments-list {
+    display: grid;
+    gap: tokens.$mdd-spacing-lg;
+    margin-bottom: tokens.$mdd-spacing-lg;
+
+    .mdd-comment-row {
+      display: grid;
+      grid-template-columns: 120px 1fr;
+      gap: tokens.$mdd-spacing-md;
+      align-items: start;
+
+      .mdd-comment-author {
+        color: tokens.$mdd-text-secondary;
+        font-weight: tokens.$mdd-font-weight-medium;
+      }
+
+      .mdd-comment-bubble {
+        background-color: tokens.$mdd-surface-muted;
+        border-radius: tokens.$mdd-radius-lg;
+        padding: tokens.$mdd-spacing-lg;
+        min-height: 72px;
+      }
+    }
+  }
+
+  .mdd-empty-comments {
+    padding: tokens.$mdd-spacing-md 0;
+  }
+
+  .mdd-comment-form {
+    margin-top: tokens.$mdd-spacing-lg;
+
+    .mdd-comment-form-row {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: tokens.$mdd-spacing-sm;
+      align-items: center;
+
+      .mdd-textarea-field {
+        width: 100%;
+      }
+
+      .mdd-comment-send {
+        width: 64px;
+        height: 64px;
+        padding: 0;
+        min-width: 64px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .mdd-comment-send-icon {
+        width: 32px;
+        height: 32px;
+      }
+    }
+  }
+}
+
+
 // -----------------------------------------------------------------------------
 // Responsive breakpoints
 // -----------------------------------------------------------------------------

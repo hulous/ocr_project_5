@@ -1,30 +1,87 @@
-<div>
+<div class="mdd-post-detail-page">
   <app-header-bar></app-header-bar>
-  <br />
 
-  <div class="mdd-page-header mdd-page-header--left">
-    <button mat-flat-button color="primary" class="mdd-btn" (click)="backToPosts()">Retour aux publications</button>
-  </div>
-
-  <mat-card class="mdd-card">
+  <mat-card class="mdd-card mdd-post-card">
     <mat-card-content>
-      <ng-container *ngIf="loading">
+      @if (loading()) {
         <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
-      </ng-container>
+      }
 
-      <ng-container *ngIf="error && !loading">
+      @if (error() && !loading()) {
         <p class="error">Impossible de charger la publication.</p>
-      </ng-container>
+      }
 
-      <ng-container *ngIf="!loading && !error && post">
-        <mat-card-title>{{ post.title }}</mat-card-title>
-        <mat-card-subtitle>
-          {{ post.topicTitle }} • Par {{ post.authorUsername }} • {{ post.createdAt | date:'medium' }}
-        </mat-card-subtitle>
-        <mat-card-content>
-          <p>{{ post.content }}</p>
-        </mat-card-content>
-      </ng-container>
+      @if (!loading() && !error() && post()) {
+        <div class="mdd-post-header">
+          <button mat-icon-button color="primary" class="mdd-back-button" (click)="backToPosts()">
+            <mat-icon>arrow_back</mat-icon>
+          </button>
+          <h1 class="mdd-post-title">{{ post()?.title }}</h1>
+        </div>
+
+        <div class="mdd-post-metadata">
+          <div class="mdd-post-metadata-labels">
+            <span>Date</span>
+            <span>Auteur</span>
+            <span>Thème</span>
+          </div>
+          <div class="mdd-post-metadata-values">
+            <span>{{ post()?.createdAt | date:'mediumDate' }}</span>
+            <span>{{ post()?.authorUsername }}</span>
+            <span>{{ post()?.topicTitle }}</span>
+          </div>
+        </div>
+
+        <div class="mdd-post-content-box">
+          <p>{{ post()?.content }}</p>
+        </div>
+
+        <div class="mdd-divider"></div>
+
+        <div class="mdd-section">
+          <h3>Commentaires</h3>
+
+          @if (post()?.comments?.length) {
+            <div class="mdd-comments-list">
+              @for (comment of post()?.comments || []; track comment.id) {
+                <div class="mdd-comment-row">
+                  <div class="mdd-comment-author">{{ comment.authorUsername }}</div>
+                  <div class="mdd-comment-bubble">
+                    {{ comment.content }}
+                  </div>
+                </div>
+              }
+            </div>
+          } @else {
+            <div class="mdd-empty-comments">
+              <p>Aucun commentaire pour le moment.</p>
+            </div>
+          }
+
+          <form class="mdd-comment-form" [formGroup]="commentForm" (ngSubmit)="submitComment()">
+            <div class="mdd-comment-form-row">
+              <mat-form-field appearance="outline" class="mdd-textarea-field">
+                <textarea matInput id="comment-content" placeholder="Écrivez ici votre commentaire" formControlName="content" rows="4"></textarea>
+              </mat-form-field>
+              <button mat-icon-button color="primary" class="mdd-comment-send" type="submit" [disabled]="submittingComment()">
+                <img src="assets/icon_send.png" alt="Envoyer" class="mdd-comment-send-icon" />
+              </button>
+            </div>
+
+            @if (commentForm.controls.content.hasError('required')) {
+              <mat-error>Le commentaire est requis.</mat-error>
+            }
+
+            @if (commentForm.controls.content.hasError('minlength')) {
+              <mat-error>Le commentaire doit contenir au moins 3 caractères.</mat-error>
+            }
+
+            @if (commentError()) {
+              <p class="error">Veuillez saisir un commentaire valide.</p>
+            }
+          </form>
+        </div>
+      }
     </mat-card-content>
   </mat-card>
 </div>
