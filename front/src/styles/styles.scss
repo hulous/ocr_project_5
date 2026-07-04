@@ -6,6 +6,33 @@
 @use './tokens';
 @use './components';
 
+%flex-center-gap-sm {
+  display: flex;
+  align-items: center;
+  gap: tokens.$mdd-spacing-sm;
+}
+
+%flex-center-gap-lg {
+  display: flex;
+  align-items: center;
+  gap: tokens.$mdd-spacing-lg;
+}
+
+%grid {
+  display: grid;
+}
+
+%grid-gap-lg {
+  @extend %grid;
+  gap: tokens.$mdd-spacing-lg;
+}
+
+@mixin surface-box($bg, $radius: tokens.$mdd-radius-lg, $padding: tokens.$mdd-spacing-md) {
+  background-color: $bg;
+  border-radius: $radius;
+  padding: $padding;
+}
+
 html, body {
   margin: 0;
   font-family: tokens.$mdd-font-family;
@@ -14,7 +41,7 @@ html, body {
 }
 
 .main-app {
-  padding: 0 16px 32px;
+  padding: 0 tokens.$mdd-spacing-md tokens.$mdd-spacing-xl;
   max-width: 960px;
   margin: 0 auto;
 }
@@ -25,11 +52,6 @@ html, body {
   font-weight: tokens.$mdd-font-weight-bold;
   text-align: center;
   margin: tokens.$mdd-spacing-lg 0;
-}
-
-.mdd-section-title {
-  font-size: tokens.$mdd-font-size-h2;
-  font-weight: tokens.$mdd-font-weight-bold;
 }
 
 // -----------------------------------------------------------------------------
@@ -76,22 +98,20 @@ html, body {
   }
 
   .error {
-    color: #b00020;
+    color: tokens.$mdd-error;
     margin: 0;
-    font-size: 0.95rem;
+    font-size: tokens.$mdd-font-size-body;
   }
 }
 
 // Topic page
 .mdd-topic-list-content {
-  max-width: min(800px, 95%);
   width: 100%;
   margin: 0 auto;
   padding: 0 tokens.$mdd-spacing-md;
 
   .mdd-topic-grid {
-    display: grid;
-    gap: 16px;
+    @extend %grid-gap-lg;
     grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
   }
 
@@ -103,83 +123,16 @@ html, body {
     div {
       display: flex;
       align-items: center;
-      gap: 0.75rem;
-      flex-wrap: wrap;
-
-      h2.mdd-card__title {
-        margin: 0;
-      }
+      gap: tokens.$mdd-spacing-xxs;
     }
 
-    .mdd-card-actions, mat-card-actions {
+    mat-card-actions {
       display: flex;
       justify-content: center;
       align-items: center;
     }
   }
 }
-
-// logged headbar - nav
-.mdd-logged-logo {
-  width: 100%;
-  max-width: 180px;
-}
-
-.mdd-logged-logo img {
-  display: block;
-  width: 100%;
-  height: auto;
-}
-
-.mat-toolbar-single-row {
-  height: 96px !important;
-}
-
-.mdd-toolbar__nav {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
-  height: 100%;
-  padding: 15px;
-  margin: 15px 0;
-}
-
-.mdd-header-bar__actions {
-  display: flex;
-  align-items: center;
-  margin-left: auto;
-  gap: 0.5rem;
-}
-
-.mdd-header-bar__links {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.mdd-header-bar__logout-button,
-.mdd-header-bar__logout-button .mat-button-wrapper {
-  color: var(--mat-sys-error) !important;
-}
-
-.mdd-header-bar__link--active,
-.mdd-header-bar__link--active .mat-button-wrapper {
-  color: var(--mat-sys-primary) !important;
-}
-
-.mdd-header-bar__user-link img {
-  width: 32px;
-  height: 32px;
-  object-fit: contain;
-  display: block;
-}
-
-.mdd-header-bar__menu-trigger {
-  display: none !important;
-}
-
-
 
 // -----
 // Post
@@ -194,12 +147,7 @@ html, body {
 
   .mdd-page-header {
     align-items: center;
-    gap: 12px;
-  }
-
-  .mdd-page-title-row {
-    display: flex;
-    align-items: center;
+    gap: tokens.$mdd-spacing-xxs;
   }
 
   .mdd-form {
@@ -211,7 +159,7 @@ html, body {
   .mdd-form-actions {
     display: flex;
     justify-content: center;
-    padding-top: 6px;
+    padding-top: tokens.$mdd-spacing-xxxs;
   }
 }
 
@@ -263,9 +211,7 @@ html, body {
   }
 
   .mdd-post-content-box {
-    background-color: tokens.$mdd-surface;
-    border-radius: tokens.$mdd-radius-lg;
-    padding: tokens.$mdd-spacing-lg;
+    @include surface-box(tokens.$mdd-surface, tokens.$mdd-radius-lg, tokens.$mdd-spacing-lg);
     margin-bottom: tokens.$mdd-spacing-lg;
   }
 
@@ -275,8 +221,7 @@ html, body {
   }
 
   .mdd-comments-list {
-    display: grid;
-    gap: tokens.$mdd-spacing-lg;
+    @extend %grid-gap-lg;
     margin-bottom: tokens.$mdd-spacing-lg;
 
     .mdd-comment-row {
@@ -291,9 +236,7 @@ html, body {
       }
 
       .mdd-comment-bubble {
-        background-color: tokens.$mdd-surface-muted;
-        border-radius: tokens.$mdd-radius-lg;
-        padding: tokens.$mdd-spacing-lg;
+        @include surface-box(tokens.$mdd-surface-muted, tokens.$mdd-radius-lg, tokens.$mdd-spacing-lg);
         min-height: 72px;
       }
     }
@@ -317,18 +260,18 @@ html, body {
       }
 
       .mdd-comment-send {
-        width: 64px;
-        height: 64px;
+        width: tokens.$mdd-spacing-2xl;
+        height: tokens.$mdd-spacing-2xl;
         padding: 0;
-        min-width: 64px;
+        min-width: tokens.$mdd-spacing-2xl;
         display: flex;
         align-items: center;
         justify-content: center;
       }
 
       .mdd-comment-send-icon {
-        width: 32px;
-        height: 32px;
+        width: tokens.$mdd-spacing-xl;
+        height: tokens.$mdd-spacing-xl;
       }
     }
   }
@@ -340,50 +283,47 @@ html, body {
 // ----------
 
 .user-card {
-  margin-top: 24px;
-  padding: 24px;
+    margin-top: tokens.$mdd-spacing-lg;
+    padding: tokens.$mdd-spacing-lg;
 
-  &__header {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    margin-bottom: 24px;
-  }
+    &__header {
+      display: flex;
+      align-items: center;
+      gap: tokens.$mdd-spacing-md;
+      margin-bottom: tokens.$mdd-spacing-lg;
 
   &__title {
     margin: 0;
-    font-size: 1.75rem;
+    font-size: tokens.$mdd-font-size-h1;
     font-weight: 700;
   }
 }
 
 .user-profile {
-  display: grid;
-  gap: 24px;
+  @extend %grid;
+    gap: tokens.$mdd-spacing-lg;
 
-  .user-form {
-    display: grid;
-    gap: 16px;
-
-    &__field {
+    .user-form {
+      display: grid;
+      gap: tokens.$mdd-spacing-md;
       width: 100%;
     }
 
     &-buttons {
       display: flex;
       justify-content: center;
-      margin-top: 12px;
+      margin-top: tokens.$mdd-spacing-xxs;
     }
   }
 
   .user-summary {
     display: grid;
-    gap: 12px;
+    gap: tokens.$mdd-spacing-xxs;
 
     &__item {
       display: flex;
       justify-content: space-between;
-      font-size: 0.95rem;
+      font-size: tokens.$mdd-font-size-body;
       color: #5f5f5f;
     }
 
@@ -397,35 +337,33 @@ html, body {
   }
 
   .user-subscriptions {
-    display: grid;
-    gap: 16px;
+    @extend %grid;
+    gap: tokens.$mdd-spacing-md;
 
     &__title {
-      font-size: 1.5rem;
+      font-size: tokens.$mdd-font-size-h2;
       font-weight: 700;
       margin: 0;
     }
 
     .user-subscription-list {
       display: grid;
-      gap: 16px;
+        gap: tokens.$mdd-spacing-md;
 
-      .subscription-card {
-        display: grid;
-        gap: 16px;
-        padding: 20px;
-        background: #f5f5f5;
-        border-radius: 24px;
-
-        &__title {
-          margin: 0 0 8px;
-          font-size: 1.1rem;
+        .subscription-card {
+          display: grid;
+          gap: tokens.$mdd-spacing-md;
+          padding: 20px;
+          background: tokens.$mdd-surface-variant;
+          border-radius: tokens.$mdd-radius-xl;
+          margin: 0 0 tokens.$mdd-spacing-xs;
+          font-size: tokens.$mdd-font-size-label;
           font-weight: 700;
         }
 
         &__description {
           margin: 0;
-          color: #5f5f5f;
+          color: tokens.$mdd-text-secondary;
         }
 
         &__actions {
@@ -438,7 +376,7 @@ html, body {
 
   .user-empty {
     text-align: center;
-    color: #5f5f5f;
+    color: tokens.$mdd-text-secondary;
   }
 }
 
@@ -487,7 +425,7 @@ html, body {
 
 @media (max-width: 420px) {
   .mdd-page-title {
-    font-size: 1.3rem;
+    font-size: tokens.$mdd-font-size-h2;
   }
 
   .mdd-home-actions {
