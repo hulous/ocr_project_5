@@ -1,0 +1,50 @@
+@startuml
+skinparam classAttributeIconSize 0
+
+class User {
+  + Integer id
+  + String username
+  + String email
+  + String password
+  + LocalDateTime createdAt
+  + LocalDateTime updatedAt
+}
+
+class Topic {
+  + Integer id
+  + String title
+  + String description
+}
+
+class Subscription {
+  + Integer id
+  + LocalDateTime createdAt
+}
+
+class Post {
+  + Integer id
+  + String title
+  + String content
+  + LocalDateTime createdAt
+  + LocalDateTime updatedAt
+}
+
+class Comment {
+  + Integer id
+  + String content
+  + LocalDateTime createdAt
+  + LocalDateTime updatedAt
+}
+
+User "1" o-- "0..*" Subscription : subscriptions
+Topic "1" o-- "0..*" Subscription : subscriptions
+
+Subscription --> "1" User : user
+Subscription --> "1" Topic : topic
+
+User "1" <-- "0..*" Post : author
+Topic "1" <-- "0..*" Post : topic
+
+User "1" <-- "0..*" Comment : author
+Post "1" <-- "0..*" Comment : post
+@enduml
