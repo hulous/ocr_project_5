@@ -1,5 +1,15 @@
 # Release Notes
 
+## 1.0.0
+
+This release improves testing documentation, validation coverage, and backend test execution.
+
+- Added `TEST_REPORT.md` to document front-end and back-end test results, coverage, and report locations.
+- Updated front-end test coverage with Jest and generated the `front/coverage/` report.
+- Resolved backend Mockito/ByteBuddy initialization issues and reran all backend tests successfully.
+- Generated backend Jacoco coverage reports in `back/target/site/jacoco/`.
+- Cleaned up unused test imports in backend test code.
+
 ## 0.0.12
 
 This release improves the front-end post creation experience.
