@@ -14,9 +14,11 @@ describe('PostService', () => {
     authorId: 1,
     authorUsername: 'john@doe.com',
     topicTitle: 'Angular',
+    topicDescription: 'A frontend framework for building web apps.',
     title: 'Test post',
     content: 'Test content',
     createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
     comments: []
   };
 

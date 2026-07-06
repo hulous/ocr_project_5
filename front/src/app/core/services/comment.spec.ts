@@ -13,7 +13,9 @@ describe('CommentService', () => {
     postId: 1,
     authorId: 1,
     authorUsername: 'john@doe.com',
-    content: 'Test comment'
+    content: 'Test comment',
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString()
   };
 
   beforeEach(() => {
