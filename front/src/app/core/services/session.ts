@@ -71,14 +71,14 @@ export class SessionService {
       return;
     }
 
-    this.tokenExpirationTimer = window.setTimeout(() => {
+    this.tokenExpirationTimer = globalThis.setTimeout(() => {
       this.logOut();
     }, delay);
   }
 
   private clearTokenExpirationTimer(): void {
     if (this.tokenExpirationTimer !== undefined) {
-      window.clearTimeout(this.tokenExpirationTimer);
+      globalThis.clearTimeout(this.tokenExpirationTimer);
       this.tokenExpirationTimer = undefined;
     }
   }
