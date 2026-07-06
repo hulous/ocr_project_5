@@ -3,7 +3,10 @@ package com.openclassrooms.mddapi.services;
 import com.openclassrooms.mddapi.dtos.LoginUserDto;
 import com.openclassrooms.mddapi.dtos.RegisterUserDto;
 import com.openclassrooms.mddapi.entities.User;
+import com.openclassrooms.mddapi.mappers.UserMapper;
 import com.openclassrooms.mddapi.repositories.UserRepository;
+import com.openclassrooms.mddapi.responses.LoginResponse;
+import com.openclassrooms.mddapi.responses.UserResponse;
 import com.openclassrooms.mddapi.testdata.UserTestData;
 
 import org.junit.jupiter.api.Test;
@@ -35,6 +38,15 @@ class AuthenticationServiceTest {
 
   @Mock
   private PasswordEncoder passwordEncoder;
+
+  @Mock
+  private JwtService jwtService;
+
+  @Mock
+  private UserMapper userMapper;
+
+  @Mock
+  private CurrentUserService currentUserService;
 
   @InjectMocks
   private AuthenticationService service;
@@ -98,5 +110,55 @@ class AuthenticationServiceTest {
     UsernameNotFoundException exception = assertThrows(UsernameNotFoundException.class, () -> service.authenticate(dto));
 
     assertEquals("Invalid credentials", exception.getMessage());
+  }
+
+  @Test
+  void registrateResponseReturnsMappedUserResponse() {
+    RegisterUserDto dto = UserTestData.registerUserDto("jane@example.com", "Jane", "password");
+    User savedUser = UserTestData.user(5, "Jane", "jane@example.com", "encodedPass");
+    UserResponse response = new UserResponse().setId(5).setUsername("Jane").setEmail("jane@example.com");
+
+    when(userRepository.existsByEmail("jane@example.com")).thenReturn(false);
+    when(passwordEncoder.encode("password")).thenReturn("encodedPass");
+    when(userRepository.save(any(User.class))).thenReturn(savedUser);
+    when(userMapper.toResponse(savedUser)).thenReturn(response);
+
+    UserResponse result = service.registrateResponse(dto);
+
+    assertEquals(5, result.getId());
+    assertEquals("Jane", result.getUsername());
+    assertEquals("jane@example.com", result.getEmail());
+  }
+
+  @Test
+  void authenticateResponseGeneratesTokenForAuthenticatedUser() {
+    LoginUserDto dto = UserTestData.loginUserDto("john@example.com", "pwd");
+    User user = UserTestData.user(0, "john", "john@example.com", null);
+
+    when(userRepository.findFirstByEmailOrUsername("john@example.com", "john@example.com")).thenReturn(Optional.of(user));
+    when(jwtService.generateToken(user)).thenReturn("jwt-token");
+    when(jwtService.getExpirationTime()).thenReturn(3600L);
+
+    LoginResponse result = service.authenticateResponse(dto);
+
+    assertEquals("jwt-token", result.getToken());
+    assertEquals(3600L, result.getExpiresIn());
+  }
+
+  @Test
+  void authenticatedUserReturnsMappedUserResponse() {
+    User currentUser = UserTestData.user(7, "sarah", "sarah@example.com", null);
+    User savedUser = UserTestData.user(7, "sarah", "sarah@example.com", "secret");
+    UserResponse response = new UserResponse().setId(7).setUsername("sarah").setEmail("sarah@example.com");
+
+    when(currentUserService.getCurrentUser()).thenReturn(currentUser);
+    when(userRepository.findById(7)).thenReturn(Optional.of(savedUser));
+    when(userMapper.toResponse(savedUser)).thenReturn(response);
+
+    UserResponse result = service.authenticatedUser();
+
+    assertEquals(7, result.getId());
+    assertEquals("sarah", result.getUsername());
+    assertEquals("sarah@example.com", result.getEmail());
   }
 }
