@@ -88,6 +88,10 @@ cd back
 ./mvnw test
 ```
 
+### Test report
+
+- See (TEST_REPORT.md)[TEST_REPORT.md] for a consolidated front-end and back-end test status summary.
+
 ### API documentation
 
 When the backend is running, OpenAPI UI is available at:
