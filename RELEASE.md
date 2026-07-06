@@ -1,12 +1,89 @@
 # Release Notes
 
+## 0.0.12
+
+This release improves the front-end post creation experience.
+
+- Updated the post creation page and form UI.
+- Refined post creation behavior and related styles.
+
+## 0.0.11
+
+This release adds front-end user profile management and back-end user update support.
+
+- Added a user profile component and update form in the Angular front-end.
+- Added `UpdateUserDto` and `UserUpdateService` in the backend.
+- Improved authenticated user handling and API response shape consistency.
+- Updated styles for the user profile experience.
+
+## 0.0.10
+
+This release adds comments on posts.
+
+- Added comment model, mapper, service, and response support in the backend.
+- Added front-end comment create and display support in post detail pages.
+- Added new UI assets and styling for comment submission.
+
+## 0.0.9
+
+This release adds front-end post browsing and creation pages.
+
+- Added post index, show, and create pages to the Angular front-end.
+- Added front-end post model and service support.
+- Updated styles and navigation for posts.
+
+## 0.0.8
+
+This release adds topic browsing and subscription support.
+
+- Added topic listing and topic subscription features in the front-end.
+- Added topic service, topic response DTO, and updated backend topic behavior.
+- Added header bar improvements and topic page styling.
+
+## 0.0.7
+
+This release fixes authenticated user loading and topic/subscription data retrieval.
+
+- Ensures user login loads topic and subscription data together.
+- Refined back-end user response mapping and repository behavior.
+
+## 0.0.6
+
+This release adds backend integration tests.
+
+- Added authentication controller integration tests.
+- Added topic post creation integration tests.
+- Added topic subscription integration tests.
+- Improved Spring Boot test coverage for JWT and user flows.
+
+## 0.0.5
+
+This release refines API response handling and documentation.
+
+- Updated response DTOs, mappers, and exception handling for API responses.
+- Added more robust backend error conditions and response validation.
+- Updated backend API documentation and README content.
+
+## 0.0.4
+
+This release implements topic, post, and comment domain support in the backend.
+
+- Added `TopicsController` and `PostsController` with topic and post endpoints.
+- Added `TopicService`, `PostService`, and create DTOs for posts and comments.
+- Added topic and post data mappings and persistence support.
+
+## 0.0.2
+
+This release implements the initial backend data model and entities.
+
+- Added entity classes for topics, posts, comments, and subscriptions.
+- Added DTOs and response objects for topic and post domain models.
+- Added Liquibase changelog updates for database schema.
+
 ## 0.0.1
 
-This release includes updates focused on code quality, accessibility, and Angular bootstrap behavior:
+This release builds the initial user authentication and application scaffold.
 
-- Updated Jest configuration to use `String.raw` for regex path patterns.
-- Replaced `window` references with `globalThis` in application and Jest setup code.
-- Marked injected dependencies and fixed service path constants as `readonly` where they are not reassigned.
-- Converted Angular app bootstrap to use top-level `await` with `bootstrapApplication(...)`.
-- Added explicit `id` and `for` associations for login and register inputs to improve accessibility.
-- No SCSS changes were required for these form accessibility updates.
+- Added Spring Boot backend with authentication, user management, security, OpenAPI, and JWT support.
+- Added Angular front-end skeleton with login, register, and basic routing.
+- Added initial backend and frontend tests, configuration, and project setup.

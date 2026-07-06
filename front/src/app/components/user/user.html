@@ -16,8 +16,8 @@
         @if (user()) {
           <form class="user-form" [formGroup]="userForm" (ngSubmit)="saveProfile()">
             <mat-form-field appearance="outline" class="mdd-field user-form__field">
-              <mat-label>Username</mat-label>
-              <input matInput formControlName="username" />
+              <mat-label for="username">Username</mat-label>
+              <input matInput formControlName="username" id="username" />
 
               @if (userForm.controls.username.invalid && userForm.controls.username.touched) {
                 @if (userForm.controls.username.errors?.['required']) {
@@ -27,8 +27,8 @@
             </mat-form-field>
 
             <mat-form-field appearance="outline" class="mdd-field user-form__field">
-              <mat-label>Email</mat-label>
-              <input matInput formControlName="email" type="email" />
+              <mat-label for="email">Email</mat-label>
+              <input matInput formControlName="email" type="email" id="email" />
 
               @if (userForm.controls.email.invalid && userForm.controls.email.touched) {
                 @if (userForm.controls.email.errors?.['required']) {
@@ -42,8 +42,8 @@
             </mat-form-field>
 
             <mat-form-field appearance="outline" class="mdd-field user-form__field">
-              <mat-label>Mot de passe</mat-label>
-              <input matInput formControlName="password" type="password" />
+              <mat-label for="password">Mot de passe</mat-label>
+              <input matInput formControlName="password" type="password" id="password" />
 
               @if (userForm.controls.password.invalid && userForm.controls.password.touched) {
                 @if (userForm.controls.password.errors?.['minlength']) {

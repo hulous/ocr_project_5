@@ -69,16 +69,12 @@
               </button>
             </div>
 
-            @if (commentForm.controls.content.hasError('required')) {
-              <mat-error>Le commentaire est requis.</mat-error>
-            }
-
             @if (commentForm.controls.content.hasError('minlength')) {
               <mat-error>Le commentaire doit contenir au moins 3 caractères.</mat-error>
             }
 
             @if (commentError()) {
-              <p class="error">Veuillez saisir un commentaire valide.</p>
+              <mat-error>Veuillez saisir un commentaire valide.</mat-error>
             }
           </form>
         </div>

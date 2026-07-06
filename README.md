@@ -1,63 +1,104 @@
-# P6-Full-Stack-reseau-dev
+# MondeDeDev
 
-## Front
+Full-stack developer social network with an Angular front-end and Spring Boot backend.
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 21.2.14.
+## Front-end (Angular)
 
-Don't forget to install your node_modules before starting (`npm install`).
+The front-end project is located in `front/`.
+
+- Angular version: `21.2.14`
+- TypeScript version: `5.9.3`
+- Uses `@angular/material` for UI components
+- Dev server: `http://localhost:4200/`
+- Proxy config: `front/proxy.conf.json` forwards `/api` requests to `http://localhost:8018`
+
+### Setup
+
+```bash
+cd front
+npm install
+```
 
 ### Development server
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+```bash
+npm start
+```
 
 ### Build
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+```bash
+npm run build
+```
 
-### Where to start
+### Tests
 
-As you may have seen if you already started the app, a simple home page containing a logo, a title and a button is available. If you take a look at its code (in the `home.component.html`) you will see that an external UI library is already configured in the project.
+```bash
+npm test
+```
 
-This library is `@angular/material`, it's one of the most famous in the angular ecosystem. As you can see on their docs (https://material.angular.io/), it contains a lot of highly customizable components that will help you design your interfaces quickly.
+## Backend (Spring Boot)
 
-Note: I recommend to use material however it's not mandatory, if you prefer you can get rid of it.
-
-## Back / Spring Boot
-
-The backend is a Spring Boot application located in the `back/` folder.
+The backend project is located in `back/`.
 
 - Spring Boot starter parent version: `4.0.6`
 - Java version: `21`
 - Maven wrapper included: `./mvnw`
-- Spring modules included: Web MVC, Security, Data JPA, Liquibase, OpenAPI
+- Spring modules: Web MVC, Security, Data JPA, Liquibase, OpenAPI
 - Runtime database: PostgreSQL
 - Test database: H2 in-memory
 
-### Running the backend
+### Environment
 
-From the `back/` directory:
+Copy the sample env file and update values before running:
 
 ```bash
+cd back
+cp .env.sample.properties src/main/resources/env.properties
+```
+
+The backend loads environment values from `back/src/main/resources/env.properties`.
+
+Required keys:
+
+- `DB_NAME`
+- `DB_HOST`
+- `DB_PORT`
+- `DB_USER`
+- `DB_PASSWORD`
+- `JWT_SECRET_TOKEN`
+- `MAIN_APP_PORT`
+
+### Run the backend
+
+```bash
+cd back
 ./mvnw spring-boot:run
 ```
 
-Build the backend jar:
+### Build the backend
 
 ```bash
 ./mvnw clean package
 ```
 
-Run tests:
+### Run tests
 
 ```bash
 ./mvnw test
 ```
 
-### Backend config
+### Test report
 
-- Main config: `src/main/resources/application.yaml`
-- Environment values: `src/main/resources/env.properties`
-- Example env file: `.env.sample.properties`
-- Liquibase changelog path: `src/main/resources/db/changelog/db.changelog-master.yaml`
+- See (TEST_REPORT.md)[TEST_REPORT.md] for a consolidated front-end and back-end test status summary.
 
-For release notes, see `RELEASE.md`.
+### API documentation
+
+When the backend is running, OpenAPI UI is available at:
+
+`http://localhost:8018/swagger-ui/index.html`
+
+## Notes
+
+- Use `Authorization: Bearer <token>` for protected API requests.
+- See `RELEASE.md` for release notes.

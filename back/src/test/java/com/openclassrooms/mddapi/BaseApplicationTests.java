@@ -1,10 +1,7 @@
 package com.openclassrooms.mddapi;
 
 import org.junit.jupiter.api.Test;
-
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.test.context.SpringBootTest;
-
 import org.mockito.MockedStatic;
 import static org.mockito.Mockito.mockStatic;
 

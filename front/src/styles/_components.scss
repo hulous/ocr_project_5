@@ -18,7 +18,7 @@
   text-transform: none !important; // pas d'UPPERCASE dans les maquettes
   font-weight: tokens.$mdd-font-weight-bold;
   box-shadow: none !important; // design plat, pas d'élévation sur les boutons
-  padding: 8px 24px;
+  padding: tokens.$mdd-spacing-sm tokens.$mdd-spacing-lg;
 }
 
 // mat-button[outlined] générique de la home page : contour noir fin
@@ -39,13 +39,6 @@
   &:hover {
     --mdc-filled-button-container-color: #{tokens.$mdd-primary-hover};
   }
-}
-
-// État "déjà fait" : même forme que le CTA mais gris, non cliquable visuellement
-.mdd-btn--done {
-  --mdc-filled-button-container-color: #{tokens.$mdd-disabled-bg};
-  --mdc-filled-button-label-text-color: #{tokens.$mdd-disabled-fg};
-  cursor: default;
 }
 
 // -----------------------------------------------------------------------------
@@ -149,13 +142,6 @@
   padding-top: tokens.$mdd-spacing-sm;
 }
 
-// Bulle de commentaire : même logique que la card mais fond encore plus clair
-.mdd-comment {
-  background-color: tokens.$mdd-surface-muted;
-  border-radius: tokens.$mdd-radius-md;
-  padding: tokens.$mdd-spacing-md;
-}
-
 // -----------------------------------------------------------------------------
 // App bar (mat-toolbar)
 // Fond blanc, séparée du contenu par un simple trait noir (pas d'ombre).
@@ -170,42 +156,14 @@
   .mdd-toolbar__nav {
     display: flex;
     align-items: center;
+    justify-content: space-between;
     gap: tokens.$mdd-spacing-lg;
+    width: 100%;
+    height: 100%;
+    padding: 15px;
+    margin: 15px 0;
   }
 
-  .mdd-toolbar__link {
-    color: tokens.$mdd-text-primary;
-    font-weight: tokens.$mdd-font-weight-regular;
-    text-decoration: none;
-    cursor: pointer;
-
-    &.is-active {
-      color: tokens.$mdd-primary;
-      font-weight: tokens.$mdd-font-weight-medium;
-    }
-  }
-
-  .mdd-toolbar__logout {
-    color: tokens.$mdd-error !important;
-    font-weight: tokens.$mdd-font-weight-bold;
-  }
-
-  // Avatar : cercle gris par défaut, contour violet quand la page Profil
-  // est active (vu sur la maquette "Profil utilisateur")
-  .mdd-toolbar__avatar {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    background: tokens.$mdd-avatar-bg;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: 2px solid transparent;
-
-    &.is-active {
-      border-color: tokens.$mdd-primary;
-    }
-  }
 }
 
 // -----------------------------------------------------------------------------

@@ -38,17 +38,22 @@
                   <mat-option [value]="topic.id">{{ topic.title }}</mat-option>
                 }
               </mat-select>
-              <mat-error *ngIf="form.controls.topicId.invalid && submitted">
-                Sélectionnez un thème auquel vous êtes abonné.
-              </mat-error>
+              @if (form.controls.topicId.invalid && submitted) {
+                <mat-error>Sélectionnez un thème auquel vous êtes abonné.</mat-error>
+              }
             </mat-form-field>
 
             <mat-form-field appearance="outline" class="mdd-field">
               <mat-label for="post-title">Titre de l’article</mat-label>
               <input id="post-title" matInput formControlName="title" />
               @if (form.controls.title.invalid && submitted) {
-                <mat-error *ngIf="form.controls.title.errors?.['required']">Le titre est requis.</mat-error>
-                <mat-error *ngIf="form.controls.title.errors?.['minlength']">Le titre doit comporter au moins 3 caractères.</mat-error>
+                @if (form.controls.title.errors?.['required']) {
+                  <mat-error>Le titre est requis.</mat-error>
+                }
+
+                @if (form.controls.title.errors?.['minlength']) {
+                  <mat-error>Le titre doit comporter au moins 3 caractères.</mat-error>
+                }
               }
             </mat-form-field>
 
@@ -56,8 +61,13 @@
               <mat-label for="post-content">Contenu de l’article</mat-label>
               <textarea id="post-content" matInput rows="6" formControlName="content"></textarea>
               @if (form.controls.content.invalid && submitted) {
-                <mat-error *ngIf="form.controls.content.errors?.['required']">Le contenu est requis.</mat-error>
-                <mat-error *ngIf="form.controls.content.errors?.['minlength']">Le contenu doit comporter au moins 10 caractères.</mat-error>
+                @if (form.controls.content.errors?.['required']) {
+                  <mat-error>Le contenu est requis.</mat-error>
+                }
+
+                @if (form.controls.content.errors?.['minlength']) {
+                  <mat-error>Le contenu doit comporter au moins 10 caractères.</mat-error>
+                }
               }
             </mat-form-field>
 

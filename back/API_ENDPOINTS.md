@@ -1,12 +1,12 @@
 # MondeDeDev Backend API Reference
 
-Base URL: `http://localhost:${MAIN_APP_PORT}`
+Base URL: `http://localhost:8018`
 
 All endpoints use JSON request and response bodies.
 
 ## Authorization
 
-- Most protected endpoints require a JWT bearer token.
+- Protected endpoints require a JWT bearer token.
 - Use the HTTP header:
 
 ```http
@@ -31,12 +31,12 @@ The token is returned by `POST /api/auth/login`.
 - `ApiMessageResponse`:
   - `message` (string)
 
-- `TopicDto`:
+- `TopicResponse`:
   - `id` (integer)
   - `title` (string)
   - `description` (string)
 
-- `PostDto`:
+- `PostResponse`:
   - `id` (integer)
   - `authorId` (integer)
   - `topicId` (integer)
@@ -45,7 +45,17 @@ The token is returned by `POST /api/auth/login`.
   - `createdAt` (string)
   - `updatedAt` (string)
 
-- `CommentDto`:
+- `PostDetailResponse`:
+  - `id` (integer)
+  - `authorId` (integer)
+  - `topicId` (integer)
+  - `title` (string)
+  - `content` (string)
+  - `createdAt` (string)
+  - `updatedAt` (string)
+  - `comments` (array)
+
+- `CommentResponse`:
   - `id` (integer)
   - `authorId` (integer)
   - `postId` (integer)
@@ -96,13 +106,21 @@ Requires Authorization header.
 
 Success response: `UserResponse`
 
-## User Endpoints
+### PUT /api/auth/me
 
-### GET /api/user/{id}
-
-Get one user by ID.
+Update the currently authenticated user profile.
 
 Requires Authorization header.
+
+Request body example:
+
+```json
+{
+  "email": "alice.updated@example.com",
+  "password": "NewStr0ngP@ssword",
+  "username": "Alice M."
+}
+```
 
 Success response: `UserResponse`
 
@@ -112,7 +130,7 @@ Success response: `UserResponse`
 
 List all topics.
 
-Success response: array of `TopicDto`
+Success response: array of `TopicResponse`
 
 ### POST /api/topics/{topicId}/subscription
 
@@ -134,7 +152,7 @@ Success response: `ApiMessageResponse`
 
 List all posts in a topic.
 
-Success response: array of `PostDto`
+Success response: array of `PostResponse`
 
 ### POST /api/topics/{topicId}/posts
 
@@ -151,7 +169,7 @@ Request body:
 }
 ```
 
-Success response: `PostDto`
+Success response: `PostResponse`
 
 ## Post Endpoints
 
@@ -159,7 +177,7 @@ Success response: `PostDto`
 
 Get one post by ID.
 
-Success response: `PostDto`
+Success response: `PostDetailResponse`
 
 ### POST /api/posts/{postId}/comments
 
@@ -175,14 +193,14 @@ Request body:
 }
 ```
 
-Success response: `CommentDto`
+Success response: `CommentResponse`
 
 ## OpenAPI Documentation
 
 When the backend is running, the OpenAPI UI is available at:
 
-- `http://localhost:${MAIN_APP_PORT}/swagger-ui/index.html`
+- `http://localhost:8018/swagger-ui/index.html`
 
 Raw OpenAPI JSON:
 
-- `http://localhost:${MAIN_APP_PORT}/v3/api-docs`
+- `http://localhost:8018/v3/api-docs`

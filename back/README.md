@@ -16,19 +16,19 @@ Spring Boot backend service with:
 - Maven 3.8+ or the included Maven wrapper
 - PostgreSQL running locally or reachable from this app
 
-## Project Structure
+## Project structure
 
 - Application entry point: `src/main/java/com/openclassrooms/mddapi/BaseApplication.java`
 - Main configuration: `src/main/resources/application.yaml`
 - Environment values: `src/main/resources/env.properties`
-- Environment sample: `.env.sample.properties`
+- Sample environment file: `.env.sample.properties`
 - Liquibase changelogs: `src/main/resources/db/changelog`
 
-## Environment Configuration
+## Environment configuration
 
 The application loads environment values from `src/main/resources/env.properties` using Spring Boot config import.
 
-1. Copy the sample file into the backend folder:
+1. Copy the sample file into `back/`:
 
 ```bash
 cd back
@@ -52,7 +52,7 @@ Notes:
 - Use a strong random value for `JWT_SECRET_TOKEN`.
 - `MAIN_APP_PORT` controls the HTTP port that Spring Boot listens on.
 
-## Run the Application
+## Run the application
 
 From the `back/` folder:
 
@@ -80,10 +80,9 @@ Run tests from `back/`:
 ./mvnw test
 ```
 
-Test configuration uses H2 in-memory database settings from `src/test/resources/application.yaml`.
-If needed, update `src/test/resources/env.properties` with test-specific values such as `MAIN_APP_PORT` and `JWT_SECRET_TOKEN`.
+Test configuration uses `src/test/resources/env.test.properties` and `src/test/resources/application.yaml`.
 
-## API Documentation
+## API documentation
 
 When the application is running, OpenAPI UI is available at:
 
@@ -93,7 +92,7 @@ The raw OpenAPI JSON is available at:
 
 - `http://localhost:${MAIN_APP_PORT}/v3/api-docs`
 
-## Database Migrations
+## Database migrations
 
 Liquibase is enabled in `application.yaml`.
 Add changelog files under:
