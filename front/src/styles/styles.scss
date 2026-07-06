@@ -159,7 +159,7 @@ html, body {
   .mdd-form-actions {
     display: flex;
     justify-content: center;
-    padding-top: tokens.$mdd-spacing-xxxs;
+    padding-top: tokens.$mdd-spacing-md;
   }
 }
 
@@ -282,24 +282,24 @@ html, body {
 // ----------
 
 .user-card {
-    margin-top: tokens.$mdd-spacing-lg;
-    padding: tokens.$mdd-spacing-lg;
+  margin-top: tokens.$mdd-spacing-lg;
+  padding: tokens.$mdd-spacing-lg;
 
-    &__header {
-      display: flex;
-      align-items: center;
-      gap: tokens.$mdd-spacing-md;
-      margin-bottom: tokens.$mdd-spacing-lg;
+  &__header {
+    display: flex;
+    align-items: center;
+    gap: tokens.$mdd-spacing-md;
+    margin-bottom: tokens.$mdd-spacing-lg;
 
-  &__title {
-    margin: 0;
-    font-size: tokens.$mdd-font-size-h1;
-    font-weight: 700;
+    &__title {
+      margin: 0;
+      font-size: tokens.$mdd-font-size-h1;
+      font-weight: 700;
+    }
   }
-}
 
-.user-profile {
-  @extend %grid;
+  .user-profile {
+    @extend %grid;
     gap: tokens.$mdd-spacing-lg;
 
     .user-form {
@@ -347,28 +347,27 @@ html, body {
 
     .user-subscription-list {
       display: grid;
+      gap: tokens.$mdd-spacing-md;
+
+      .subscription-card {
+        display: grid;
         gap: tokens.$mdd-spacing-md;
+        padding: 20px;
+        background: tokens.$mdd-surface-variant;
+        border-radius: tokens.$mdd-radius-xl;
+        margin: 0 0 tokens.$mdd-spacing-xs;
+        font-size: tokens.$mdd-font-size-label;
+        font-weight: 700;
+      }
 
-        .subscription-card {
-          display: grid;
-          gap: tokens.$mdd-spacing-md;
-          padding: 20px;
-          background: tokens.$mdd-surface-variant;
-          border-radius: tokens.$mdd-radius-xl;
-          margin: 0 0 tokens.$mdd-spacing-xs;
-          font-size: tokens.$mdd-font-size-label;
-          font-weight: 700;
-        }
+      &__description {
+        margin: 0;
+        color: tokens.$mdd-text-secondary;
+      }
 
-        &__description {
-          margin: 0;
-          color: tokens.$mdd-text-secondary;
-        }
-
-        &__actions {
-          display: flex;
-          justify-content: flex-end;
-        }
+      &__actions {
+        display: flex;
+        justify-content: flex-end;
       }
     }
   }
