@@ -92,6 +92,8 @@ The raw OpenAPI JSON is available at:
 
 - `http://localhost:${MAIN_APP_PORT}/v3/api-docs`
 
+The documentation is here too: [API_ENDPOINTS.md](API_ENDPOINTS.md).
+
 ## Database migrations
 
 Liquibase is enabled in `application.yaml`.

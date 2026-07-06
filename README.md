@@ -98,6 +98,8 @@ When the backend is running, OpenAPI UI is available at:
 
 `http://localhost:8018/swagger-ui/index.html`
 
+Another documentation is here: [API_ENDPOINTS.md](back/API_ENDPOINTS.md).
+
 ## Notes
 
 - Use `Authorization: Bearer <token>` for protected API requests.
