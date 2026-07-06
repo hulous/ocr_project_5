@@ -6,7 +6,7 @@ import { Session } from '../models/session.interface.js';
 })
 export class SessionService {
   private static readonly storageKey = 'mddapi_session';
-  private tokenExpirationTimer?: number;
+  private tokenExpirationTimer?: ReturnType<typeof globalThis.setTimeout>;
   private readonly _session = signal<Session | undefined>(this.restoreSession());
 
   public readonly session = this._session.asReadonly();
