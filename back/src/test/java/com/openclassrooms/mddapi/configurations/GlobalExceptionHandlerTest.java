@@ -91,6 +91,14 @@ class GlobalExceptionHandlerTest {
     assertEquals("Internal server error", response.getBody().getMessage());
   }
 
+  @Test
+  void handleIllegalArgumentExceptionReturnsBadRequest() {
+    var response = handler.handleIllegalArgumentException(new IllegalArgumentException("A user with this email already exists"));
+
+    assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+    assertEquals("A user with this email already exists", response.getBody().getMessage());
+  }
+
   @SuppressWarnings("unused")
   private void sampleValidationTarget(String payload) {
     // Test fixture for MethodParameter creation.

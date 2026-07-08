@@ -46,6 +46,13 @@ public class GlobalExceptionHandler {
       .body(new ApiMessageResponse().setMessage("Invalid email or password"));
   }
 
+  @ExceptionHandler(IllegalArgumentException.class)
+  public ResponseEntity<ApiMessageResponse> handleIllegalArgumentException(IllegalArgumentException exception) {
+    return ResponseEntity
+      .status(HttpStatus.BAD_REQUEST)
+      .body(new ApiMessageResponse().setMessage(exception.getMessage()));
+  }
+
   @ExceptionHandler(ClassCastException.class)
   public ResponseEntity<ApiMessageResponse> handleClassCastException(ClassCastException exception) {
     return ResponseEntity
