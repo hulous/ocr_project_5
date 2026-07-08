@@ -44,7 +44,7 @@ export class RegisterComponent {
         Validators.required,
         Validators.minLength(8),
         Validators.maxLength(40),
-        Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[^A-Za-z0-9]).{8,40}$')
+        Validators.pattern(String.raw`^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).{8,40}$`)
       ]
     ]
   });
