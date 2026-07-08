@@ -26,6 +26,21 @@
         <mat-form-field appearance="outline" class="mdd-field">
           <mat-label for="password-input">Mot de passe</mat-label>
           <input id="password-input" matInput type="password" formControlName="password" />
+
+          @if (form.controls.password.invalid && form.controls.password.touched) {
+            @if (form.controls.password.errors?.['required']) {
+              <mat-error>Le mot de passe est requis.</mat-error>
+            }
+            @if (form.controls.password.errors?.['minlength']) {
+              <mat-error>Le mot de passe doit comporter au moins 8 caractères.</mat-error>
+            }
+            @if (form.controls.password.errors?.['maxlength']) {
+              <mat-error>Le mot de passe ne peut pas dépasser 40 caractères.</mat-error>
+            }
+            @if (form.controls.password.errors?.['pattern']) {
+              <mat-error>Le mot de passe doit contenir au moins une majuscule, une minuscule, un chiffre et un caractère spécial.</mat-error>
+            }
+          }
         </mat-form-field>
 
         <div fxLayout="column" fxLayoutAlign="center center">

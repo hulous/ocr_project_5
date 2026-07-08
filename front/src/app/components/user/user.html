@@ -47,7 +47,13 @@
 
               @if (userForm.controls.password.invalid && userForm.controls.password.touched) {
                 @if (userForm.controls.password.errors?.['minlength']) {
-                  <mat-error>Le mot de passe doit faire au moins 6 caractères.</mat-error>
+                  <mat-error>Le mot de passe doit faire au moins 8 caractères.</mat-error>
+                }
+                @if (userForm.controls.password.errors?.['maxlength']) {
+                  <mat-error>Le mot de passe ne peut pas dépasser 40 caractères.</mat-error>
+                }
+                @if (userForm.controls.password.errors?.['pattern']) {
+                  <mat-error>Le mot de passe doit contenir au moins une majuscule, une minuscule, un chiffre et un caractère spécial.</mat-error>
                 }
               }
             </mat-form-field>
