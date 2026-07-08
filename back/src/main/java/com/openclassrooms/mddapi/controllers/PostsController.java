@@ -9,6 +9,7 @@ import com.openclassrooms.mddapi.services.PostService;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.ExampleObject;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -55,9 +56,15 @@ public class PostsController {
   )
   @ApiResponses(value = {
     @ApiResponse(responseCode = "200", description = "Comment created successfully", content = @Content(schema = @Schema(implementation = CommentResponse.class))),
-    @ApiResponse(responseCode = "400", description = "Invalid input", content = @Content(schema = @Schema(implementation = ApiMessageResponse.class))),
-    @ApiResponse(responseCode = "401", description = "Unauthorized request", content = @Content(schema = @Schema(implementation = ApiMessageResponse.class))),
-    @ApiResponse(responseCode = "404", description = "Post not found", content = @Content(schema = @Schema(implementation = ApiMessageResponse.class))),
+    @ApiResponse(responseCode = "400", description = "Invalid input", content = @Content(schema = @Schema(implementation = ApiMessageResponse.class), examples = {
+      @ExampleObject(name = "InvalidCommentPayload", value = "{\"message\": \"Comment text must not be empty\"}")
+    })),
+    @ApiResponse(responseCode = "401", description = "Unauthorized request", content = @Content(schema = @Schema(implementation = ApiMessageResponse.class), examples = {
+      @ExampleObject(name = "UnauthorizedRequest", value = "{\"message\": \"Unauthorized request\"}")
+    })),
+    @ApiResponse(responseCode = "404", description = "Post not found", content = @Content(schema = @Schema(implementation = ApiMessageResponse.class), examples = {
+      @ExampleObject(name = "PostNotFound", value = "{\"message\": \"Post not found\"}")
+    })),
     @ApiResponse(responseCode = "500", description = "Server error", content = @Content(schema = @Schema(implementation = ApiMessageResponse.class)))
   })
   public ResponseEntity<CommentResponse> createComment(

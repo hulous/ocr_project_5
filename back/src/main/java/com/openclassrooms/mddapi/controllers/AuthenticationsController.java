@@ -19,6 +19,7 @@ import com.openclassrooms.mddapi.services.UserUpdateService;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.ExampleObject;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -45,7 +46,18 @@ public class AuthenticationsController {
   @SecurityRequirements
   @ApiResponses(value = {
     @ApiResponse(responseCode = "200", description = "User created", content = @Content(schema = @Schema(implementation = UserResponse.class))),
-    @ApiResponse(responseCode = "400", description = "Invalid registration payload (validation error)", content = @Content(schema = @Schema(implementation = ApiMessageResponse.class))),
+    @ApiResponse(responseCode = "400", description = "Invalid registration payload", content = @Content(schema = @Schema(implementation = ApiMessageResponse.class), examples = {
+      @ExampleObject(
+        name = "InvalidRegistrationPayload",
+        value = "{\"message\": \"Email is required\"}"
+      )
+    })),
+    @ApiResponse(responseCode = "409", description = "User already exist", content = @Content(schema = @Schema(implementation = ApiMessageResponse.class), examples = {
+      @ExampleObject(
+        name = "UserAlreadyExists",
+        value = "{\"message\": \"user already exist\"}"
+      )
+    })),
     @ApiResponse(responseCode = "500", description = "Server error", content = @Content(schema = @Schema(implementation = ApiMessageResponse.class)))
   })
   public ResponseEntity<UserResponse> registrate(@Valid @RequestBody RegisterUserDto registerUserDto) {
@@ -57,7 +69,9 @@ public class AuthenticationsController {
   @SecurityRequirements
   @ApiResponses(value = {
     @ApiResponse(responseCode = "200", description = "Authenticated", content = @Content(schema = @Schema(implementation = LoginResponse.class))),
-    @ApiResponse(responseCode = "401", description = "Invalid credentials", content = @Content(schema = @Schema(implementation = ApiMessageResponse.class))),
+    @ApiResponse(responseCode = "401", description = "Invalid credentials", content = @Content(schema = @Schema(implementation = ApiMessageResponse.class), examples = {
+      @ExampleObject(name = "InvalidCredentials", value = "{\"message\": \"Invalid email or password\"}")
+    })),
     @ApiResponse(responseCode = "500", description = "Server error", content = @Content(schema = @Schema(implementation = ApiMessageResponse.class)))
   })
   public ResponseEntity<LoginResponse> authenticate(@RequestBody LoginUserDto loginUserDto) {
