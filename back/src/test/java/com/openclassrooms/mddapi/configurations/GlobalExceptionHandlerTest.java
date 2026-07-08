@@ -76,6 +76,14 @@ class GlobalExceptionHandlerTest {
   }
 
   @Test
+  void handleUserAlreadyExistsExceptionReturnsBadRequest() {
+    var response = handler.handleApiException(new com.openclassrooms.mddapi.exceptions.UserAlreadyExistsException("john@example.com"));
+
+    assertEquals(HttpStatus.CONFLICT, response.getStatusCode());
+    assertEquals("user already exist", response.getBody().getMessage());
+  }
+
+  @Test
   void handleClassCastExceptionReturnsUnauthorized() {
     var response = handler.handleClassCastException(new ClassCastException("boom"));
 

@@ -4,6 +4,7 @@ import com.openclassrooms.mddapi.dtos.LoginUserDto;
 import com.openclassrooms.mddapi.dtos.RegisterUserDto;
 import com.openclassrooms.mddapi.entities.User;
 import com.openclassrooms.mddapi.mappers.UserMapper;
+import com.openclassrooms.mddapi.exceptions.UserAlreadyExistsException;
 import com.openclassrooms.mddapi.repositories.UserRepository;
 import com.openclassrooms.mddapi.responses.LoginResponse;
 import com.openclassrooms.mddapi.responses.UserResponse;
@@ -56,9 +57,9 @@ class AuthenticationServiceTest {
     RegisterUserDto dto = UserTestData.registerUserDto("john@example.com", null, null);
     when(userRepository.existsByEmail("john@example.com")).thenReturn(true);
 
-    IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> service.registrate(dto));
+    UserAlreadyExistsException exception = assertThrows(UserAlreadyExistsException.class, () -> service.registrate(dto));
 
-    assertEquals("A user with this email already exists", exception.getMessage());
+    assertEquals("user already exist", exception.getMessage());
   }
 
   @Test
