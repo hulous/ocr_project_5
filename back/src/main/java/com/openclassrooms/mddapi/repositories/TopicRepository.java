@@ -20,6 +20,7 @@ public interface TopicRepository extends CrudRepository<Topic, Integer> {
   @Query("select new com.openclassrooms.mddapi.responses.TopicResponse(t.id, t.title, t.description, case when count(s) > 0 then true else false end) "
      + "from Topic t "
      + "left join t.subscriptions s on s.user = :user "
-     + "group by t.id, t.title, t.description")
+     + "group by t.id, t.title, t.description "
+     + "order by t.title asc")
   List<TopicResponse> findAllWithSubscribedFlagByUser(@Param("user") User user);
 }
