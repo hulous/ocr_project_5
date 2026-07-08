@@ -25,4 +25,11 @@ public class TopicResponse {
 
   @Schema(description = "Whether the current user is subscribed to the topic", example = "true")
   private boolean subscribed;
+
+  public TopicResponse(Integer id, String title, String description, boolean subscribed) {
+    this.id = id;
+    this.title = title;
+    this.description = description;
+    this.subscribed = subscribed;
+  }
 }
