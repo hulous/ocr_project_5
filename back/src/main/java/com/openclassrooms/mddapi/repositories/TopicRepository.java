@@ -15,12 +15,18 @@ import java.util.List;
 public interface TopicRepository extends CrudRepository<Topic, Integer> {
   List<Topic> findAll();
 
-  // This query get topics and if current user had subscribed
-  // it set a Topic.subscribed to true (for each Topic loaded).
-  @Query("select new com.openclassrooms.mddapi.responses.TopicResponse(t.id, t.title, t.description, case when count(s) > 0 then true else false end) "
-     + "from Topic t "
-     + "left join t.subscriptions s on s.user = :user "
-     + "group by t.id, t.title, t.description "
-     + "order by t.title asc")
+  // This query gets topics and marks Topic.subscribed true when the current user has subscribed.
+  @Query("""
+    select new com.openclassrooms.mddapi.responses.TopicResponse(
+        t.id,
+        t.title,
+        t.description,
+        case when count(s) > 0 then true else false end
+    )
+    from Topic t
+    left join t.subscriptions s on s.user = :user
+    group by t.id, t.title, t.description
+    order by t.title asc
+  """)
   List<TopicResponse> findAllWithSubscribedFlagByUser(@Param("user") User user);
 }
