@@ -43,7 +43,7 @@ class AuthenticationsControllerIntegrationTest {
     RegisterUserDto registerRequest = new RegisterUserDto()
       .setEmail("john@example.com")
       .setUsername("john")
-      .setPassword("pwd");
+      .setPassword("P@ssw0rd1");
 
     mockMvc.perform(post("/api/auth/register")
         .contentType(MediaType.APPLICATION_JSON)
@@ -52,7 +52,7 @@ class AuthenticationsControllerIntegrationTest {
 
     LoginUserDto loginRequest = new LoginUserDto()
       .setEmail("john@example.com")
-      .setPassword("pwd");
+      .setPassword("P@ssw0rd1");
 
     mockMvc.perform(post("/api/auth/login")
         .contentType(MediaType.APPLICATION_JSON)
@@ -68,7 +68,7 @@ class AuthenticationsControllerIntegrationTest {
     RegisterUserDto registerRequest = new RegisterUserDto()
       .setEmail("jane@example.com")
       .setUsername("jane")
-      .setPassword("pwd");
+      .setPassword("P@ssw0rd1");
 
     mockMvc.perform(post("/api/auth/register")
         .contentType(MediaType.APPLICATION_JSON)
@@ -77,7 +77,7 @@ class AuthenticationsControllerIntegrationTest {
 
     LoginUserDto loginRequest = new LoginUserDto()
       .setEmail("jane")
-      .setPassword("pwd");
+      .setPassword("P@ssw0rd1");
 
     mockMvc.perform(post("/api/auth/login")
         .contentType(MediaType.APPLICATION_JSON)

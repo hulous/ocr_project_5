@@ -36,7 +36,11 @@ export class UserComponent implements OnInit {
   public userForm = this.formBuilder.group({
     username: ['', [Validators.required]],
     email: ['', [Validators.required, Validators.email]],
-    password: ['', [Validators.minLength(6)]]
+    password: ['', [
+      Validators.minLength(8),
+      Validators.maxLength(40),
+      Validators.pattern(String.raw`^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).{8,40}$`)
+    ]]
   });
 
   ngOnInit(): void {

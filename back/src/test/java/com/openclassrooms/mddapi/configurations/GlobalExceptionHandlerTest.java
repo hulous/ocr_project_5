@@ -76,6 +76,14 @@ class GlobalExceptionHandlerTest {
   }
 
   @Test
+  void handleUserAlreadyExistsExceptionReturnsBadRequest() {
+    var response = handler.handleApiException(new com.openclassrooms.mddapi.exceptions.UserAlreadyExistsException("john@example.com"));
+
+    assertEquals(HttpStatus.CONFLICT, response.getStatusCode());
+    assertEquals("user already exist", response.getBody().getMessage());
+  }
+
+  @Test
   void handleClassCastExceptionReturnsUnauthorized() {
     var response = handler.handleClassCastException(new ClassCastException("boom"));
 
@@ -89,6 +97,14 @@ class GlobalExceptionHandlerTest {
 
     assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
     assertEquals("Internal server error", response.getBody().getMessage());
+  }
+
+  @Test
+  void handleIllegalArgumentExceptionReturnsBadRequest() {
+    var response = handler.handleIllegalArgumentException(new IllegalArgumentException("A user with this email already exists"));
+
+    assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+    assertEquals("A user with this email already exists", response.getBody().getMessage());
   }
 
   @SuppressWarnings("unused")

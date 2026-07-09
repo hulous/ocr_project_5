@@ -1,5 +1,23 @@
 # Release Notes
 
+## 1.0.2
+
+This release improves backend error handling, API error documentation, and topic querying.
+
+- Updated Swagger/OpenAPI error documentation for authentication, post, and topic endpoints.
+- Added a dedicated `UserAlreadyExistsException` and return `409 Conflict` when registering an existing user.
+- Improved global exception handling to return `400 Bad Request` for illegal argument errors instead of `500`.
+- Cleaned up backend topic query logic and enforced alphabetic ordering for topics.
+- Refined topic-related controller documentation and error response handling.
+
+## 1.0.1
+
+This release updates documentation and release artifacts to reflect the `1.0.0` tag and adds API documentation links.
+
+- Added backend `plant_diagram.uml` documentation.
+- Added links to the API endpoints in the README.
+- Updated release documentation with `1.0.0` tag information.
+
 ## 1.0.0
 
 This release improves testing documentation, validation coverage, and backend test execution.

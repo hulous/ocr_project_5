@@ -9,7 +9,9 @@ import com.openclassrooms.mddapi.services.SubscriptionService;
 import com.openclassrooms.mddapi.services.TopicService;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.ExampleObject;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -45,7 +47,7 @@ public class TopicsController {
   @GetMapping
   @Operation(summary = "List all topics")
   @ApiResponses(value = {
-    @ApiResponse(responseCode = "200", description = "List of topics", content = @Content(schema = @Schema(implementation = TopicResponse.class))),
+    @ApiResponse(responseCode = "200", description = "List of topics", content = @Content(array = @ArraySchema(schema = @Schema(implementation = TopicResponse.class)))),
     @ApiResponse(responseCode = "500", description = "Server error", content = @Content(schema = @Schema(implementation = ApiMessageResponse.class)))
   })
   public ResponseEntity<List<TopicResponse>> list() {
@@ -59,9 +61,15 @@ public class TopicsController {
   )
   @ApiResponses(value = {
     @ApiResponse(responseCode = "200", description = "Subscription created successfully", content = @Content(schema = @Schema(implementation = ApiMessageResponse.class))),
-    @ApiResponse(responseCode = "400", description = "Already subscribed or invalid request", content = @Content(schema = @Schema(implementation = ApiMessageResponse.class))),
-    @ApiResponse(responseCode = "401", description = "Unauthorized request", content = @Content(schema = @Schema(implementation = ApiMessageResponse.class))),
-    @ApiResponse(responseCode = "404", description = "Topic not found", content = @Content(schema = @Schema(implementation = ApiMessageResponse.class))),
+    @ApiResponse(responseCode = "400", description = "Already subscribed or invalid request", content = @Content(schema = @Schema(implementation = ApiMessageResponse.class), examples = {
+      @ExampleObject(name = "AlreadySubscribed", value = "{\"message\": \"Already subscribed to this topic\"}")
+    })),
+    @ApiResponse(responseCode = "401", description = "Unauthorized request", content = @Content(schema = @Schema(implementation = ApiMessageResponse.class), examples = {
+      @ExampleObject(name = "UnauthorizedRequest", value = "{\"message\": \"Unauthorized request\"}")
+    })),
+    @ApiResponse(responseCode = "404", description = "Topic not found", content = @Content(schema = @Schema(implementation = ApiMessageResponse.class), examples = {
+      @ExampleObject(name = "TopicNotFound", value = "{\"message\": \"Topic not found\"}")
+    })),
     @ApiResponse(responseCode = "500", description = "Server error", content = @Content(schema = @Schema(implementation = ApiMessageResponse.class)))
   })
   public ResponseEntity<ApiMessageResponse> subscribe(@PathVariable Integer topicId) {
@@ -75,9 +83,15 @@ public class TopicsController {
   )
   @ApiResponses(value = {
     @ApiResponse(responseCode = "200", description = "Subscription removed successfully", content = @Content(schema = @Schema(implementation = ApiMessageResponse.class))),
-    @ApiResponse(responseCode = "400", description = "No existing subscription or invalid request", content = @Content(schema = @Schema(implementation = ApiMessageResponse.class))),
-    @ApiResponse(responseCode = "401", description = "Unauthorized request", content = @Content(schema = @Schema(implementation = ApiMessageResponse.class))),
-    @ApiResponse(responseCode = "404", description = "Topic not found", content = @Content(schema = @Schema(implementation = ApiMessageResponse.class))),
+    @ApiResponse(responseCode = "400", description = "No existing subscription or invalid request", content = @Content(schema = @Schema(implementation = ApiMessageResponse.class), examples = {
+      @ExampleObject(name = "NoSubscriptionFound", value = "{\"message\": \"No subscription found for this topic\"}")
+    })),
+    @ApiResponse(responseCode = "401", description = "Unauthorized request", content = @Content(schema = @Schema(implementation = ApiMessageResponse.class), examples = {
+      @ExampleObject(name = "UnauthorizedRequest", value = "{\"message\": \"Unauthorized request\"}")
+    })),
+    @ApiResponse(responseCode = "404", description = "Topic not found", content = @Content(schema = @Schema(implementation = ApiMessageResponse.class), examples = {
+      @ExampleObject(name = "TopicNotFound", value = "{\"message\": \"Topic not found\"}")
+    })),
     @ApiResponse(responseCode = "500", description = "Server error", content = @Content(schema = @Schema(implementation = ApiMessageResponse.class)))
   })
   public ResponseEntity<ApiMessageResponse> unsubscribe(@PathVariable Integer topicId) {
@@ -87,7 +101,7 @@ public class TopicsController {
   @GetMapping("/{topicId}/posts")
   @Operation(summary = "List all posts for a topic")
   @ApiResponses(value = {
-    @ApiResponse(responseCode = "200", description = "List of posts", content = @Content(schema = @Schema(implementation = PostResponse.class))),
+    @ApiResponse(responseCode = "200", description = "List of posts", content = @Content(array = @ArraySchema(schema = @Schema(implementation = PostResponse.class)))),
     @ApiResponse(responseCode = "404", description = "Topic not found", content = @Content(schema = @Schema(implementation = ApiMessageResponse.class))),
     @ApiResponse(responseCode = "500", description = "Server error", content = @Content(schema = @Schema(implementation = ApiMessageResponse.class)))
   })
@@ -102,9 +116,15 @@ public class TopicsController {
   )
   @ApiResponses(value = {
     @ApiResponse(responseCode = "200", description = "Post created successfully", content = @Content(schema = @Schema(implementation = PostResponse.class))),
-    @ApiResponse(responseCode = "400", description = "Invalid input", content = @Content(schema = @Schema(implementation = ApiMessageResponse.class))),
-    @ApiResponse(responseCode = "401", description = "Unauthorized request", content = @Content(schema = @Schema(implementation = ApiMessageResponse.class))),
-    @ApiResponse(responseCode = "404", description = "Topic not found", content = @Content(schema = @Schema(implementation = ApiMessageResponse.class))),
+    @ApiResponse(responseCode = "400", description = "Invalid input", content = @Content(schema = @Schema(implementation = ApiMessageResponse.class), examples = {
+      @ExampleObject(name = "InvalidPostPayload", value = "{\"message\": \"Title and content must be provided\"}")
+    })),
+    @ApiResponse(responseCode = "401", description = "Unauthorized request", content = @Content(schema = @Schema(implementation = ApiMessageResponse.class), examples = {
+      @ExampleObject(name = "UnauthorizedRequest", value = "{\"message\": \"Unauthorized request\"}")
+    })),
+    @ApiResponse(responseCode = "404", description = "Topic not found", content = @Content(schema = @Schema(implementation = ApiMessageResponse.class), examples = {
+      @ExampleObject(name = "TopicNotFound", value = "{\"message\": \"Topic not found\"}")
+    })),
     @ApiResponse(responseCode = "500", description = "Server error", content = @Content(schema = @Schema(implementation = ApiMessageResponse.class)))
   })
   public ResponseEntity<PostResponse> createPost(
