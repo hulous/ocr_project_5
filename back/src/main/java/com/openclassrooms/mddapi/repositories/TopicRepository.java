@@ -18,10 +18,10 @@ public interface TopicRepository extends CrudRepository<Topic, Integer> {
   // This query gets topics and marks Topic.subscribed true when the current user has subscribed.
   @Query("""
     select new com.openclassrooms.mddapi.responses.TopicResponse(
-        t.id,
-        t.title,
-        t.description,
-        case when count(s) > 0 then true else false end
+      t.id,
+      t.title,
+      t.description,
+      case when count(s) > 0 then true else false end
     )
     from Topic t
     left join t.subscriptions s on s.user = :user
